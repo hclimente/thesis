@@ -1,0 +1,16 @@
+--- 
+title: "Network-guided biomarker discovery in GWAS"
+author: "Héctor Climente González"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [references.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+# Preface {-}
+
+Ph.D. thesis
+
+Supervised by Chloé-Agathe Azencott and Véronique Stoven

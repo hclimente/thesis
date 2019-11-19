@@ -1,0 +1,9 @@
+# (APPENDIX) Appendix {-} 
+
+# Block HSIC Lasso: model-free biomarker detection for ultra-high dimensional data
+
+\includepdf[pages=-, scale=1]{articles/climente_2019.pdf}
+
+`r if (knitr::is_html_output()) '
+https://academic.oup.com/bioinformatics/article/35/14/i427/5529193
+'`

@@ -1,0 +1,8 @@
+# The Functional Impact of Alternative Splicing in Cancer {#smartas}
+
+\includepdf[pages=-, scale=1]{articles/climente_2017.pdf}
+
+`r if (knitr::is_html_output()) '
+https://www.cell.com/cell-reports/fulltext/S2211-1247(17)31104-X
+'`
+
