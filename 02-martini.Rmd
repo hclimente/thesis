@@ -1,4 +1,4 @@
-# The *martini* R package
+# The *martini* R package {#martini}
 
 From the beginning of my thesis, my work was related to SConES [@azencott_efficient_2013], a GWAS oriented high-score subnetwork search method developed by my supervisor Dr. Chloé A. Azencott. SConES works on a SNP network, where SNPs are linked to each other if there is evidence of shared function (e.g. they both are mapped to the same gene). Then, SConES finds a small set of highly interconnected SNPs associated to the disease by solving the following problem:
 
@@ -8,7 +8,7 @@ From the beginning of my thesis, my work was related to SConES [@azencott_effici
 
 where $\eta$ and $\lambda$ are hyperparameters, s_v is the association score of node v, and W is the Laplacian matrix. A more detailed description of SConES can be found in [@azencott_efficient_2013] and in the section /Methods used/ of Chapter TODO.   
 
-With the intention of applying SConES to the GENESIS dataset, I started working on a user-friendly version. The result was an R package, /martini/, which is published with Bioconductor 3.7. Bioconductor is a peer-reviewed R repository. /martini/ is based on EasyGWAS' implementation of SConES [@grimm_easygwas:_2017]. Hence, it combines the accessibility of R and and the Bioconductor environment with the computational efficiency of C++.
+With the intention of applying SConES to the GENESIS dataset, I started working on a user-friendly version. The result was an R package, /martini/, which is published with Bioconductor 3.7. Bioconductor is a peer-reviewed R repository. /martini/ is based on EasyGWAS' implementation of SConES [@grimm_easygwas_2017]. Hence, it combines the accessibility of R and and the Bioconductor environment with the computational efficiency of C++.
 
 ## Improvements
 ### Association using $\chi^2$ statistic

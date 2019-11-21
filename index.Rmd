@@ -4,13 +4,29 @@ author: "Héctor Climente González"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
+output: 
+  bookdown::pdf_book: 
+    dev: png
+    toc : true
+    toc_depth: 4
+    keep_tex : yes
 bibliography: [references.bib]
-biblio-style: apalike
 link-citations: yes
-description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+description: "PhD thesis of Héctor Climente-González"
+lof: yes
+lot: yes        
+fontsize: 12pt
+biblio-style: "plainnat"
+geometry: "marginpar=2cm, top=3cm, bottom=4cm"
+linestretch: 1
 ---
+
 # Preface {-}
 
 Ph.D. thesis
 
 Supervised by Chloé-Agathe Azencott and Véronique Stoven
+
+```{r global-env, echo=FALSE}
+options(knitr.graphics.auto_pdf = TRUE)
+```
