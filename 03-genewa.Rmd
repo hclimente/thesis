@@ -2,6 +2,7 @@
 
 *Héctor Climente-González, Christine Lonjou, Fabienne Lesueur, GENESIS investigators, Dominique Stoppa-Lyonnet, Nadine Andrieu, Chloé-Agathe Azencott*
 
+\begin{abstract}
 Systems biology provides a comprehensive approach to biomarker discovery
 and biological hypothesis building. It does so by jointly considering
 the statistical association between a gene and a phenotype, and the
@@ -25,24 +26,15 @@ mechanisms related to cancer, like protein folding (*HSPA1A*, *HSPA1B*,
 and *HSPA1L*) or mitochondrial ribosomes (*MRPS30*, *MRPS31*,
 *MRPS18B*). We also observed a general dysregulation in the neighborhood
 of *COPS5*, a gene related to multiple hallmarks of cancer.
+\end{abstract}
 
 ## Introduction
 
-In human health, genome-wide association studies (GWAS) aim at
-quantifying how single-nucleotide polymorphisms (SNPs) predispose to
-complex diseases, like diabetes or some forms of cancer
-[@bush_chapter_2012]. To that end, in a typical GWAS thousands of
-unrelated samples are genotyped: the cases, suffering the disease of
-interest, and the controls from the general population. Then, a per-SNP
-statistical association test is conducted (e.g. logistic regression).
-Those SNPs with a P-value lower than a conservative Bonferroni threshold
-are candidates to further studies in an independent cohort. Once the
-risk SNPs have been discovered, they can be used for risk assessment,
-and to deepen our understanding of the disease.
-
-GWAS have successfully identified thousands of variants underlying many
-common diseases [@buniello_nhgri-ebi_2019]. However, the experimental
-setting also presents intrinsic challenges. Some of them stem from the
+As described in Section \@ref(intro-gwas), genome-wide association studies 
+(GWAS) aim at quantifying how single-nucleotide polymorphisms (SNPs) predispose 
+to complex diseases, like diabetes or some forms of cancer [@bush_chapter_2012]. 
+Despite their successes [@buniello_nhgri-ebi_2019], GWAS also presents intrinsic
+challenges (Section \@ref(intro-gwas-challenges)). Some of them stem from the
 high-dimensionality of the problem, as every GWAS to date studies more
 variants than samples are genotyped. This limits the statistical power
 of the experiment, as only variants with large and moderate effects can
@@ -121,21 +113,7 @@ obtain a consensus network of predisposition to familial breast cancer.
 
 ### GENESIS
 
-The GENE Sisters (GENESIS) study was designed to investigate risk
-factors for familial breast cancer in the French population
-[@sinilnikova_genesis:_2016]. Index cases are patients with infiltrating
-mammary or ductal adenocarcinoma, who had a sister with breast cancer,
-and who have been tested negative for BRCA1 and BRCA2 pathogenic
-variants. Controls are unaffected colleagues and/or friends of the
-cases, born around the year of birth of the corresponding case ( 3
-years). We focused on the 2 577 samples of European ancestry, of which
-1 279 are controls and 1 298 are cases. The genotyping was performed
-using the iCOGS array, a custom Illumina array designed to study genetic
-susceptibility of hormone-related cancers [@sakoda_turning_2013]. It
-contains 211 155 SNPs, including SNPs putatively associated with breast,
-ovarian, and prostate cancers, SNPs associated with survival after
-diagnosis, and SNPs associated to other cancer-related traits, as well
-as functional candidate variants in selected genes and pathways.
+In this study we used the GENESIS dataset, described in Section \@ref(genesis-dataset).
 
 ### Preprocessing and quality control
 
@@ -645,7 +623,7 @@ knitr::include_graphics('fig/sfigure_2', dpi = NA)
 
 (ref:fig-manhattan-solutions-caption) Manhattan plots showing the biomolecules selected by each method. In **(Consensus, dmGWAS, heinz, HotNet2, and SigMod)** datapoints are genes; in **(SConES GS, GM, and GI)**, SNPs. LEAN was excluded, as it did not select any gene.
 
-```{r manhattan-solutions, echo=FALSE, fig.cap='(ref:fig-manhattan-solutions-caption)'}
+```{r manhattan-solutions, echo=FALSE, fig.cap='(ref:fig-manhattan-solutions-caption)', out.height='80%', fig.align='center'}
 knitr::include_graphics('fig/sfigure_3.png', dpi = NA)
 ```
 
@@ -679,19 +657,19 @@ needed draw conclusions.
 
 (ref:fig-disgenet-comparison-caption) Proportion of the selected genes by each of the methods on the GENESIS data that is a known breast cancer susceptibility gene (Section \@ref(methods:bcac)). Only genes present in the protein-protein interaction network were considered. LEAN is not displayed as it did not select any gene. The presented network methods recover a higher proportion of breast cancer susceptibility genes than of other genes, despite their lack of significance in GENESIS.
 
-```{r disgenet-comparison, echo=FALSE, fig.cap='(ref:fig-disgenet-comparison-caption)'}
+```{r disgenet-comparison, echo=FALSE, fig.cap='(ref:fig-disgenet-comparison-caption)', out.height='80%', fig.align='center'}
 knitr::include_graphics('fig/sfigure_5', dpi = NA)
 ```
 
 (ref:fig-bcac-comparison-caption) Proportion of the Bonferroni significant biomolecules (in either the GENESIS or the BCAC datasets) selected by each of the methods on the GENESIS data. **(Consensus, dmGWAS, heinz, HotNet2, and SigMod)** involve significant genes, only among those present in the protein-protein interaction network. **(SConES GS, GM and GI)** involve significant SNPs. LEAN is not displayed as it did not select any gene. The presented network methods recover a higher proportion of significant genes than of non-significant genes in both datasets, despite their lack of significance in GENESIS.
 
-```{r bcac-comparison, echo=FALSE, fig.cap="(ref:fig-bcac-comparison-caption)"}
+```{r bcac-comparison, echo=FALSE, fig.cap="(ref:fig-bcac-comparison-caption)", out.height='80%', fig.align='center'}
 knitr::include_graphics('fig/sfigure_4', dpi = NA)
 ```
 
 (ref:fig-consensus-stats-caption) Genes on the consensus network. Breast cancer susceptibility genes are colored in pink; the rest are colored in grey. **(A)** Number of methods selecting every gene in the subnetwork. **(B)** VEGAS P-values of association of the genes, with regards to the number of methods that selected them. **(C)** Comparison of betweenness centrality of the genes in the consensus network and the other genes in the PPIN and not in the consensus network. To improve visualization, we removed outliers. **(D)** Relationship between the log~10~ of the betweenness centrality and the -log~10~ of the VEGAS P-value of the genes in the consensus network. The blue line represents a fitted generalized linear model.
 
-```{r consensus-stats, echo=FALSE, fig.cap='(ref:fig-consensus-stats-caption)', out.height='70%'}
+```{r consensus-stats, echo=FALSE, fig.cap='(ref:fig-consensus-stats-caption)', out.height='75%', fig.align='center'}
 knitr::include_graphics('fig/sfigure_8', dpi = NA)
 ```
 
@@ -721,7 +699,7 @@ nodes), contains the two breast cancer susceptibility genes *CASP8* and
 
 (ref:fig-benchmark-caption) Comparison of network-based GWAS methods on GENESIS. Each method was run 5 times of a random subset of the samples, and tested on the remaining samples (Section \@ref(methods:comparison)). **(A)** Number of SNPs selected by each method and number of SNPs on the active set used by the Lasso classifier. Points are the average over the 5 runs; lines represent the standard error of the mean. A grey diagonal line with slope 1 is added for comparison. For reference, the active set of Lasso using all the SNPs included, on average, 154 117.4 SNPs. **(B)** Sensitivity and specificity on test set of the L1-penalized logistic regression trained on the features selected by each of the methods. In addition, the performance of the classifier trained on all SNPs is displayed. Points are the average over the 5 runs; lines represent the standard error of the mean. **(C)** Pairwise Pearson\'s correlations of the solutions used by different methods. A Pearson's correlation of 1 means the two solutions are the same. A Pearson's correlation of 0 means that there is no SNP in common between the two solutions. **(D)** Runtime of the evaluated methods, by type of network used (gene or SNP). For gene network-based methods, inverted triangles represent the runtime of the algorithm itself, and circles the total time, which includes the algorithm themselves and the additional 119 980 seconds (1 day and 9.33 hours) which took VEGAS2v2 on average to compute the gene scores from SNP summary statistics.
 
-```{r benchmark, echo=FALSE, fig.cap='(ref:fig-benchmark-caption)'}
+```{r benchmark, echo=FALSE, fig.cap='(ref:fig-benchmark-caption)', out.width='80%', fig.align='center'}
 knitr::include_graphics('fig/figure_4', dpi = NA)
 ```
 
@@ -912,7 +890,7 @@ P-value = 0.006).
 
 (ref:fig-consensus-names-caption) Consensus subnetwork on GENESIS (Section \@ref(methods:consensus)). **(A)** Each node is represented by a pie chart, which accounts the methods that selected it. The labeled genes have a VEGAS2v2 P-value \< 0.001 and/or are known breast cancer susceptibility genes (colored in pink). This panel is equivalent to Figure \@ref(fig:consensus). **(B)** The name of every gene is indicated.
 
-```{r consensus-names, echo=FALSE, fig.cap='(ref:fig-consensus-names-caption)'}
+```{r consensus-names, echo=FALSE, fig.cap='(ref:fig-consensus-names-caption)', out.height='75%', fig.align='center'}
 knitr::include_graphics('fig/sfigure_7', dpi = NA)
 ```
 

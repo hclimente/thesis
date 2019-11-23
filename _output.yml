@@ -1,3 +1,4 @@
+link-citations: yes
 bookdown::gitbook:
   css: style.css
   config:
@@ -9,9 +10,13 @@ bookdown::gitbook:
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:
-    in_header: preamble.tex
+    in_header: latex/preamble.tex
+    before_body: latex/before_body.tex
   latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
   fig_caption: true
+  toc: true
+  toc_depth: 4
+  dev: png
 bookdown::epub_book: default

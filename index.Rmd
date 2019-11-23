@@ -17,9 +17,11 @@ lof: yes
 lot: yes        
 fontsize: 12pt
 biblio-style: "plainnat"
-geometry: "marginpar=2cm, top=3cm, bottom=4cm"
-linestretch: 1
+geometry: "marginpar=2cm, left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
+linestretch: 1.15
 ---
+
+\mainmatter
 
 # Preface {-}
 
@@ -27,6 +29,11 @@ Ph.D. thesis
 
 Supervised by Chloé-Agathe Azencott and Véronique Stoven
 
-```{r global-env, echo=FALSE}
-options(knitr.graphics.auto_pdf = TRUE)
+<!-- 
+Cover dimensions wrong because
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+-->
+
+```{r env, echo=FALSE}
+# options(knitr.graphics.auto_pdf = TRUE)
 ```

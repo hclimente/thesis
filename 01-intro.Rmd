@@ -10,11 +10,11 @@ The modern unit of genetic variation are single-nucleotide polymorphisms (SNPs) 
 
 ## Epistasis
 
-Epistasis is the phenomenon where the impact on the phenotype of one locus depends on the state of another locus. It has two variants: biological and statistical [@moore_traversing_2005]. Biological epistasis refers to the physical interaction occurring between the two loci, for instance via their protein products. Statistical epistasis, in constrast, is the observation than the association between one locus and the phenotype changes across the level of the other locus. In essence, statistical epistasis refers to the biological epistasis that we detected in a genetic study. In my thesis I worked in the detection of statistical epistasis, which I will refer to simply as epistasis.
+Epistasis is the phenomenon where the impact on the phenotype of one locus depends on the state one or more additional loci. It has two variants: biological and statistical [@moore_traversing_2005]. Biological epistasis refers to the physical interaction occurring between the loci, for instance via their protein products. Multiple cases of biological epistasis contributing to phenotypes in model organisms have been reported in the literature [@required]. It was proposed that biological epistasis is a consequence of the redundancy of biological mechanisms [@niel_survey_2015]. Statistical epistasis, in constrast, is the observation than the association between one locus and the phenotype changes across the level of the other locus. In essence, statistical epistasis refers to the biological epistasis detectable at the population level. In this case, several links between complex diseases and epistasis have been found [@required]. As in this thesis I worked exclusively in the detection of the latter kind, for brevity's sake I will refer to it simply as *epistasis*.
 
-Epistasis greatly contributes to complex traits in model organisms [@required]. In fact, it has been proposed that incorrectly accounting for epistasis might be behind the so-called *missing heritability* problem of complex diseases [@zuk_mystery_2012]. This motivates the study of methods to improve epistasis detection.
+Despite the links between epistasis and complex disease described above, estimating the magnitude of its contribution to complex diseases in humans is hard [@gusareva_practical_2014]. Nonetheless, [@zuk_mystery_2012] proposed that incorrectly accounting for epistasis might be behind the so-called *missing heritability* problem of complex diseases. This motivates the study of methods to improve epistasis detection. Epistasis greatly contributes to complex traits in model organisms [@required].
 
-## Genome-wide association studies
+## Genome-wide association studies {#intro-gwas}
 
 Genome-wide association studies (GWAS) are experiments where a high number of genetic variants are systematically surveyed on large cohorts [@bush_chapter_2012]. Their goal is to identify genomic regions associated with a disease. In the classical GWAS setting, a statistical test for association is conducted between each variant and the phenotype of interest. Often, that statistical test is a logistic regression, which allows using additional variables that might act as confounders. Then the "best hits", conventionally variants with a genome-wide P-value < 5 \texttimes 10^{-8}^, undergo a follow-up on an independent cohort. Many fields that profit from this ability to survey a sample genome are using GWAS, especially in personalized medicine (e.g. pharmacogenomics). In consequence, GWAS has become a paragon of translational bioinformatics. The ultimate goal is to be able to identify individuals at genetic risk, as well as understand the molecular basis of the disease.
 
@@ -24,7 +24,7 @@ Since the first GWAS in the late 2000s, more than 70000 variant-trait associatio
 
 recently holistic models that go beyond the classical polygenic model have been suggested, like the /omnigenic model/ [@boyle_expanded_2017]. The omnigenic model postulates that only a few core genes are directly implicated in the disease, and alterations on them have a strong effect. But alterations in many other, unrelated, genes can also lead to disease as they propagate through biological networks to affect the functionality of those core genes. A more complete view of biological networks and disease is available in Chapter \@ref(genesis). 
 
-### Challenges {#gwas-challenges}
+### Challenges {#intro-gwas-challenges}
 
 In the case of height, 80% of the intra-population variability in height is due to genetic factors (h^2 = 0.8) [@visscher_heritability_2008]. Three studies with a total sample size of 63k individuals (14k + 16k + 34k) identified 54 variants that are reliably associated with height. However, they only get to explain 5% of the phenotypic variance [@manolio_finding_2009]. The rest of the estimated genetic component is something alike "dark matter": we know it is there, as we can see its effects, we just cannot see it nor know what it is exactly. This situation is actually common to many complex phenotypes, and has been called the missing heritability problem. There are several candidates out there to explain this dark matter: a larger than expected number of variants with mild effects (difficult to find in underpowered setting of GWAS); rarer variants with strong effects; but also an overestimation of h<sup>2</sup> by unconsidered epigenetics, dominance and epistatic effects; and even an inadequate accounting of shared environment among relatives. Of course, different traits will have different allelic architectures (number of variants, effects, type...). But even then, our knowledge is too limited to really assess it. The enigma of missing heritability is especially relevant when we deal with complex diseases. Missing heritability is a consequence of a few, inter-related challenges, which I describe below. My thesis involved developing methodologies that work around these issues.
 
@@ -46,7 +46,7 @@ Another consideration regarding GWAS is that most studies have been carried out 
 
 Ultimately, our goal is to estimate the full effect of the genetic factors for a patient. This involves moving moving from population-level associations, to an individual assessment [@wray_pitfalls_2013]. However, even in an hypothetical case where we know all the markers involved in a phenotype and their respective effect sizes, the $R^2$ of a linear predictor would be upper bounded by the heritability ($h^2$). This means that, at the patient level, we would only have a probabilistic estimate of their risk.
 
-#### Population structure
+#### Population structure {#pop-structure}
 
 The LD structure is population specific. Hence, in GWAS designs must account for samples with different ancestries or, in other words, capture the population structure in the data. Failure to do so might lead to overestimating allelic and genotypic frequencies, reduce statistical power and produce spurious associations [@required]. Population structure can be captured by the principal components of the genotype matrix, and hence they are often used to account for it. For instance, a logistic regression using the main principal components as covariates is often used to obtain measures of association at the SNP level correcting by potentially confounding population structure. Approaches like EIGENSTRAT also use these PCs to detect population structure in the data.
 
@@ -54,7 +54,7 @@ The LD structure is population specific. Hence, in GWAS designs must account for
 
 Every SNP genotyped in a GWAS represents a whole genomic region, which is in LD with it. Hence, when an association is found between a SNP and a disease, the causal SNPs might be any SNP in LD with the surveyed one. Functional analyses are needed to find out the real causal one. However, if the LD block is large, that's hard.
 
-The problem is exacerbated by the unclear mapping of SNP to a biological function. As the gene is considered the functional unit of inheritance, mapping SNPs to genes is a crucial step. However, that is not a trivial problem either. In the literature, we find three ways of mapping a SNP to a gene. The classical one is the physical mapping, where a SNP is mapped to a gene when their genomic coordinates overlap. Often a certain window around the gene boundaries are also included, to deal with the LD problem, and because SNPs outside the coding region are also known to control the expression of the gene. In this regard, another mapping is through eQTL. Thanks to projects like ??? we find those in different tissues. Lastly, 3D structure.
+The problem is exacerbated by the unclear mapping of SNP to a biological function. As the gene is considered the functional unit of inheritance, mapping SNPs to genes is a crucial step. However, that is not a trivial problem either. In the literature, we find three ways of mapping a SNP to a gene. The classical one is the physical mapping, where a SNP is mapped to a gene when their genomic coordinates overlap. Often a certain window around the gene boundaries are also included, to deal with the LD problem, and because SNPs outside the coding region are also known to control the expression of the gene. In this regard, another mapping is through eQTL. Thanks to projects like GTEx [@required] we find those in different tissues. Lastly, 3D structure.
 
 Genes also overlap. Mention that paper that Makoto sent.
 
@@ -64,13 +64,19 @@ Non-coding SNPs.
 
 Genome-wide association interaction studies (GWAIS) share the experimental design with GWAS, but focus on the detection of epistasis.
 
+TODO check Kristel's papers' introduction, Niel 2015. Take things out from the introduction of those papers. Enumerate: exhaustive, prior knowledge, model-less...
+
 ### Challenge: modelling epistasis
 
-GWAIS share the same challenges as GWAS enumerated in Section \@ref(gwas-challenges), and requires the additional of how to appropriately detect epistasis. TODO In Chapter \@ref(epi-network) we examine different epistasis detection methods.
+Due to the similar experimental design, GWAIS and GWAS share a number of challenges \@ref(intro-gwas-challenges). Nonetheless, such problems are often aggravated in GWAIS. For instance, a larger number of tests implies a further reduction of the statistical power. Interpretation is also more complicated, as two or more genomic region in LD with the genotyped SNP need to be examined for the causal variants. However, it presents two additional considerations.
+
+First, in any epistasis related study, it must be settled what is the order of the interactions that are explored. For instance, fourth order epistasis involves four different loci jointly contributing to a phenotype. Nonetheless, as the number of interactions grows exponentially with the epistasis order, most methods and studies focus on second order epistasis. 
+
+Second, epistasis introduces the challenge of how the most appropriate way of detecting it. Multiple strategies to detect epistasis have been proposed, from logistic regression with an interaction term to deep learning. [@niel_survey_2015] reviews the main families of epistasis detection stategies. In general, this diversity comes tackle different aspects of the computational and statistical issues that arise from the large number of potential interactions. Logistic regression [@required] for instance is exhaustive and easy to paralelize, but makes strong assumptions on the underlying relationship between the genotype and the phenotype. Hence, statistical power is compromised when that model is inaccurate. On the other hand, MDR [@required] is model-free and exhaustive, but is limited to case-control phenotypes and the inability to compute analitically the statistical power makes it slower. In Chapter \@ref(epi-network) we examine different epistasis detection methods, focusing on those that can account for a continuous phenotype.
 
 ## Diseases studied in this thesis
 
-In this thesis I worked in two complex diseases: breast cancer, and inflammatory bowel disease.
+The bulk of my work in this thesis revolved aroung two complex diseases: breast cancer and inflammatory bowel disease.
 
 ### Breast cancer
 
@@ -96,17 +102,37 @@ HBOC follows an autosomal dominant inheritance pattern. While approximately 5–
 
 Nearly all known HBOC susceptibility genes encode tumor suppressors that participate in genome stability pathways (homologous recombination repair, replication fork stability, transcription–replication collisions, mismatch repair, and DNA damage signaling, checkpoints and cell death; see Appendix A for more information).
 
-#### The GENESIS dataset
+#### The GENESIS dataset {#genesis-dataset}
 
-GENESIS (GENE SISter) is a French project that aims to shed some light on familial breast cancer. The index cases are patients with a breast cancer affected sister and no BRCA1/2 mutations [@sinilnikova_genesis:_2016]. The controls are unaffected colleagues and/or friends of the cases. This dataset is specially interesting for us: the heritability of the disease among the cases is not driven by BRCA1/2, but by rarer variants which are enriched in this experimental setting.
-
-GENESIS used the iCOGS genotyping platform [@sakoda_turning_2013]. iCOGS is a custom Illumina array designed by four consortia that study genetic susceptibility of three hormone-related cancers: breast (BCAC and CIMBA), ovarian (OCAC) and prostate (PRACTICAL). Its explicit purpose is to facile the genotyping in large case-control studies for these tumors. The criteria to include the SNPs was (i) previously associated with cancer susceptibility or survival; (ii) fine mapping of genomic regions of interest; (iii) associated with cancer-related quantitative traits; (iv) in selected candidate genes or pathways; (v) associated with other cancers. The final array included ~211,000 SNPs.
-
-GENESIS was examined in Chapter \@ref(genesis). 
+The GENE Sisters (GENESIS) study was designed to investigate risk
+factors for familial breast cancer in the French population
+[@sinilnikova_genesis:_2016]. Index cases are patients with infiltrating
+mammary or ductal adenocarcinoma, who had a sister with breast cancer,
+and who have been tested negative for BRCA1 and BRCA2 pathogenic
+variants. Controls are unaffected colleagues and/or friends of the
+cases, born around the year of birth of the corresponding case ($\pm 3$
+years). We focused on the 2 577 samples of European ancestry, of which
+1 279 are controls and 1 298 are cases. The genotyping was performed
+using the iCOGS array, a custom Illumina array designed to study genetic
+susceptibility of hormone-related cancers [@sakoda_turning_2013]. It
+contains 211 155 SNPs, including SNPs putatively associated with breast,
+ovarian, and prostate cancers, SNPs associated with survival after
+diagnosis, and SNPs associated to other cancer-related traits, as well
+as functional candidate variants in selected genes and pathways.
 
 ### Inflammatory bowel disease
 
+Inflammatory bowel disease (IBD) is a group of diseases that, as the name indicates, share a common theme of inflammation of the intestines. The two main forms of IBD are ulcerative colitis and Chron's disease.
+
 TODO
+
+#### The IIBDGC dataset
+
+The International Inflammatory Bowel Disease Genetics Consortium carried out a case-control GWAS on ulcerative colitis and Chron's disease [@ellinghaus_analysis_2016]. The dataset contain 66 280 samples, out of which 32 622 are cases and 33 658 are controls. The Immunochip SNP array was used for the genotyping [@required].
+
+TODO
+
+As it aggregates multiple cohorts, we need to deal with population structure.
 
 ## Network view of complex diseases
 
@@ -118,7 +144,7 @@ Relationships between pairs of proteins can be mathematically formalized as a ne
 
 The field of systems biology relies on the assumption that the network accurately captures the context it requires to carry out its biological function. We can distinguish three levels of network properties: properties of individual nodes (local), the joint properties of groups of nodes (mesoscale), and the properties over the whole network (global). Indeed, at all three levels biological networks are structured, very differently from random networks [@barabasi_network_2011].
 
-At the global level, for instance, the degree distribution, which represents the distribution of the number of edges of the nodes in a network, follows a power-law distribution. This implies that, at the local level, a few genes participate in the majority of the edges. Such nodes are called *hubs*. Importantly, this node property is informative of the gene function: *in utero* essential genes, like knots preventing the network from falling apart, tend to be hubs. An important consequence of the structured degree distribution at the mesoscale level is the emergence of modules, subsets of nodes densely interconnected to each other, and sparsely to the rest. Such modules are often associated with biological function towards which all nodes jointly contribute [@required]. 
+At the global level, for instance, the degree distribution, which represents the distribution of the number of edges of the nodes in a network, follows a power-law distribution. This implies that, at the local level, a few genes participate in the majority of the edges. Such nodes are called *hubs*. Importantly, this node property is informative of the gene function: *in utero* essential genes, like knots preventing the network from falling apart, tend to be hubs. An important consequence of the structured degree distribution at the mesoscale level is the emergence of modules, subsets of nodes densely interconnected to each other, and sparsely to the rest. Such modules are often associated with biological function towards which all nodes jointly contribute [@mitra_integrative_2013]. 
 
 Another global property of a graph is the distribution of distances between pairs of nodes, that is, how many edges must be passed to travel from one node to another. Such is the notion of path between nodes, and often we are interested in the *shortest* path. Such paths are of special interest, for they reveal the fastest way information can flow from one node to another. An examination of the distribution of shortest paths in biological networks, shows that all nodes are close to each other [@barabasi_network_2011]. Such networks are called *small world networks*.
 
@@ -130,25 +156,9 @@ The properties of biological networks enumerated above lay down the foundations 
 
 Indeed, disease genes exhibit different properties than non-disease genes in disease [@pinero_uncovering_2016; @cai_broker_2010; @furlong_human_2013; @barabasi_network_2011]. For starters, disease genes are not hubs [@cai_broker_2010; @das_hint_2012], but tend to be non-essential genes located in the periphery. This is coherent with a evolutionary mindset, where mutations in essential genes would be highly deleterious, even resulting in embryonic lethality. However, this enrichment is driven mainly by cancer genes [@pinero_uncovering_2016]. Additionally, disease genes tend to be bottlenecks i.e. the sole link between many peripheral genes and the rest of the network [@cai_broker_2010], suggesting disease arise when these vulnerable regions of the network break down. 
 
-These properties, however, do not affect equally all types of disease genes. Many of the aforementioned properties do not extend to genes identified through GWAS [@cai_broker_2010]. However, differences arise even when comparing genes involved in complex diseases with those involved in Mendelian ones. 
+These properties, however, do not affect equally all types of disease genes. Many of the aforementioned properties do not extend to genes identified through GWAS [@cai_broker_2010]. However, differences arise even when comparing genes involved in complex diseases with those involved in Mendelian ones.
 
-#### Network propagation experiments 
-
-Network propagation includes a set of methods which use all the possible paths in the network to re-rank the genes on it [@cowen_network_2017]. In essence, for these methods, association of a node with a phenotype can be thought of as a volume of water: the more strongly associated, the more voluminous. Generically, each node starts with an initial volume which, iteratively, gets distributes its liquid among its neighbors. Equivalently, that node will receive a share from its neighbors'. The expectation is that truly associated genes will be densely interconnected to each other, forming cycles and modules that will keep the water from diffusing to other, uninvolved genes. After a number of steps the volume of water in each node is re-evaluated, and used to re-prioritize the genes. An added benefit of network propagation method is that they account for biases introduced by highly connected nodes. The outcome of different network propagation methods, that is, the vector p containing the scores of the nodes after k steps or in stationary state, can be expressed by the equation [@cowen_network_2017]:
-
-p = S p_0,
-
-where p_0 is the vector containing the association of each node to the phenotype, and S is a network-derived similarity matrix. S_ij represents the information propagated from node j to node i. Among network propagation methods, we include heat diffusion, random walk, graph kernels and even Google's PageRank. Below we describe different network propagation methods. Readers interested in network propagation can read [@cowen_network_2017].
-
-Proved that they are important [@huang_systematic_2018].
-
-<!-- Hindrances -->
-
-Undirected edges [@barabasi_network_2011].
-
-Biases introduced by technology [@pinero_uncovering_2016].
-
-Posed by small world network, when the edges considered are not relevant for the particular disease [@pinero_uncovering_2016].
+Experimentally, network propagation experiments highlight the differential topological properties of disease genes and biological networks. Network propagation refers to methods that use all the possible paths in the network to re-rank the genes on it [@cowen_network_2017]. They include heat diffusion, random walk, graph kernels and even Google's PageRank. In essence, for these methods, association of a node with a phenotype can be thought of as a volume of water: the more strongly associated, the more voluminous. Generically, each node starts with an initial volume which, iteratively, gets distributes its liquid among its neighbors. Equivalently, that node will receive a share from its neighbors'. The expectation is that truly associated genes will be densely interconnected to each other, forming cycles and modules that will keep the water from diffusing to other, uninvolved genes. After a number of steps the volume of water in each node is re-evaluated, and used to re-prioritize the genes. TODO Proved that they are important [@huang_systematic_2018].
 
 ### Network-guided approaches to disease study 
 
@@ -156,15 +166,24 @@ As exemplified in the previous section, networks can be leveraged on to gain ins
 
 #### High-score subnetwork search
 
-One of the focuses of my thesis was the study of networks where the nodes have been scored by their association to the disease. The scores might come from omics experiments, or from *a priori* knowledge of disease genes. In essence, such methods look for connected subnetworks made of nodes with high scores. Lacking a term broadly agreed in the community, I refer to such algorithms as high-score subnetwork search. Although heterogeneous, to some extent all such approaches are based on the *guilt-by-association principle*: nodes nearby other nodes associated to the disease are suspect of being associated themselves, even if their association is non-significant by conventional standards. However, taking only the genes associated with those associated would be prone to false positives, as often networks include edges that are not relevant for the biological problem at hand. There are several high-score subnetwork search methods available in the literature. Essentially, they differ in the considerations they make on how the solution looks like. In Chapter \@ref(genesis) we describe a representative set of these methods and critically discuss their performance at biomarker discovery on the GENESIS dataset. 
+One of the focuses of my thesis was the study of networks where the nodes have been scored by their association to the disease. The scores might come from omics experiments, or from *a priori* knowledge of disease genes. In essence, such methods look for connected subnetworks made of nodes with high scores. Lacking a term broadly agreed in the community, I refer to such algorithms as high-score subnetwork search. Although heterogeneous, to some extent all such approaches are based on the *guilt-by-association principle*: nodes nearby other nodes associated to the disease are suspect of being associated themselves, even if their association is non-significant by conventional standards. However, taking only the genes associated with those associated would be prone to false positives, as often networks include edges that are not relevant for the biological problem at hand. There are several high-score subnetwork search methods available in the literature. Essentially, they differ in the considerations they make on how the solution looks like. In Chapter \@ref(genesis) we describe a representative set of these methods, critically discuss their performance at biomarker discovery on the GENESIS dataset, and discuss their shortcomings.
 
-#### Consensus clustering
+<!--
+MOVE TO THE GENESIS PAPER
+Nonetheless, these methods are not exempt of problems. For instance, these methods are heavily affected by the *small world* nature of biological networks, which make it relatively easy to find that two associated nodes are close [@pinero_uncovering_2016]. Additionally, when the biological network contains edges that are irrelevant for a particular disease the complexity of the problem is increased, and the signal decreased. ALso [@mitra_integrative_2013].
+-->
+
+#### Aggregation of networks
+
+Due to the methodological nature of my PhD, often I had multiple subnetworks providing complementary approaches to the same diseases. In consequence, I was interested in integrating them into a single subnetwork, which I would analyze.
+
+baba[@lancichinetti_consensus_2012]. [@wang_similarity_2014] proposed a network fusion approach to integrate similarity matrices from different omics experiments on the same patients.
 
 In Chapter \@ref(genesis) we discuss a naive way of aggregating subnetworks from different high-score subnetwork search algorithms, were the edges are unweighed. In Chapter \@ref(epi-network), we discuss how to apply consensus clustering to networks coming from different epistasis detection methods, whose edges are weighed by the confidence they exist.
 
-#### Community detection
+#### Module detection
 
-In Appendix \@ref(smartas) we apply community detection techniques to a subnetwork of genes with abnormal splicing.
+Given a biological network, finding sets of nodes densely interconnected to each other and sparsely to the rest reveals functional units within the network [@mitra_integrative_2013]. In Appendix \@ref(smartas) we apply module detection techniques to a subnetwork of genes with abnormal splicing in cancer.
 
 ## Contributions
 
@@ -174,11 +193,11 @@ My first approach to the problem involved the work on SConES [@azencott_efficien
 
 In collaboration with Dr. Nadine Andrieu, and Dr. Fabienne Leuseur, and working closely with Dr. Christine Lonjou, I apply SConES and other network-based methods to the GENESIS dataset. Our goal was to find new biomarkers for familial breast cancer. My work on GENESIS is explained in Chapter \@ref(genesis). In summary, I applied six difference network-based, biomarker discovery methods to the GENESIS dataset. The methods provide a representative view of the high-score subnetwork search field. We perform a methodological comparison and a benchmark of the methods, highlighting their strenghts and weaknesses. Finally, we conclude that combining the methods provide a more complete answer than any of the individual solutions. Our network analysis recovers both genes and genomic regions previously found in association with breast cancer susceptibility, as well as new genes. Importantly, all of those genes are tied in a subnetwork, providing a rationale on how alterations on those genes might lead to disease.
 
-In 2019, when I started working on epistasis detection, we established a collaboration with Prof. Dr. Dr. Kristel Van Steen, from University of Liège. Specifically, I worked closely with Diane Duroux, a PhD student in Prof. Dr. Dr. Van Steen's research group. Our goal was to build an epistasis gene network of inflammatory bowel disease. We discuss our efforts in this regard in Chapter \@ref(epi-network). For that purpose, we surveyed suitable epistasis detection methods, applied them to our IBD dataset, and integrated the solution. However, as a previous step we needed to appropriately map epistatic SNP networks to epistatic gene networks. We describe this work in Chapter \@ref(epi-snp2gene). In summary, we examined and evaluated four different mappings (physical, eQTL, chromatine, and the three together).
+In 2019, when I started working on epistasis detection, we established a collaboration with Prof. Dr. Dr. Kristel Van Steen, from University of Liège. Specifically, I worked closely with Diane Duroux, a PhD student in Prof. Dr. Dr. Van Steen's research group. Our goal was to build an epistasis gene network of inflammatory bowel disease. We discuss our efforts in this regard in Chapter \@ref(epi-network). For that purpose, we surveyed suitable epistasis detection methods, applied them to the IIBDGC dataset, and integrated the solution. However, as a previous step we needed to appropriately map epistatic SNP networks to epistatic gene networks. We describe this work in Chapter \@ref(epi-snp2gene). In summary, we examined and evaluated four different mappings (physical, eQTL, chromatine, and the three together).
 
-In collaboration with Dr. Makoto Yamada and Dr. Samuel Kaski, I developed block HSIC Lasso, a general-purpose non-linear feature selector. The work involved modifying an existing algorithm, HSIC Lasso, to reduce its memory consumption. On top of that, we worked on improving its performance, and on solving numerical issues in edge cases. The algorithm is implemented as the Python package pyHSICLasso, available on both PyPI and GitHub. Then, I characterized the algorithm and applied it to several biological datasets. Crucially, three of the datasets were GWAS, which was a milestone in terms of the number of features block HSIC Lasso can handle. Thanks to this work, we analyzed the impact of considering non-redundancy and non-linear models when selecting SNPs for patient classification. We describe the algorithm and our conclusions in the article *Block HSIC Lasso: model-free biomarker detection for ultra-high dimensional data* published in the proceedings of the ISMB/ECCB 2019. The full manuscript is available in Appendix 1. It was made possible by a scholarship from RIKEN AIP, which allowed me to spend 3 months in Dr. Yamada's laboratory in Kyoto.
+In collaboration with Dr. Makoto Yamada and Dr. Samuel Kaski, I developed block HSIC Lasso, a general-purpose non-linear feature selector. The work involved modifying an existing algorithm, HSIC Lasso, to reduce its memory consumption. On top of that, we worked on improving its performance, and on solving numerical issues in edge cases. The algorithm is implemented as the Python package pyHSICLasso, available on both PyPI and GitHub. Then, I characterized the algorithm and applied it to several biological datasets. Crucially, three of the datasets were GWAS, which was a milestone in terms of the number of features block HSIC Lasso can handle. Thanks to this work, we analyzed the impact of considering non-redundancy and non-linear models when selecting SNPs for patient classification. We describe the algorithm and our conclusions in the article *Block HSIC Lasso: model-free biomarker detection for ultra-high dimensional data* published in the proceedings of the ISMB/ECCB 2019 [@climente-gonzalez_block_2019]. The full manuscript is available in Appendix 1. It was made possible by a scholarship from RIKEN AIP, which allowed me to spend 3 months in Dr. Yamada's laboratory in Kyoto.
 
-Additionally, I continued working on the involvement of alternative splicing in cancer. During 2016 and early 2017, we prepared the answer to reviewers for the article *The functional impact of alternative splicing in cancer*, which was published in Cell Reports in August 2017. The full manuscript is available in Appendix 2. In the same dates, I explored evidence of epistasis in cancer, looking for mutual exclusivity between alterations in alternative splicing and somatic mutations. We searched evidence of mutual exclusivity at both the gene and the pathway level. Among others, we found a compelling pattern in GATA3. This finding was published in Cell Reports in March 2018, in the broader article *Systematic analysis of splice-site-creating mutations in cancer*. In addition, I put compiled the code required for the analyses in *The functional impact of alternative splicing in cancer*, and created a Python package with a clean interface. The package, *spada*, is available in both PyPI and GitHub. This package searches alterations of alternative splicing, and maps them to functional consequences at the protein level. Specifically, such consequences are the removal/addition of functional modules to the protein (e.g. domains) and the loss or gain of protein-protein interactions. Lastly, I applied *spada* to two leukemia datasets from TARGET. This last analysis is still on-going.
+Additionally, I continued working on the involvement of alternative splicing in cancer. During 2016 and early 2017, we prepared the answer to reviewers for the article *The functional impact of alternative splicing in cancer*, which was published in Cell Reports in August 2017 [@climente-gonzalez_functional_2017]. The full manuscript is available in Appendix 2. In the same dates, I explored evidence of epistasis in cancer, looking for mutual exclusivity between alterations in alternative splicing and somatic mutations. We searched evidence of mutual exclusivity at both the gene and the pathway level. Among others, we found a compelling pattern in GATA3. This finding was published in Cell Reports in March 2018, in the broader article *Systematic analysis of splice-site-creating mutations in cancer* [@jayasinghe_systematic_2018]. In addition, I put compiled the code required for the analyses in *The functional impact of alternative splicing in cancer*, and created a Python package with a clean interface. The package, *spada*, is available in both PyPI and GitHub. This package searches alterations of alternative splicing, and maps them to functional consequences at the protein level. Specifically, such consequences are the removal/addition of functional modules to the protein (e.g. domains) and the loss or gain of protein-protein interactions. Lastly, I applied *spada* to two leukemia datasets from TARGET. This last analysis is still on-going.
 
 As part of the IC-3i International PhD Program, I was part of a doctoral mission, unrelated to my research, which would take one month of work every year. In 2017, it involved the preparation of the "3rd course on Breast Cancer, from clinics to biology". In 2018, it consisted on leading my own collaboration with Dr. Eyras, described above. In 2019, I helped mantaining the website of the Training Unit of Institut Curie. 
 

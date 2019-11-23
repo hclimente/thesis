@@ -1,4 +1,6 @@
-# (APPENDIX) Appendix {-} 
+\backmatter
+
+# (APPENDIX) Appendix {-}
 
 # Block HSIC Lasso: model-free biomarker detection for ultra-high dimensional data
 
