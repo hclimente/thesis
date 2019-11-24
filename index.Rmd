@@ -27,7 +27,7 @@ linestretch: 1.15
 
 Ph.D. thesis
 
-Supervised by Chloé-Agathe Azencott and Véronique Stoven
+Supervised by Chloé-Agathe Azencott and Véronique Stoven.
 
 <!-- 
 Cover dimensions wrong because

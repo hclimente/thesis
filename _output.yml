@@ -1,4 +1,3 @@
-link-citations: yes
 bookdown::gitbook:
   css: style.css
   config:

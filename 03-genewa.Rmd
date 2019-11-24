@@ -2,7 +2,6 @@
 
 *Héctor Climente-González, Christine Lonjou, Fabienne Lesueur, GENESIS investigators, Dominique Stoppa-Lyonnet, Nadine Andrieu, Chloé-Agathe Azencott*
 
-\begin{abstract}
 Systems biology provides a comprehensive approach to biomarker discovery
 and biological hypothesis building. It does so by jointly considering
 the statistical association between a gene and a phenotype, and the
@@ -26,7 +25,6 @@ mechanisms related to cancer, like protein folding (*HSPA1A*, *HSPA1B*,
 and *HSPA1L*) or mitochondrial ribosomes (*MRPS30*, *MRPS31*,
 *MRPS18B*). We also observed a general dysregulation in the neighborhood
 of *COPS5*, a gene related to multiple hallmarks of cancer.
-\end{abstract}
 
 ## Introduction
 
