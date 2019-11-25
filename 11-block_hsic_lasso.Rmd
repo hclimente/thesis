@@ -2,7 +2,7 @@
 
 # (APPENDIX) Appendix {-}
 
-# Block HSIC Lasso: model-free biomarker detection for ultra-high dimensional data
+# Block HSIC Lasso: model-free biomarker detection for ultra-high dimensional data {#block-hsic-lasso}
 
 \includepdf[pages=-, scale=1]{articles/climente_2019.pdf}
 

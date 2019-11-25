@@ -493,8 +493,7 @@ homogeneous dataset focused on the French population. Despite these
 differences, there should be shared genetic architecture. On top of
 that, that overlap should become larger when the results are aggregated
 at the gene level. For that purpose, we computed the gene association as
-in Section \@ref(methods:node_score)
-. iCOGS array was used for genotyping in
+in Section \@ref(methods:node_score). iCOGS array was used for genotyping in
 BCAC [@sakoda_turning_2013], the same array as for GENESIS
 [@sinilnikova_genesis:_2016]. Although imputed data is available, we
 used exclusively the SNPs available on GENESIS after quality control to
@@ -527,11 +526,9 @@ knitr::include_graphics('fig/figure_1.png', dpi = NA)
 ```
 
 We conducted association analyses in the GENESIS dataset at both the SNP
-and the gene levels (Section
-\@ref(methods:node_score)
-). Two genomic regions have a P-value
-lower than the Bonferroni threshold in chromosomes 10 and 16 (Figure
-\@ref(fig:snp-gene-manhattan) A). The former overlaps with gene
+and the gene levels (Section \@ref(methods:node_score)). Two genomic regions 
+have a P-value lower than the Bonferroni threshold in chromosomes 10 and 16 
+(Figure \@ref(fig:snp-gene-manhattan) A). The former overlaps with gene
 *FGFR2*; the latter with *CASC16*, and it is located near the
 protein-coding gene *TOX3*. Variants in both *FGFR2* and *TOX3* were
 related to breast cancer susceptibility in other cohorts negative for
@@ -848,9 +845,8 @@ mechanisms most shared among the solution subnetworks (Section
 \@ref(fig:consensus) contains 93 genes and is enriched in breast
 cancer susceptibility genes (Fisher's exact test P-value = 7.8 10^-5^).
 Due to the limited overlap between methods, only 20 genes were common to
-more than two of them (Figure
-\@ref(fig:consensus-stats)A). Encouragingly, the more methods
-selected a gene, the higher its association was (Figure
+more than two of them (Figure \@ref(fig:consensus-stats)A). Encouragingly, 
+the more methods selected a gene, the higher its association was (Figure
 \@ref(fig:consensus-stats)B). Globally, a GO enrichment shows the
 involvement of two cellular processes: unfolded protein binding, and
 structural constituent of cytoskeleton (adjusted P-values of 0.001,

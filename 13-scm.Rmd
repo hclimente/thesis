@@ -1,4 +1,4 @@
-# Systematic Analysis of Splice-Site-Creating Mutations in Cancer
+# Systematic Analysis of Splice-Site-Creating Mutations in Cancer {#scm}
 
 \includepdf[pages=-, scale=1]{articles/jayasinghe_2018.pdf}
 
