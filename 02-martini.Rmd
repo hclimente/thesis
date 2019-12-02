@@ -1,19 +1,19 @@
 # The *martini* R package {#martini}
 
-From the beginning of my thesis, my work was related to SConES [@azencott_efficient_2013], a GWAS oriented high-score subnetwork search method developed by my supervisor Dr. Chloé A. Azencott. SConES works on a SNP network, where SNPs are linked to each other if there is evidence of shared function (e.g. they both are mapped to the same gene). Then, SConES finds a small set of highly interconnected SNPs associated to the disease by solving the following problem:
+At the beginning of my thesis I worked on SConES [@azencott_efficient_2013], a GWAS-oriented high-score subnetwork search method. SConES works on a SNP network, where SNPs are linked to each other if there is evidence of shared function (e.g. they both are mapped to the same gene). Then, SConES finds a small set of highly interconnected SNPs associated to the disease by solving the following problem:
 
 \begin{equation}
 \underset{S \subseteq G}{\arg \max } \underbrace{\sum_{v \in V_S} s_v}_{\text { association }}-\underbrace{\lambda \sum_{v \in V_S} \sum_{u \not\in V_S} W_{vu} }_{\text { connectivity }}-\underbrace{\eta \lvert V_S \rvert }_{\text { sparsity }}
 \end{equation}
 
-where $\eta$ and $\lambda$ are hyperparameters, s_v is the association score of node v, and W is the Laplacian matrix. A more detailed description of SConES can be found in [@azencott_efficient_2013] and in the section /Methods used/ of Chapter TODO.   
+where $\eta$ and $\lambda$ are hyperparameters, $s_v$ is the association score of node $v$, and $W$ is the Laplacian matrix. A detailed description of SConES and those parameters can be found in [@azencott_efficient_2013] and in Section \@ref(methods:methods).
 
-With the intention of applying SConES to the GENESIS dataset, I started working on a user-friendly version. The result was an R package, /martini/, which is published with Bioconductor 3.7. Bioconductor is a peer-reviewed R repository. /martini/ is based on EasyGWAS' implementation of SConES [@grimm_easygwas_2017]. Hence, it combines the accessibility of R and and the Bioconductor environment with the computational efficiency of C++.
+With the goal of applying SConES to the GENESIS dataset, I started working on a more user-friendly version. The result was an R package, *martini*, which is published with Bioconductor 3.7. Bioconductor is a peer-reviewed R repository. *martini* is based on EasyGWAS' implementation of SConES [@grimm_easygwas_2017]. Hence, it combines the accessibility of R and and the Bioconductor environment with the computational efficiency of C++.
 
 ## Improvements
 ### Association using $\chi^2$ statistic
 
-SConES scores the relevance of each SNP to the phenotype using the SKAT test of association [@ionita-laza_sequence_2013]. We decided to additionally implement the $\chi^2$ statistic, the *de facto* standard measure of association between two qualitative variables. Then, we compare how it behaves in comparison to SKAT to decide which association score works best in our experimental setting.
+SConES scores the relevance of each SNP to the phenotype using the SKAT test of association [@ionita-laza_sequence_2013]. We decided to additionally implement the $\chi^2$ statistic, a common measure of association between two qualitative variables.
 
 ### Hyperparameter optimization
 
@@ -53,21 +53,21 @@ With the selected SNPs for each $\lambda$ and $\eta$ we build a logistic regress
 
 ## Interface, documentation and quality assurance 
 
-Last, but not least, /martini/ includes the two main groups of functions required to run SConES. The first group includes the creation of the SNP networks: /get_GS_network()/ for a network that relates the SNPs based on genomic structure; /get_GM_network()/ for a network that, on top of the previous one, relates SNPs mapped to the same gene; and /get_GI_network()/ which, on top of the latter, relates SNPs mapped to genes that interact in a user provided list. The second important function is /scones()/ which takes a GWAS dataset and a SNP network and runs SConES.
+Last, but not least, *martini* includes the two main groups of functions required to run SConES. The first group includes the creation of the SNP networks: *get_GS_network()* for a network that relates the SNPs based on genomic structure; *get_GM_network()* for a network that, on top of the previous one, relates SNPs mapped to the same gene; and *get_GI_network()* which, on top of the latter, relates SNPs mapped to genes that interact in a user provided list. The second important function is *scones()* which takes a GWAS dataset and a SNP network and runs SConES.
 
-All functions exported by /martini/ have a man page, and hence information of the functions arguments, behavior and return value can be obtained via /help(fun)/. Accompanying examples and toy datasets are provided. Additionally, I wrote two vignettes to explain its basic behavior: one to run SConES (/Running SConES/), and another to simulate network-based phenotypes (/Simulating SConES-based phenotypes/).
+All functions exported by *martini* have a man page, and hence information of the functions arguments, behavior and return value can be obtained via *help(fun)*. Accompanying examples and toy datasets are provided. Additionally, I wrote two vignettes to explain its basic behavior: one to run SConES ([Running SConES](https://www.bioconductor.org/packages/release/bioc/vignettes/martini/inst/doc/scones_usage.html)), and another to simulate network-based phenotypes ([Simulating SConES-based phenotypes](https://www.bioconductor.org/packages/release/bioc/vignettes/martini/inst/doc/simulate_phenotype.html)).
 
-/martini/ was thoroughly subject to unit tests via the /testthat/ package [@wickham_testthat:_2011]. At the moment of writing this text, /martini/ had a code coverage of 96%.
+*martini* was thoroughly subject to unit tests via the *testthat* package [@wickham_testthat:_2011]. At the moment of writing this text, *martini* had a code coverage of 96%.
 
 ## The *scones.nf* pipeline
 
-In addition to the changes implemented in /martini/, I developed a ready to use computational pipeline that simplifies the usage of SConES from just genotype data in PLINK binary files and, when needed, a gene annotation file and a protein-protein interaction file. The pipeline /scones.nf/ is available on GitHub (https://github.com/hclimente/gwas-tools). In terms of function, the difference with vanilla SConES is that it performs an exhaustive grid-search to optimize both $\lambda$ and $\eta$, as opposed to SConES' single grid search. In the latter, both parameters explore the same range of values, which is calculated from the association scores $c$ (e.g. SKAT score). It creates a linearly spaced n-component vector (n = 10 by default) between $\lfloor \log_{10} \min(c) \rfloor$ and $\lceil \log_{10} \max(c) \rceil$, then explores its powers of 10.
+In addition to the changes implemented in *martini*, I developed a ready to use computational pipeline that simplifies the usage of SConES from just genotype data in PLINK binary files and, when needed, a gene annotation file and a protein-protein interaction file. The pipeline *scones.nf* is available on GitHub (https://github.com/hclimente/gwas-tools). In terms of function, the difference with vanilla SConES is that it performs an exhaustive grid-search to optimize both $\lambda$ and $\eta$, as opposed to SConES' single grid search. In the latter, both parameters explore the same range of values, which is calculated from the association scores $c$ (e.g. SKAT score). It creates a linearly spaced n-component vector (n = 10 by default) between $\lfloor \log_{10} \min(c) \rfloor$ and $\lceil \log_{10} \max(c) \rceil$, then explores its powers of 10.
 
-In /scones.nf/ we make the grid search finer, because it explores the grid in an iterative way. After the first exploration, the best $\lambda$ and $\eta$ according to some selection criterion are picked. Then, a new hyperparameter space ranging from $\log_{10}(\text{best } \lambda) - \Delta$ to $\log_{10}(\text{best } \lambda) + \Delta$, where $\Delta = 0.2(\log_{10}\max{\lambda_{explored}}- \log_{10} \min{\lambda_{explored}}$. Prior to these improvements, /scones.nf/ was not able, in some instances, to recover the best solution, returning a trivial solution instead.
+In *scones.nf* we make the grid search finer, because it explores the grid in an iterative way. After the first exploration, the best $\lambda$ and $\eta$ according to some selection criterion are picked. Then, a new hyperparameter space ranging from $\log_{10}(\text{best } \lambda) - \Delta$ to $\log_{10}(\text{best } \lambda) + \Delta$, where $\Delta = 0.2(\log_{10}\max{\lambda_{explored}}- \log_{10} \min{\lambda_{explored}}$. Prior to these improvements, *scones.nf* was not able, in some instances, to recover the best solution, returning a trivial solution instead.
 
 ## Experiments on simulated data
 
-We propose that gin will detect biomarker with increased sensibility respect to non-network frameworks. In other words, gin should be able to detect causal SNPs for less heritable phenotypes. In order to test this hypothesis, we will perform simulations on the GENESIS data where we picked causal, interconnected SNPs, simulate a phenotype in each case, and check how many of them were retrieved by gin. The simulation tool is implemented in /martini/. It was inspired by the \textit{--simu-cc} function of the GCTA suite [@Yang2011].
+We propose that gin will detect biomarker with increased sensibility respect to non-network frameworks. In other words, gin should be able to detect causal SNPs for less heritable phenotypes. In order to test this hypothesis, we will perform simulations on the GENESIS data where we picked causal, interconnected SNPs, simulate a phenotype in each case, and check how many of them were retrieved by gin. The simulation tool is implemented in *martini*. It was inspired by the *\-\-simu-cc* function of the GCTA suite [@Yang2011].
 
 A random set of 20 interconnected SNPs from the biggest clique of the SNP network will be picked as causal. Then, a qualitative phenotype $y_j$ is simulated for a patient $j$ using the following additive model:
 
@@ -79,13 +79,13 @@ The weight $w_{ij}$ is calculated as
 
 $$ w_{ij} = \frac{x_{ij} - 2p_i}{\sqrt{2p_i(1 - p_i)}} $$
 
-\begin{figure}
-\includegraphics[width = \linewidth]{fig/2_p_vs_w.png}
-\caption{Allelic effect $i$ as function of causal allele frequency $p$ for different counts of causal allele in a patient ($x = 0, 1, 2$).}
-\label{fig:p_vs_w}
-\end{figure}
+where $x_{ij}$ is the number of reference alleles for the $i$-th causal variant of the $j$-th individual; and $p_i$ is the frequency of the $i$-th causal variant. $w_{ij}$ follows a sigmoid like behavior for different $p$ (Figure \@ref(fig:p-vs-w)): the rarer an allele is, the stronger its impact on the phenotype.
 
-where $x_{ij}$ is the number of reference alleles for the $i$-th causal variant of the $j$-th individual; and $p_i$ is the frequency of the $i$-th causal variant. $w_{ij}$ follows a sigmoid like behavior for different $p$ (Fig. \ref{fig:p_vs_w}): the rarer an allele is, the stronger its impact on the phenotype.
+(ref:fig-p-vs-w-caption) Allelic effect $i$ as function of causal allele frequency $p$ for different counts of causal allele in a patient ($x = 0, 1, 2$).
+
+```{r p-vs-w, echo=FALSE, fig.cap='(ref:fig-p-vs-w-caption)'}
+knitr::include_graphics('fig/2_p_vs_w.png', dpi = NA)
+```
 
 The most interesting bit of this simulation, however, has to do with the residual effect $e_j$, given that it depends directly on the heritability of the trait. $e_j$ is generated from a normal distribution with mean of 0 and variance 
 

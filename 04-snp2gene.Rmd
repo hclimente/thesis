@@ -1,1 +1,1 @@
-# SNP2GENE {#epi-snp2gene}
+# Boosting interpretability and statistical power in epistasis detection by using prior biological knowledge {#epi-snp2gene}

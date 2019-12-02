@@ -1,0 +1,60 @@
+# Susceptibility genes to nreast cancer {#hboc-genes}
+
+Nearly all known HBOC susceptibility genes encode tumor suppressors that participate in genome stability pathways (homologous recombination repair, replication fork stability, transcription-replication collisions, mismatch repair, and DNA damage signaling, checkpoints and cell death). 
+
+## Homologous recombination repair
+
+The homologous recombination repair pathway (HRR) deals with double strand DNA breaks by using the undamaged chromosome as template for error-free repair. After a DSB occurs, the MRN complex (MRE11, RAD50 and NDN) detects and binds the free DNA ends. Then, it promotes DNA damage checkpoint signaling.
+
+HRR involves BRCA1, BRCA2 and, actually, most of the HBOC genes. Because of its ability to interact with a wide range of proteins, BRCA1 is hypothetized to act as a recruitment scaffold. A deficiency of BRCA1 is linked to the inability to trigger HRR. Mutations in the MRN complex have also been clinically associated to breast cancer, although dubiously so in the case of RAD50 variants. Reassuringly, some other HBOC genes are interactors of the MRN complex and BRCA1/2.
+
+## Replication fork stability
+
+BRCA1 and BRCA2 protect newly synthesized DNA and promote the restart of stalled forks in an HRR-independent manner. In the absence of these proteins, newly synthesized DNA in a stalled fork would get degraded, leading to genome instability and increasing the risk of cancer.
+
+## Transcription-replication collisions 
+
+Collisions between transcription and replication are emerging as a source of genome instability. In particular, RNA-DNA hybrids called R-loops can form between the nascent transcript and the DNA template. They can lead to double-strand breaks and mutations. Both BRCA1 and BRCA2 participate in the resolution of R-loops, preventing their accumulation. In consequence, BRCA-deficient cells tend to suffer transcriptional stress that leads to genome instability. Nonetheless the relationship between this mechanism and proneness to HBOC is yet to be proven, and the genes involved further investigated.
+
+## Mismatch repair
+
+DNA mismatch repair (MMR) corrects base-base mispairs. When MMR is faulty, accumulations point mutations and genetic changes in repeated nucleotide sequences (microsatellite instability) occur. MMR also plays a role in error-free HRR.
+
+## DNA damage signaling, checkpoints and cell death
+
+Pathways involved in genome maintenance, cell cycle checkpoints and cell death usually eliminate cells with damaged DNA. When proteins involved in them are not active, some processes such as cell cycle arrest, apoptosis and senescence will not occur. In consequence, cells that undergo genomic alterations are allowed to proliferate. The most famous case of HBOC in this pathway is TP53, which coordinates the transcriptional induction of many genome stability factors.
+
+\begin{sidewaystable}
+\centering
+\caption{Overview of HBOC genes: estimated lifetime risk of breast cancer (age in years) and tumorogenic molecular mechanisms that involves them: homologous recombination repair (HRR), replication fork stability, transcription-replication collisions, mismatch repair (MMR), DNA damage signaling, checkpoints and cell death, and/or others. Adapted from [@nielsen_hereditary_2016].
+\label{tab:hboc-genes}
+\begin{tabular}{llllllll}
+Gene & Lifetime risk & HRR & Rep. fork stab. & Tr.-rep. clash & MMR & DNA Damage, apoptosis & Other \\
+ATM & 60\% by age 80 & $\checkmark$ & & & & $\checkmark$ &\\
+BARD1 & Unknown & $\checkmark$ & & & & &\\
+BLM & Unknown & & $\checkmark$& & & &\\
+BRCA1 & 57-65\% by age 70 & $\checkmark$ & $\checkmark$& $\checkmark$& & $\checkmark$ &\\
+BRCA2 & 45-55\% by age 70 & $\checkmark$ & $\checkmark$& $\checkmark$& & $\checkmark$ &\\
+BRIP1 & OR: \textless2.0& & & & & &\\
+CDH1 & 42\% by age 80 & & & & & & $\checkmark$ \\
+CHEK2 & 37\% by age 70 & & & & & $\checkmark$ &\\
+FAM175A & Unknown & $\checkmark$ & & & & &\\
+FANCC & Unknown & & $\checkmark$& & & &\\
+FANCM & Unknown & & $\checkmark$& & & &\\
+MLH1 & $\sim$19\% by age 70 & & $\checkmark$& & $\checkmark$ & &\\
+MRE11 & Unknown & & & & $\checkmark$ & &\\
+MSH2 & $\sim$11\% by age 70 & & & & $\checkmark$ & &\\
+NBN & OR: 3.0 & $\checkmark$ & & & & &\\
+NF1 & 6.5-fold up ages 30-39 & & & & & & $\checkmark$ \\
+PALB2 & 35\% by age 70 & $\checkmark$ & $\checkmark$& & & &\\
+PMS2 & SIR: 3.8& & & & $\checkmark$ & &\\
+PTEN & 85\% by age 70 & & & & & & $\checkmark$ \\
+RAD51B & Unknown & $\checkmark$ & & & & &\\
+RAD51C & Unknown & $\checkmark$ & & & & &\\
+RAD51D & Unknown & $\checkmark$ & & & & &\\
+RECQL & Unknown & & $\checkmark$& & & &\\
+RINT1 & Unknown & $\checkmark$ & & & & &\\
+STK11 & 32\% by age 60 & & & & & & $\checkmark$ \\
+TP53 & 25\% by age 70 & & & & & $\checkmark$ &  
+\end{tabular}
+\end{sidewaystable}
