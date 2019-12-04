@@ -1,5 +1,5 @@
 --- 
-title: "Network-guided biomarker discovery in GWAS"
+title: "Network-guided genome-wide association studies"
 author: "Héctor Climente González"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
