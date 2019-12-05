@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Network-guided biomarker discovery in GWAS</a></li>
+        <li><a href="./">Network-guided GWAS</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     download: ["pdf", "epub"]
@@ -12,10 +12,10 @@ bookdown::pdf_book:
     in_header: latex/preamble.tex
     before_body: latex/before_body.tex
   latex_engine: xelatex
-  citation_package: natbib
   keep_tex: yes
   fig_caption: true
   toc: true
   toc_depth: 4
   dev: png
+  pandoc_args: --top-level-division=chapter
 bookdown::epub_book: default

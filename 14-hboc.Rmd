@@ -1,4 +1,4 @@
-# Susceptibility genes to nreast cancer {#hboc-genes}
+# Susceptibility genes to breast cancer {#hboc-genes}
 
 Nearly all known HBOC susceptibility genes encode tumor suppressors that participate in genome stability pathways (homologous recombination repair, replication fork stability, transcription-replication collisions, mismatch repair, and DNA damage signaling, checkpoints and cell death). 
 
