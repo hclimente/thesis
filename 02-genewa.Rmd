@@ -1,6 +1,6 @@
 # Combining network-guided GWAS to discover susceptibility mechanisms for breast cancer {#genesis}
 
-*Héctor Climente-González, Christine Lonjou, Fabienne Lesueur, GENESIS investigators, Dominique Stoppa-Lyonnet, Nadine Andrieu, Chloé-Agathe Azencott*
+*Joint work with Christine Lonjou, Fabienne Lesueur, the GENESIS investigators, Dominique Stoppa-Lyonnet, Nadine Andrieu and Chloé-Agathe Azencott*
 
 Systems biology provides a comprehensive approach to biomarker discovery
 and biological hypothesis building. It does so by jointly considering
@@ -162,7 +162,7 @@ mapped to that gene as selected by the method.
 
 #### Mathematical notation {#methods:notation}
 
-In this article, we use undirected, vertex-weighted networks, or graphs,
+In this chapter, we use undirected, vertex-weighted networks, or graphs,
 $G = (V,E,w)$. $V = \{v_{1}, \dots{}, v_{n}\}$ refers to the vertices,
 with weights $w: V \rightarrow \mathbb{R}$. Equivalently,
 $E \subseteq \{\{x,y\} | x,y \in V \wedge x \neq y\}$ refers to the
@@ -172,7 +172,7 @@ S and $E_{S}$ is the set of edges in S. A special case of subgraphs are
 be reached from any other node.
 
 On top of a weight, nodes have other properties provided by the topology
-of the graph. In this article we focus on two: degree centrality, and
+of the graph. In this chapter we focus on two: degree centrality, and
 betweenness centrality. The degree centrality, or degree, is the number
 of edges that a node has. The betweenness centrality, or betweenness, is
 the number of times a node participates in the shortest paths between
@@ -215,7 +215,7 @@ the only choice to make: how to score the nodes, whether the affected
 mechanisms form a single connected component or several, how to frame
 the problem in a computationally efficient fashion, what is the best
 network to use, etc. In consequence, multiple solutions have been
-proposed. In this article, we examine six of them: five that explore the
+proposed. In this chapter, we examine six of them: five that explore the
 protein-protein interaction network, and one which explores SNP
 networks. We selected methods that were open source, had an
 implementation available, and an accessible documentation. Their main
@@ -420,7 +420,7 @@ network"); interconnecting all the SNPs mapped to the same gene, on top
 of GS ("GM network"); and interconnecting all SNPs mapped to two genes
 for which a protein-protein interaction exists ("GI network"). We
 focused on the GI network, as it is the network that fits better the
-scope of this article. However, at different stages of the manuscript we
+scope of this chapter. However, at different stages of the chapter we
 also used GS and GM. For the GM network, we used the mapping described
 in Section \@ref(methods:node_score). For the GI network, we used the PPI as
 described in Section \@ref(methods:gene-network). For all three networks the 
@@ -479,7 +479,7 @@ each of the methods to the consensus subnetwork of all the solutions
 An alternative way to validate the results is comparing our results to
 an external dataset. For that purpose, we recovered a list of 153 genes
 associated to familial breast cancer from DisGeNET
-[@pinero_disgenet:_2017]. Across this article we refer to these genes as
+[@pinero_disgenet:_2017]. Across this chapter we refer to these genes as
 *breast cancer susceptibility genes*.
 
 Additionally, we used the summary statistics from the Breast Cancer
@@ -508,7 +508,7 @@ processes, a streamlined, project-agnostic pipeline with a clear
 interface was created. They are compiled in the following GitHub
 repository: <https://github.com/hclimente/gwas-tools>. The code that
 applies these pipelines to the GENESIS project, as well as the code that
-reproduces all the analyses in this article are available at
+reproduces all the analyses in this chapter are available at
 <https://github.com/hclimente/genewa>. Although the GENESIS dataset is
 not publicly available, the published code should work on any other GWAS
 dataset. All the produced gene subnetworks were deposited on NDEx
@@ -744,7 +744,7 @@ benchmark, that step took on average 1 day and 9.33 hours. Considering
 that, it took 3 days and 2.4 hours on average for dmGWAS' to produce
 results.
 
-### No solution is perfect {#sec:orgc8f05c9}
+### No solution is perfect {#genesis-issues}
 
 (ref:fig-issues-caption) Drawbacks confronted when using network guided methods. **(A)** dmGWAS solution subnetwork. Genes with a P-value \< 0.1 are highlighted in red. **(B)** Centrality degree and -log~10~ of the VEGAS P-value for the nodes in SigMod solution subnetwork. **(C)** Genomic regions where either SConES GS, GM or GI select SNPs.
 
@@ -923,7 +923,7 @@ susceptibility.
 
 ## Discussion {#genewa-discussion}
 
-In this article we evaluate the viability of systems biology approaches
+In this chapter we evaluate the viability of systems biology approaches
 to GWAS, and examine a GWAS dataset on familial breast cancer focused on
 BRCA1/2 negative French women. Systems biology addresses two of the
 largest GWAS issues: interpretability and an overly conservative
@@ -936,7 +936,7 @@ their differences, most of them produced a relevant subset of
 biomarkers, recovering known familial breast cancer genes. We also
 discuss the limitations of such analyses, related to the lack of known
 interactions around some genes. A crucial step for the gene based
-methods is the computation of the gene score. In the manuscript we used
+methods is the computation of the gene score. In this chapter we used
 VEGAS2v2 [@mishra_vegas2:_2015] due to the flexibility it offers to use
 user-specified gene annotations. However, it presents known problems
 (selection of an appropriate percentage of top SNPs, long runtimes and
@@ -1039,9 +1039,7 @@ easier use, which is available on Docker Hub
 ## Funding and acknowledgments {.unnumbered}
 
 This project was supported by funding from Agence Nationale de la
-Recherche (ANR-18-CE45-0021-01). H.C-G. was funded by the European
-Union's Horizon 2020 research and innovation program under the Marie
-Skłodowska-Curie [666003]. Financial support for GENESIS resource and
+Recherche (ANR-18-CE45-0021-01). Financial support for GENESIS resource and
 genotyping was provided by the Ligue Nationale contre le Cancer (grants
 PRE05/DSL, PRE07/DSL, PRE11/NA), the French National Institute of Cancer
 (INCa grant No b2008-029/LL-LC) and the comprehensive cancer center

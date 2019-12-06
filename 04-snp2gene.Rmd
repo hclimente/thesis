@@ -1,6 +1,6 @@
 # Boosting interpretability and statistical power in epistasis detection by using prior biological knowledge {#epi-snp2gene}
 
-*Diane Duroux, Héctor Climente-González, Lars Wienbrandt, David Ellinghaus, Chloe-Agathe Azencott, Kristel Van Steen*
+*Joint work with Diane Duroux, Lars Wienbrandt, David Ellinghaus, Chloé-Agathe Azencott and Kristel Van Steen*
 
 ## Introduction
 
@@ -24,7 +24,9 @@ statistical power when dealing with complex diseases [@wu2010novel]. Yet,
 specific gene-gene interactions have rarely been identified. This is largely 
 due to the statistical and biological challenges described in Sections 
 \@ref(intro-gwas-challenges) and \@ref(gwais), mainly low power, and the 
-difficulty to link tag SNPs to the risk SNP and to genes/functions.
+difficulty to link tag SNPs to the risk SNP and to genes/functions. Nonetheless,
+the identification of gene-gene interactions is crucial to properly understand
+the functional basis of SNP-SNP interactions, and how they relate to disease.
 
 In this chapter we study the detection of gene-level epistasis from
 SNP-level epistasis to improve the interpretability of GWAIS. Our
@@ -33,19 +35,18 @@ level into a gene-based statistical epistasis network. First, we
 investigate different functional filters [@ma2015biological] and
 SNP-to-gene mapping functions.
 Second, as a bijectivity issue arises because a SNP can be mapped on
-several genes, we investigated the use of current knowledge on gene-gene
+several genes, we investigate the use of current knowledge on gene-gene
 interaction to focus on the most promising gene-pairs. We study whether
 the epistatic interactions driving the phenotype are likely to be
 currently in existing databases. Third, we used the adaptive truncated
 product method to estimate gene-pairs significance. Protocols and their
 associated outputs are compared through networks.
-non-additive genetic effects in diseases. 
 
 ## Materials and methods
 
 ### Dataset and initial quality control
 
-We investigated the IIBDGC dataset [@ellinghaus2016analysis], described in 
+We investigated the IIBDGC dataset, described in 
 Section \@ref(iibdgc-dataset). Its large sample size helps to overcome the 
 issue of reduced statistical power due, for example, to multiple testing and LD. 
 We performed a quality control as in @ellinghaus2016analysis, reducing the 
@@ -239,7 +240,6 @@ $\alpha=0.05$. The specific procedure goes as follows:
 5.  We reject the joint null hypothesis if the adjusted P-value is
     smaller than the significance level $\alpha$.
 
-
 ## Preliminary results
 
 ### Chromatin contacts map more SNPs per gene than other mappings {#results-power-gain}
@@ -275,13 +275,12 @@ magnitude smaller.
 ```{r datasets-snps, echo=FALSE}
 datasets_snps <- rbind(
       c('# SNPs', 38225, 16417, 30146, 16652),
-      c('# SNP-gene mappings', NA, 1.7e5, 2.4e6, 4.1e5),
-      c('# tests', 7.2e8, 4.6e6, 8.9e7, 2.2e7)
+      c('# SNP-gene mappings', format(c(NA, 1.7e5, 2.4e6, 4.1e5), scientific = T)),
+      c('# tests', format(c(7.2e8, 4.6e6, 8.9e7, 2.2e7)))
   )
 colnames(datasets_snps) <- c('', 'Standard', 'Physical' ,'Chromatin', 'eQTL')
 
-kableExtra::footnote(knitr::kable(datasets_snps, 
-                                  caption = 'Properties of the different SNP-gene mappings and the filtered datasets.'), escape = FALSE)
+knitr::kable(datasets_snps, caption = 'Properties of the different SNP-gene mappings and the filtered datasets.')
 ```
 
 ### The *physical* protocol does not recover any SNP interaction
@@ -299,12 +298,11 @@ snp_networks <- rbind(
       c('# nodes', 55, 0, 20, 46),
       c('# connected components', 12, NA, 5, 6),
       c('Size of the largest component', 25, NA, 11, 17),
-      c('Average degree', 2.07, NA, 1.9, 2.78)
+      c('Average degree', 2.07, NA, 1.90, 2.78)
   )
 colnames(snp_networks) <- c('', 'Standard', 'Physical' ,'Chromatin', 'eQTL')
 
-kableExtra::footnote(knitr::kable(snp_networks, 
-                                  caption = 'Properties of the SNP networks from the different datasets.'), escape = FALSE)
+knitr::kable(snp_networks, caption = 'Properties of the SNP networks from the different datasets.')
 ```
 
 (ref:fig-snp-networks-caption) SNP-level epistasis networks for *Standard* (orange), *eQTL* (green), and *Chromatin* (violet) (Sections \@ref(methods:prefiltering) and \@ref(methods:snp-epistasis)). The *physical* dataset is absent, as no SNP pairs were significant.
@@ -361,8 +359,7 @@ gene_networks <- rbind(
   )
 colnames(gene_networks) <- c('', 'Standard', 'Physical' ,'Chromatin', 'eQTL')
 
-kableExtra::footnote(knitr::kable(gene_networks, 
-                                  caption = 'Properties of the gene networks from the different datasets.'), escape = FALSE)
+knitr::kable(gene_networks, caption = 'Properties of the gene networks from the different datasets.')
 ```
 
 (ref:fig-gene-networks-caption) Gene-level epistasis networks for *Standard* (orange), *eQTL* (green), and *Chromatin* (violet) (Section \@ref(methods:prefiltering)).
@@ -432,10 +429,12 @@ mappings provide results which match the biology of IBD, while corresponding
 to known interactions. On the other hand, the Standard protocol detects 
 multiple interactions that are hard to interpret. For instance, several 
 interactions involve RNA genes of unknown function (e.g. *LOC101927272* or 
-*LINC02178*). Hence, Our results stress that considering the 3D structure of the
+*LINC02178*). Hence, our results stress that considering the 3D structure of the
 genome in GWAIS might inform about the susceptibility.
 
-Nonetheless, epistasis detection still requires making many other
+In this chapter, we aim at developing a set of guidelines for the detection of 
+gene epistasis, with an application to IBD. Nonetheless, epistasis detection 
+at the gene level still requires making many
 choices which were out of the scope of this work. One instance is the
 choice of encoding for the genotypes. In this work we used the additive
 encoding, which can lead to an increased false positive rate
@@ -444,17 +443,12 @@ detection algorithm, as it accepts a continuous outcome variable,
 corrects for main effects, and is computationally efficient. However,
 other algorithms like MBMDR [@calle2010mbmdr], which share these
 properties but make different assumptions about epistasis, would have
-been suitable as well.
-
-## Future work
-
-In this chapter, we aim at developing a set of guidelines for the detection of 
-gene epistasis, with an application to IBD. The final work will include a 
-thorough set of recommendations based on our experience, and the results
+been suitable as well. It would be of interest to the GWAIS community for us 
+to provide set of recommendations based on our experience, and the results
 justifying each of them. Before we reach that point, a few extra experiments 
 are required.
 
-**Comparison between mappings.** Our current protocol produces compelling hypotheses,
+Our current protocol produces compelling hypotheses,
 and shows the benefits of functional filtering with regards to statistical power and 
 interpretability. However, the multi-stage nature of the process makes it
 impossible to find out what each of the step brings. For instance, if the
@@ -463,25 +457,25 @@ found without filtering out the interactions not in Biofilter; or if they are
 a subset of the interactions that could be found by a joint *physical+chromatin+eQTL*
 mapping. The answers to such questions are relevant to the community, 
 and cannot be answered without isolating their effect from the Biofilter 
-interactions. In other words, we should just map the results of a conventional 
-GWAIS result, to observe how they differ from a conventional mapping.
-
-**Disease-specific eQTL mapping.** Risk SNPs from GWAS are often located
+interactions. In other words, it would be useful just map the results of a conventional 
+GWAIS result, to observe how they differ from a conventional mapping. 
+Related to this point, risk SNPs from GWAS are often located
 in chromatin that is active in the tissues involved in the disease 
 [@boyle_expanded_2017]. Hence, the presented protocol might lead to the most biologically
 plausible epistatic interactions while boosting the power if it focused exclusively
 on mappings the eQTLs and chromatin mappings obtained in the tissues relevant 
-to IBD (intestines and leukocytes). This is a question that we need to study.
+to IBD (intestines and leukocytes).
 
-**Most appropriate source of interactions.** In this chapter we worked
+It would also be interesting to explore alternative sources of known
+interactions. In this chapter we worked
 exclusively on interactions from Biofilter, which compiles multiple databases.
-The version of Biofilter which we built contained 37 266 interactions. This
+The database that Biofilter built contained 37 266 interactions. This
 is notably smaller than other gene interaction databases, like STRING 
 [@szklarczyk_string_2019] (11 759 455 interactions). Hence changing
 databases might result in more, equally interpretable, detected interactions.
 
-**Pathway analysis.** Pathway enrichment analyses can inform about the broader framework 
-in which the observed gene epistasis occurs. We plan on adapting the "network neighborhood 
+Pathway enrichment analyses can inform about the broader framework 
+in which the observed gene epistasis occurs. I would like to adapt the "network neighborhood 
 search" procedure from @yip2018network to build appropriate gene sets. In 
 summary, given reference biological network, a gene set for a given pair of genes
 is obtained in three steps:
@@ -491,11 +485,9 @@ is obtained in three steps:
 3. Create a gene set including the initial two genes and all the genes in the
 shortest path that are part of the epistasis network as well.
 
-The question of which is the best reference network, already outlined above, 
-applies as well to this part of project. 
-
 Another important question is which is the null hypothesis we are 
-testing. In this regard, the literature often distinguishes two kinds of test:
+testing in the pathway enrichment analyses. 
+In this regard, the literature often distinguishes two kinds of test:
 self-contained and competitive [@wang_gene_2011]. As in our study we do not
 have gene-wise statistics, we are restricted to the former.
 Those tests compare the overlap between a pathway and the gene set to 
@@ -510,24 +502,21 @@ results are analyzed in a gene universe where only the genes with a chromatin
 mapping to the chip are used. However not all genes are surveyed at the same
 resolution, as we observe in Figure \@ref(fig:sign-snps-per-gene-and-viceversa).
 If two genes are equally involved in a disease, we are more likely to find an 
-association in the gene which we are testing more often. Hence, I suggest
-weighting every gene by the number of SNPs that map to it, which should provide 
+association in the gene which we are testing more often. Hence, I would like to
+weight every gene by the number of SNPs that map to it, which should provide 
 a conservative null hypothesis.
 
-**Widely-available computational protocol.** The protocol here presented is a
+Lastly, the protocol presented here is a
 complex, multi-stage approach which can be useful to any researcher with any
 GWAIS dataset. In consequence, it would be useful to provide a dataset-agnostic
 computational pipeline. The user would just need to provide a gene-gene network, 
 a SNP-gene mapping, and a GWAIS dataset, and would be given two epistasic
-networks, SNP- and gene-based respectively. Generating such pipeline
-should be a priority in the project, since it would allow us to carry out 
-the aforementioned experiments faster.
+networks, SNP- and gene-based respectively. Generating such a pipeline would 
+also allow us to answer the questions outlined above faster
 
 ## Acknowledgements {.unnumbered}
 
 Computational resources have been provided by the Consortium des
 Équipements de Calcul Intensif (CÉCI), funded by the Fonds de la
 Recherche Scientifique de Belgique (F.R.S.-FNRS) under Grant No.
-2.5020.11 and by the Walloon Region. H.C-G. was funded by the European
-Union's Horizon 2020 research and innovation program under the Marie
-Skłodowska-Curie [666003].
+2.5020.11 and by the Walloon Region.
