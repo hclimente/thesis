@@ -22,8 +22,6 @@ SConES scores the relevance of each SNP to the phenotype using the linear SKAT t
 
 One of the earliest issues we detected in the implementation of SConES was the difficulty to find the most appropriate values for the hyperparameters $\lambda$ and $\eta$. After examining simulated examples were SConES was retrieving suboptimal solutions TODO explain, we implemented the following changes.
 
-#### Selection criterion 
-
 SConES chooses the best set of parameters based on consistency across folds. Each $\lambda$ and $\eta$ is explored in a 10-fold setting. Each iteration produces a selection vector $v$, which length is equal to the number of SNPs $N$. Each of its element is set to 0 if the corresponding SNP was not selected and to 1 if it was. Then, the consistency $C$ between the selection vectors $v_i$ and $v_j$ of two folds for the same $\lambda$ and $\eta$ is calculated as
 
 $$ C = N\|v_i \cdot v_j \|_0 - \|v_i\| _0\|v_j\|_0 .$$
@@ -34,7 +32,7 @@ $$C^* = N \min(\|v_i\| _0, \|v_j\|_0) - \|v_i\| _0\|v_j\|_0. $$
 
 A mean of all pairwise normalized consistencies between selection vectors for a particular $\eta$ and $\lambda$ is returned as the consistency score for those hyperparameters. Consistency was the choice for SConES as other model selection approaches displayed proneness to overfitting. For instance, it was examined the performance of a regression model TODO trained over the selected SNPs.
 
-We explored alternatives to consistency as selection criterion, specifically information theory-based criteria. These measures are also known as penalized log-likelihood, as they try to maximize
+We explored alternatives to consistency as selection criterion, specifically information theory-based criteria. These measures are also known as penalized log-likelihood, as they take the form
 
 $$L(X,y,\hat{\theta})-c(\hat{\theta})$$
 

@@ -27,6 +27,10 @@ due to the statistical and biological challenges described in Sections
 difficulty to link tag SNPs to the risk SNP and to genes/functions. Nonetheless,
 the identification of gene-gene interactions is crucial to properly understand
 the functional basis of SNP-SNP interactions, and how they relate to disease.
+For instance, we want to know if two interacting SNPs alter the same gene, and
+buth alterations are required to modify its function; or if they affect 
+different genes that participate in the same pathway, or n two pathways that 
+cross-talk.
 
 In this chapter we study the detection of gene-level epistasis from
 SNP-level epistasis to improve the interpretability of GWAIS. Our
@@ -105,7 +109,9 @@ Lastly, in the 3D chromatin interaction mapping, we mapped a SNP to a
 gene when a contact had been observed between the former the region
 around the latter's promoter (250bp upstream and 500bp downstream from
 the transcription start site) in any of the Hi-C datasets included in
-FUMA ($\text{FDR} < 10^{-6}$).
+FUMA ($\text{FDR} < 10^{-6}$). The chromatin mapping might contain new,
+undiscovered, regulatory variants which, as eQTL, regulate the expression
+of a gene.
 
 Second, after obtaining the SNP-to-gene mappings, we used Biofilter 2.4
 [@pendergrass_genomic_2013] to obtain the candidate gene-pairs
@@ -453,9 +459,11 @@ and shows the benefits of functional filtering with regards to statistical power
 interpretability. However, the multi-stage nature of the process makes it
 impossible to find out what each of the step brings. For instance, if the
 detected interactions in any dataset are just a subset of the interactions that could be 
-found without filtering out the interactions not in Biofilter; or if they are
+found without filtering out the interactions not in Biofilter; if they are
 a subset of the interactions that could be found by a joint *physical+chromatin+eQTL*
-mapping. The answers to such questions are relevant to the community, 
+mapping; or how often are interactions between genes mapped to SNPs through 
+different mechanisms (e.g. a gene regulated by eQTL and a gene physically mapped). 
+The answers to such questions are relevant to the community, 
 and cannot be answered without isolating their effect from the Biofilter 
 interactions. In other words, it would be useful just map the results of a conventional 
 GWAIS result, to observe how they differ from a conventional mapping. 
@@ -477,8 +485,8 @@ databases might result in more, equally interpretable, detected interactions.
 Pathway enrichment analyses can inform about the broader framework 
 in which the observed gene epistasis occurs. I would like to adapt the "network neighborhood 
 search" procedure from @yip2018network to build appropriate gene sets. In 
-summary, given reference biological network, a gene set for a given pair of genes
-is obtained in three steps:
+summary, given reference biological network (e.g. the Biofilter network), a 
+gene set for a given pair of genes is obtained in three steps:
 
 1. Remove the edge connecting the two genes in the reference network.
 2. Find the shortest path between them in the reference network.
