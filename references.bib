@@ -2927,4 +2927,208 @@ Conclusions: Biofilter is a software tool that provides a flexible way to use th
     journal = {Zenodo},
     year = {2017},
     url = {http://doi.org/10.5281/zenodo.824643/},
+}
+  
+@Article{bioconductor,
+    author = {W. Huber and V. J. Carey and R. Gentleman and S. Anders and M. Carlson and B. S. Carvalho and H. C. Bravo and S. Davis and L. Gatto and T. Girke and R. Gottardo and F. Hahne and K. D. Hansen and R. A. Irizarry and M. Lawrence and M. I. Love and J. MacDonald and V. Obenchain and A. K. {Ole's} and H. {Pag`es} and A. Reyes and P. Shannon and G. K. Smyth and D. Tenenbaum and L. Waldron and M. Morgan},
+    title = {{O}rchestrating high-throughput genomic analysis with {B}ioconductor},
+    journal = {Nature Methods},
+    year = {2015},
+    volume = {12},
+    number = {2},
+    pages = {115--121},
+    url = {http://www.nature.com/nmeth/journal/v12/n2/full/nmeth.3252.html},
+}
+
+@article{chatelain_performance_2018,
+	title = {Performance of epistasis detection methods in semi-simulated {GWAS}},
+	volume = {19},
+	issn = {1471-2105},
+	url = {https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2229-8},
+	doi = {10.1186/s12859-018-2229-8},
+	abstract = {Background: Part of the missing heritability in Genome Wide Association Studies (GWAS) is expected to be explained by interactions between genetic variants, also called epistasis. Various statistical methods have been developed to detect epistasis in case-control GWAS. These methods face major statistical challenges due to the number of tests required, the complexity of the Linkage Disequilibrium (LD) structure, and the lack of consensus regarding the definition of epistasis. Their limited impact in terms of uncovering new biological knowledge might be explained in part by the limited amount of experimental data available to validate their statistical performances in a realistic GWAS context. In this paper, we introduce a simulation pipeline for generating real scale GWAS data, including epistasis and realistic LD structure. We evaluate five exhaustive bivariate interaction methods, fastepi, GBOOST, SHEsisEpi, DSS, and IndOR. Two hundred thirty four different disease scenarios are considered in extensive simulations. We report the performances of each method in terms of false positive rate control, power, area under the ROC curve (AUC), and computation time using a GPU. Finally we compare the result of each methods on a real GWAS of type 2 diabetes from the Welcome Trust Case Control Consortium.
+Results: GBOOST, SHEsisEpi and DSS allow a satisfactory control of the false positive rate. fastepi and IndOR present an increase in false positive rate in presence of LD between causal SNPs, with our definition of epistasis. DSS performs best in terms of power and AUC in most scenarios with no or weak LD between causal SNPs. All methods can exhaustively analyze a GWAS with 6.105 SNPs and 15,000 samples in a couple of hours using a GPU.
+Conclusion: This study confirms that computation time is no longer a limiting factor for performing an exhaustive search of epistasis in large GWAS. For this task, using DSS on SNP pairs with limited LD seems to be a good strategy to achieve the best statistical performance. A combination approach using both DSS and GBOOST is supported by the simulation results and the analysis of the WTCCC dataset demonstrated that this approach can detect distinct genes in epistasis. Finally, weak epistasis between common variants will be detectable with existing methods when GWAS of a few tens of thousands cases and controls are available.},
+	language = {en},
+	number = {1},
+	urldate = {2019-09-19},
+	journal = {BMC Bioinformatics},
+	author = {Chatelain, Clément and Durand, Guillermo and Thuillier, Vincent and Augé, Franck},
+	month = dec,
+	year = {2018},
+	note = {00001},
+	pages = {231},
+	file = {Chatelain et al. - 2018 - Performance of epistasis detection methods in semi.pdf:/Users/hclimente/Zotero/storage/ENIS62EZ/Chatelain et al. - 2018 - Performance of epistasis detection methods in semi.pdf:application/pdf}
+}
+
+@article{taylor_higher-order_2015,
+	title = {Higher-order genetic interactions and their contribution to complex traits},
+	volume = {31},
+	issn = {01689525},
+	url = {https://linkinghub.elsevier.com/retrieve/pii/S0168952514001371},
+	doi = {10.1016/j.tig.2014.09.001},
+	language = {en},
+	number = {1},
+	urldate = {2019-10-02},
+	journal = {Trends in Genetics},
+	author = {Taylor, Matthew B. and Ehrenreich, Ian M.},
+	month = jan,
+	year = {2015},
+	note = {00074},
+	pages = {34--40},
+	file = {Taylor and Ehrenreich - 2015 - Higher-order genetic interactions and their contri.pdf:/Users/hclimente/Zotero/storage/AAWE7HBT/Taylor and Ehrenreich - 2015 - Higher-order genetic interactions and their contri.pdf:application/pdf}
+}
+
+@inproceedings{hu_statistical_2012,
+	address = {Kohala Coast, Hawaii, USA},
+	title = {Statistical epistasis networks reduce the computational complexity of searching three-locus genetic models.},
+	isbn = {978-981-4596-36-7 978-981-4447-97-3},
+	url = {http://www.worldscientific.com/doi/abs/10.1142/9789814447973_0039},
+	doi = {10.1142/9789814447973_0039},
+	language = {en},
+	urldate = {2019-04-18},
+	booktitle = {Biocomputing 2013},
+	publisher = {WORLD SCIENTIFIC},
+	author = {Hu, Ting and Andrew, Angeline S. and Karagas, Margaret R. and Moore, Jason H.},
+	month = nov,
+	year = {2012},
+	note = {00019},
+	keywords = {to read},
+	pages = {397--408},
+	file = {Hu et al. - 2012 - STATISTICAL EPISTASIS NETWORKS REDUCE THE COMPUTAT.pdf:/Users/hclimente/Zotero/storage/2PLIMHN5/Hu et al. - 2012 - STATISTICAL EPISTASIS NETWORKS REDUCE THE COMPUTAT.pdf:application/pdf}
+}
+
+@article{lishout_efficient_2013,
+	title = {An efficient algorithm to perform multiple testing in epistasis screening},
+	volume = {14},
+	issn = {1471-2105},
+	url = {https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-14-138},
+	doi = {10.1186/1471-2105-14-138},
+	abstract = {Background: Research in epistasis or gene-gene interaction detection for human complex traits has grown over the last few years. It has been marked by promising methodological developments, improved translation eﬀorts of statistical epistasis to biological epistasis and attempts to integrate diﬀerent omics information sources into the epistasis screening to enhance power. The quest for gene-gene interactions poses severe multiple-testing problems. In this context, the maxT algorithm is one technique to control the false-positive rate. However, the memory needed by this algorithm rises linearly with the amount of hypothesis tests. Gene-gene interaction studies will require a memory proportional to the squared number of SNPs. A genome-wide epistasis search would therefore require terabytes of memory. Hence, cache problems are likely to occur, increasing the computation time. In this work we present a new version of maxT, requiring an amount of memory independent from the number of genetic eﬀects to be investigated. This algorithm was implemented in C++ in our epistasis screening software MBMDR-3.0.3. We evaluate the new implementation in terms of memory eﬃciency and speed using simulated data. The software is illustrated on real-life data for Crohn’s disease.
+Results: In the case of a binary (aﬀected/unaﬀected) trait, the parallel workﬂow of MBMDR-3.0.3 analyzes all gene-gene interactions with a dataset of 100,000 SNPs typed on 1000 individuals within 4 days and 9 hours, using 999 permutations of the trait to assess statistical signiﬁcance, on a cluster composed of 10 blades, containing each four Quad-Core AMD Opteron(tm) Processor 2352 2.1 GHz. In the case of a continuous trait, a similar run takes 9 days. Our program found 14 SNP-SNP interactions with a multiple-testing corrected p-value of less than 0.05 on real-life Crohn’s disease (CD) data.
+Conclusions: Our software is the ﬁrst implementation of the MB-MDR methodology able to solve large-scale SNP-SNP interactions problems within a few days, without using much memory, while adequately controlling the type I error rates. A new implementation to reach genome-wide epistasis screening is under construction. In the context of Crohn’s disease, MBMDR-3.0.3 could identify epistasis involving regions that are well known in the ﬁeld and could be explained from a biological point of view. This demonstrates the power of our software to ﬁnd relevant phenotype-genotype higher-order associations.},
+	language = {en},
+	number = {1},
+	urldate = {2019-02-28},
+	journal = {BMC Bioinformatics},
+	author = {Lishout, François Van and Mahachie John, Jestinah M and Gusareva, Elena S and Urrea, Victor and Cleynen, Isabelle and Théâtre, Emilie and Charloteaux, Benoît and Calle, Malu Luz and Wehenkel, Louis and Steen, Kristel Van},
+	month = dec,
+	year = {2013},
+	note = {00021},
+	keywords = {epistasis, algorithm, to read},
+	file = {Lishout et al. - 2013 - An efficient algorithm to perform multiple testing.pdf:/Users/hclimente/Zotero/storage/THWAQIBU/Lishout et al. - 2013 - An efficient algorithm to perform multiple testing.pdf:application/pdf}
+}
+
+@techreport{chang_genepi:_2018,
+	type = {preprint},
+	title = {{GenEpi}: {Gene}-based {Epistasis} {Discovery} {Using} {Machine} {Learning}},
+	shorttitle = {{GenEpi}},
+	url = {http://biorxiv.org/lookup/doi/10.1101/421719},
+	abstract = {Abstract
+          
+            Genome-wide association studies (GWAS) provide a powerful means to identify associations between genetic variants and phenotypes. However, GWAS techniques for detecting epistasis, the interactions between genetic variants associated with phenotypes, are still limited. We believe that developing an efficient and effective GWAS method to detect epistasis will be a key for discovering sophisticated pathogenesis, which is especially important for complex diseases such as Alzheimer’s disease (AD). In this regard, this study presents GenEpi, a computational package to uncover epistasis associated with phenotypes by the proposed machine learning approach. GenEpi identifies both within-gene and cross-gene epistasis through a two-stage modeling workflow. In both stages, GenEpi adopts two-element combinatorial encoding when producing features and constructs the prediction models by L1-regularized regression with stability selection. The simulated data showed that GenEpi outperforms other widely-used methods on detecting ground-truth epistasis. As real data is concerned, this study uses AD as an example to reveal the capability of GenEpi in finding disease-related variants and variant interactions that show both biological meanings and predictive power.
+            Availability:
+            GenEpi is an open-source python package and available free of charge only for non-commercial users. The package can be downloaded from
+            https://github.com/Chester75321/GenEpi
+            , and has also been published on The Python Package Index.},
+	language = {en},
+	urldate = {2019-09-18},
+	institution = {Bioinformatics},
+	author = {Chang, Yu-Chuan and Wu, June-Tai and Hong, Ming-Yi and Tung, Yi-An and Hsieh, Ping-Han and Yee, Sook Wah and Giacomini, Kathleen M. and Oyang, Yen-Jen and Chen, Chien-Yu and {for the Alzheimer’s Disease Neuroimaging Initiative}},
+	month = sep,
+	year = {2018},
+	doi = {10.1101/421719},
+	note = {00000 },
+	file = {Chang et al. - 2018 - GenEpi Gene-based Epistasis Discovery Using Machi.pdf:/Users/hclimente/Zotero/storage/PG4PNNR2/Chang et al. - 2018 - GenEpi Gene-based Epistasis Discovery Using Machi.pdf:application/pdf}
+}
+
+@article{kam-thong_epistasis_2011,
+	title = {Epistasis detection on quantitative phenotypes by exhaustive enumeration using {GPUs}},
+	volume = {27},
+	issn = {1367-4803, 1460-2059},
+	url = {https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btr218},
+	doi = {10.1093/bioinformatics/btr218},
+	abstract = {Motivation: In recent years, numerous genome-wide association studies have been conducted to identify genetic makeup that explains phenotypic differences observed in human population. Analytical tests on single loci are readily available and embedded in common genome analysis software toolset. The search for signiﬁcant epistasis (gene–gene interactions) still poses as a computational challenge for modern day computing systems, due to the large number of hypotheses that have to be tested.},
+	language = {en},
+	number = {13},
+	urldate = {2019-05-06},
+	journal = {Bioinformatics},
+	author = {Kam-Thong, T. and Putz, B. and Karbalai, N. and Muller-Myhsok, B. and Borgwardt, K.},
+	month = jul,
+	year = {2011},
+	note = {00026},
+	keywords = {epistasis, gwas, algorithm, hsic},
+	pages = {i214--i221},
+	file = {Kam-Thong et al. - 2011 - Epistasis detection on quantitative phenotypes by .pdf:/Users/hclimente/Zotero/storage/44PRJ6GU/Kam-Thong et al. - 2011 - Epistasis detection on quantitative phenotypes by .pdf:application/pdf}
+}
+
+@Manual{gpuEpiScan,
+    title = {gpuEpiScan: GPU-Based Methods to Scan Pairwise Epistasis in Genome-Wide
+Level},
+    author = {Beibei Jiang},
+    year = {2019},
+    note = {R package version 0.0.1},
   }
+  
+@article{li_detecting_2016,
+	title = {Detecting gene-gene interactions using a permutation-based random forest method},
+	volume = {9},
+	issn = {1756-0381},
+	url = {http://biodatamining.biomedcentral.com/articles/10.1186/s13040-016-0093-5},
+	doi = {10.1186/s13040-016-0093-5},
+	abstract = {Background: Identifying gene-gene interactions is essential to understand disease susceptibility and to detect genetic architectures underlying complex diseases. Here, we aimed at developing a permutation-based methodology relying on a machine learning method, random forest (RF), to detect gene-gene interactions. Our approach called permuted random forest (pRF) which identified the top interacting single nucleotide polymorphism (SNP) pairs by estimating how much the power of a random forest classification model is influenced by removing pairwise interactions.
+Results: We systematically tested our approach on a simulation study with datasets possessing various genetic constraints including heritability, number of SNPs, sample size, etc. Our methodology showed high success rates for detecting the interaction SNP pair. We also applied our approach to two bladder cancer datasets, which showed consistent results with well-studied methodologies, such as multifactor dimensionality reduction (MDR) and statistical epistasis network (SEN). Furthermore, we built permuted random forest networks (PRFN), in which we used nodes to represent SNPs and edges to indicate interactions.
+Conclusions: We successfully developed a scale-invariant methodology to detect pure gene-gene interactions based on permutation strategies and the machine learning method random forest. This methodology showed great potential to be used for detecting gene-gene interactions to study underlying genetic architectures in a scale-free way, which could be benefit to uncover the complex disease mechanisms.},
+	language = {en},
+	number = {1},
+	urldate = {2019-04-26},
+	journal = {BioData Mining},
+	author = {Li, Jing and Malley, James D. and Andrew, Angeline S. and Karagas, Margaret R. and Moore, Jason H.},
+	month = dec,
+	year = {2016},
+	note = {00027},
+	keywords = {epistasis, gwas, algorithm, random forest},
+	pages = {14},
+	file = {Li et al. - 2016 - Detecting gene-gene interactions using a permutati.pdf:/Users/hclimente/Zotero/storage/8R4L4GCN/Li et al. - 2016 - Detecting gene-gene interactions using a permutati.pdf:application/pdf}
+}
+
+@article{yoshida_snpinterforest:_2011,
+	title = {{SNPInterForest}: {A} new method for detecting epistatic interactions},
+	volume = {12},
+	issn = {1471-2105},
+	shorttitle = {{SNPInterForest}},
+	url = {https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-469},
+	doi = {10.1186/1471-2105-12-469},
+	abstract = {Background: Multiple genetic factors and their interactive effects are speculated to contribute to complex diseases. Detecting such genetic interactive effects, i.e., epistatic interactions, however, remains a significant challenge in large-scale association studies.
+Results: We have developed a new method, named SNPInterForest, for identifying epistatic interactions by extending an ensemble learning technique called random forest. Random forest is a predictive method that has been proposed for use in discovering single-nucleotide polymorphisms (SNPs), which are most predictive of the disease status in association studies. However, it is less sensitive to SNPs with little marginal effect. Furthermore, it does not natively exhibit information on interaction patterns of susceptibility SNPs. We extended the random forest framework to overcome the above limitations by means of (i) modifying the construction of the random forest and (ii) implementing a procedure for extracting interaction patterns from the constructed random forest. The performance of the proposed method was evaluated by simulated data under a wide spectrum of disease models. SNPInterForest performed very well in successfully identifying pure epistatic interactions with high precision and was still more than capable of concurrently identifying multiple interactions under the existence of genetic heterogeneity. It was also performed on real GWAS data of rheumatoid arthritis from the Wellcome Trust Case Control Consortium (WTCCC), and novel potential interactions were reported.
+Conclusions: SNPInterForest, offering an efficient means to detect epistatic interactions without statistical analyses, is promising for practical use as a way to reveal the epistatic interactions involved in common complex diseases.},
+	language = {en},
+	number = {1},
+	urldate = {2019-03-28},
+	journal = {BMC Bioinformatics},
+	author = {Yoshida, Makiko and Koike, Asako},
+	month = dec,
+	year = {2011},
+	note = {00041},
+	keywords = {epistasis, algorithm, to read, random forest},
+	file = {Yoshida and Koike - 2011 - SNPInterForest A new method for detecting epistat.pdf:/Users/hclimente/Zotero/storage/YQT47GXU/Yoshida and Koike - 2011 - SNPInterForest A new method for detecting epistat.pdf:application/pdf}
+}
+
+@article{Shang2011,
+abstract = {BACKGROUND Epistasis is recognized fundamentally important for understanding the mechanism of disease-causing genetic variation. Though many novel methods for detecting epistasis have been proposed, few studies focus on their comparison. Undertaking a comprehensive comparison study is an urgent task and a pathway of the methods to real applications. RESULTS This paper aims at a comparison study of epistasis detection methods through applying related software packages on datasets. For this purpose, we categorize methods according to their search strategies, and select five representative methods (TEAM, BOOST, SNPRuler, AntEpiSeeker and epiMODE) originating from different underlying techniques for comparison. The methods are tested on simulated datasets with different size, various epistasis models, and with/without noise. The types of noise include missing data, genotyping error and phenocopy. Performance is evaluated by detection power (three forms are introduced), robustness, sensitivity and computational complexity. CONCLUSIONS None of selected methods is perfect in all scenarios and each has its own merits and limitations. In terms of detection power, AntEpiSeeker performs best on detecting epistasis displaying marginal effects (eME) and BOOST performs best on identifying epistasis displaying no marginal effects (eNME). In terms of robustness, AntEpiSeeker is robust to all types of noise on eME models, BOOST is robust to genotyping error and phenocopy on eNME models, and SNPRuler is robust to phenocopy on eME models and missing data on eNME models. In terms of sensitivity, AntEpiSeeker is the winner on eME models and both SNPRuler and BOOST perform well on eNME models. In terms of computational complexity, BOOST is the fastest among the methods. In terms of overall performance, AntEpiSeeker and BOOST are recommended as the efficient and effective methods. This comparison study may provide guidelines for applying the methods and further clues for epistasis detection.},
+author = {Shang, Junliang and Zhang, Junying and Sun, Yan and Liu, Dan and Ye, Daojun and Yin, Yaling},
+doi = {10.1186/1471-2105-12-475},
+file = {:Users/hclimente/Documents/papers/BMC bioinformatics/Shang et al/2011{\_}Performance analysis of novel methods for detecting epistasis.pdf:pdf},
+isbn = {1471210512475},
+issn = {1471-2105},
+journal = {BMC bioinformatics},
+mendeley-groups = {epistasis/detection software},
+month = {dec},
+number = {1},
+pages = {475},
+pmid = {22172045},
+title = {{Performance analysis of novel methods for detecting epistasis.}},
+url = {http://www.biomedcentral.com/1471-2105/12/475 http://www.ncbi.nlm.nih.gov/pubmed/22172045 http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=PMC3259123},
+volume = {12},
+year = {2011}
+}

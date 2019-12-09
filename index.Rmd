@@ -29,8 +29,6 @@ Ph.D. thesis
 
 Supervised by Chloé-Agathe Azencott and Véronique Stoven.
 
-This thesis was funded by the European Union's Horizon 2020 research and innovation program under the Marie Skłodowska-Curie [666003].
-
 <!-- 
 Cover dimensions wrong because
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
@@ -38,4 +36,6 @@ Cover dimensions wrong because
 
 ```{r env, echo=FALSE}
 # options(knitr.graphics.auto_pdf = TRUE)
+library(magrittr)
+library(kableExtra)
 ```

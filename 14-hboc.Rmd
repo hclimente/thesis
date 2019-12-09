@@ -24,37 +24,57 @@ DNA mismatch repair (MMR) corrects base-base mispairs. When MMR is faulty, accum
 
 Pathways involved in genome maintenance, cell cycle checkpoints and cell death usually eliminate cells with damaged DNA. When proteins involved in them are not active, some processes such as cell cycle arrest, apoptosis and senescence will not occur. In consequence, cells that undergo genomic alterations are allowed to proliferate. The most famous case of HBOC in this pathway is TP53, which coordinates the transcriptional induction of many genome stability factors.
 
-\begin{sidewaystable}
-\centering
-\caption{Overview of HBOC genes: estimated lifetime risk of breast cancer (age in years) and tumorogenic molecular mechanisms that involves them: homologous recombination repair (HRR), replication fork stability, transcription-replication collisions, mismatch repair (MMR), DNA damage signaling, checkpoints and cell death, and/or others. Adapted from [@nielsen_hereditary_2016].
-\label{tab:hboc-genes}
-\begin{tabular}{llllllll}
-Gene & Lifetime risk & HRR & Rep. fork stab. & Tr.-rep. clash & MMR & DNA Damage, apoptosis & Other \\
-ATM & 60\% by age 80 & $\checkmark$ & & & & $\checkmark$ &\\
-BARD1 & Unknown & $\checkmark$ & & & & &\\
-BLM & Unknown & & $\checkmark$& & & &\\
-BRCA1 & 57-65\% by age 70 & $\checkmark$ & $\checkmark$& $\checkmark$& & $\checkmark$ &\\
-BRCA2 & 45-55\% by age 70 & $\checkmark$ & $\checkmark$& $\checkmark$& & $\checkmark$ &\\
-BRIP1 & OR: \textless2.0& & & & & &\\
-CDH1 & 42\% by age 80 & & & & & & $\checkmark$ \\
-CHEK2 & 37\% by age 70 & & & & & $\checkmark$ &\\
-FAM175A & Unknown & $\checkmark$ & & & & &\\
-FANCC & Unknown & & $\checkmark$& & & &\\
-FANCM & Unknown & & $\checkmark$& & & &\\
-MLH1 & $\sim$19\% by age 70 & & $\checkmark$& & $\checkmark$ & &\\
-MRE11 & Unknown & & & & $\checkmark$ & &\\
-MSH2 & $\sim$11\% by age 70 & & & & $\checkmark$ & &\\
-NBN & OR: 3.0 & $\checkmark$ & & & & &\\
-NF1 & 6.5-fold up ages 30-39 & & & & & & $\checkmark$ \\
-PALB2 & 35\% by age 70 & $\checkmark$ & $\checkmark$& & & &\\
-PMS2 & SIR: 3.8& & & & $\checkmark$ & &\\
-PTEN & 85\% by age 70 & & & & & & $\checkmark$ \\
-RAD51B & Unknown & $\checkmark$ & & & & &\\
-RAD51C & Unknown & $\checkmark$ & & & & &\\
-RAD51D & Unknown & $\checkmark$ & & & & &\\
-RECQL & Unknown & & $\checkmark$& & & &\\
-RINT1 & Unknown & $\checkmark$ & & & & &\\
-STK11 & 32\% by age 60 & & & & & & $\checkmark$ \\
-TP53 & 25\% by age 70 & & & & & $\checkmark$ &  
-\end{tabular}
-\end{sidewaystable}
+(ref:tab-hboc-genes-caption) Overview of HBOC genes: estimated lifetime risk of breast cancer (age in years) and tumorogenic molecular mechanisms that involves them: homologous recombination repair (HRR), replication fork stability, transcription-replication collisions, mismatch repair (MMR), DNA damage signaling, checkpoints and cell death, and/or others. Adapted from @nielsen_hereditary_2016.
+
+(ref:checkmark) $\checkmark$
+
+```{r hboc-genes, echo=FALSE}
+library(magrittr)
+library(kableExtra)
+library(readr)
+
+hboc_genes <- read_table2(file = "
+ATM 60%_by_age_80 (ref:checkmark) - - - (ref:checkmark) -
+BARD1 Unknown (ref:checkmark) - - - - -
+BLM Unknown - (ref:checkmark) - - - -
+BRCA1 57-65%_by_age_70 (ref:checkmark) (ref:checkmark) (ref:checkmark) - (ref:checkmark) -
+BRCA2 45-55%_by_age_70 (ref:checkmark) (ref:checkmark) (ref:checkmark) - (ref:checkmark) -
+BRIP1 OR:_<_2.0 - - - - - -
+CDH1 42%_by_age 80 - - - - - (ref:checkmark) 
+CHEK2 37%_by_age 70 - - - - (ref:checkmark) -
+FAM175A Unknown (ref:checkmark) - - - - -
+FANCC Unknown - (ref:checkmark) - - - -
+FANCM Unknown - (ref:checkmark) - - - -
+MLH1 ~19%_by_age_70 - (ref:checkmark) - (ref:checkmark) - -
+MRE11 Unknown - - - (ref:checkmark) - -
+MSH2 ~11%_by_age_70 - - - (ref:checkmark) - -
+NBN OR:_3.0 - (ref:checkmark) - - - - -
+NF1 6.5-fold_up_ages_30-39 - - - - - (ref:checkmark) 
+PALB2 35%_by_age_70 (ref:checkmark) (ref:checkmark) - - - -
+PMS2 SIR:_3.8 - - - (ref:checkmark) - -
+PTEN 85%_by_age_70 - - - - - (ref:checkmark) 
+RAD51B Unknown (ref:checkmark) - - - - -
+RAD51C Unknown (ref:checkmark) - - - - -
+RAD51D Unknown (ref:checkmark) - - - - -
+RECQL Unknown - (ref:checkmark) - - - -
+RINT1 Unknown (ref:checkmark) - - - - -
+STK11 32%_by_age_60 - - - - - (ref:checkmark) 
+TP53 25%_by_age_70 - - - - (ref:checkmark) - 
+", col_names = FALSE, col_types = 'cccccccc')
+
+colnames(hboc_genes) <- c('Gene', 'Lifetime risk', 'HRR', 'Rep. fork stab.', 'Tr.-rep. clash', 'MMR', 'DNA Damage, apoptosis', 'Other')
+
+hboc_genes <- data.frame(lapply(hboc_genes, function(x) {
+  gsub("^-$", "", x)
+  }))
+
+hboc_genes <- data.frame(lapply(hboc_genes, function(x) {
+  gsub("_", " ", x)
+  }))
+
+kable(hboc_genes, 
+      caption = '(ref:tab-hboc-genes-caption)', 
+      booktabs = TRUE) %>% 
+  kable_styling(latex_options = "striped") %>%
+  landscape()
+```

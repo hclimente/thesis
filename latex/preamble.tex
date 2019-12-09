@@ -5,6 +5,10 @@
 \usepackage{fancyhdr}
 \usepackage{bibentry}
 
+% abstract for each chapter
+\newenvironment{chapabstract}[1]%
+{\raggedright\leftskip1in\textbf{#1 }\itshape}%
+
 %%% Fancy Header %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Fancy Header Style Options
 
@@ -106,5 +110,6 @@
 \frkeywords{ Caesar licentia post honoratis haec adhibens urbium
   honoratis nullum Caesar.}
 \enkeywords{ gwas network epistasis machine-learning }
+
 
 \frontmatter

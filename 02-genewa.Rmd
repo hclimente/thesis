@@ -1,87 +1,39 @@
 # Combining network-guided GWAS to discover susceptibility mechanisms for breast cancer {#genesis}
 
-*Joint work with Christine Lonjou, Fabienne Lesueur, the GENESIS investigators, Dominique Stoppa-Lyonnet, Nadine Andrieu and Chloé-Agathe Azencott*
+The contents of this chapter are based on *Héctor Climente-González, Christine Lonjou, Fabienne Lesueur, the GENESIS investigators, Dominique Stoppa-Lyonnet, Nadine Andrieu and Chloé-Agathe Azencott*, Combining network-guided GWAS to discover susceptibility mechanisms for breast cancer (manuscript in preparation).
 
-Systems biology provides a comprehensive approach to biomarker discovery
-and biological hypothesis building. It does so by jointly considering
-the statistical association between a gene and a phenotype, and the
-biological context of each gene, represented as a network. In this work
-we study the utility of six network methods to discover new biomarkers
-for breast cancer susceptibility by searching subnetworks highly
-associated to a phenotype. We interrogate a familial breast cancer
-genome-wide association study (GWAS) focused on *BRCA1/2* negative
-French women. By trading statistical astringency for biological
-meaningfulness, most network methods get more compelling results than
-standard SNP- and gene-level analyses, recovering causal subnetworks
-tightly related to cancer susceptibility. We perform an in-depth
-benchmarking of the methods with regards to size of the solution
-subnetwork, their utility as biomarkers, and the stability and the
-runtime of the methods. Interestingly, a combination of solution
-subnetworks provided a concise subnetwork of 93 genes, enriched in known
-breast cancer susceptibility genes (*BABAM1*, *BLM*, *CASP8*, *FGFR2*,
-and *TOX3*, Fisher's exact test P-value = $7.8 \times 10^{-5}$ ) and
-more central than average. Additionally, it includes subnetworks of
-mechanisms related to cancer, like protein folding (*HSPA1A*, *HSPA1B*,
-and *HSPA1L*) or mitochondrial ribosomes (*MRPS30*, *MRPS31*,
-*MRPS18B*). We also observed a general dysregulation in the neighborhood
-of *COPS5*, a gene related to multiple hallmarks of cancer.
+```{r echo=FALSE}
+library(magrittr)
+library(kableExtra)
+
+knitr::asis_output(if (knitr:::is_latex_output()) {
+"\\begin{chapabstract}{Abstract:}
+Systems biology provides a comprehensive approach to biomarker discovery and biological hypothesis building. It does so by jointly considering the statistical association between a gene and a phenotype, and the biological context of each gene, represented as a network. In this work we study the utility of six network methods to discover new biomarkers for breast cancer susceptibility by searching subnetworks highly associated to a phenotype. We interrogate a familial breast cancer genome-wide association study (GWAS) focused on BRCA1/2 negative French women. By trading statistical astringency for biological meaningfulness, most network methods get more compelling results than standard SNP- and gene-level analyses, recovering causal subnetworks tightly related to cancer susceptibility. We perform an in-depth benchmarking of the methods with regards to size of the solution subnetwork, their utility as biomarkers, and the stability and the runtime of the methods. Interestingly, a combination of solution subnetworks provided a concise subnetwork of 93 genes, enriched in known breast cancer susceptibility genes (BABAM1, BLM, CASP8, FGFR2, and TOX3, Fisher's exact test P-value = $7.8 \\times 10^{-5}$ ) and more central than average. Additionally, it includes subnetworks of mechanisms related to cancer, like protein folding (HSPA1A, HSPA1B, and HSPA1L) or mitochondrial ribosomes (MRPS30, MRPS31, MRPS18B). We also observed a general dysregulation in the neighborhood of COPS5, a gene related to multiple hallmarks of cancer.
+\\end{chapabstract}
+\\vskip 0.2in
+\\begin{chapabstract}{Résumé :}
+
+\\end{chapabstract}"
+})
+```
 
 ## Introduction
 
-As described in Section \@ref(intro-gwas), genome-wide association studies 
-(GWAS) aim at quantifying how single-nucleotide polymorphisms (SNPs) predispose 
-to complex diseases, like diabetes or some forms of cancer [@bush_chapter_2012]. 
-Despite their successes [@buniello_nhgri-ebi_2019], GWAS also presents intrinsic
-challenges (Section \@ref(intro-gwas-challenges)). Some of them stem from the
-high-dimensionality of the problem, as every GWAS to date studies more
-variants than samples are genotyped. This limits the statistical power
-of the experiment, as only variants with large and moderate effects can
-be detected. And it is particularly problematic since the prevailing
-view is that most genetic architectures involve many variants with small
-effects [@visscher_10_2017]. Additionally, to avoid false positives, a
-conservative multiple test correction is applied, typically Bonferroni.
-However, Bonferroni is known to be overly conservative when the
-statistical tests are correlated, as is the case in GWAS
-[@wang_statistical_2018]. Another open issue is the interpretation of
-the results, as the functional consequences of most common variants are
-not well understood. On top of that, recent large-sampled studies
-suggest that most of the genome contributes to a degree to any complex
-trait, in accordance with the infinitesimal model
-[@barton_infinitesimal_2017]. The omnigenic model [@boyle_expanded_2017]
-explains this by the dense functional inter-relatedness between genes,
-influencing each other's behavior, which allows alterations in most
-genes to impact the "core" genes involved in a disease. A comprehensive
+Network-based biomarker discovery methods provide a comprehensive
 statistical framework which includes the structure of biological data
-might address the aforementioned issues.
-
-In this regard many authors turn to network biology to handle the
-complex interplay of biomolecules that lead to disease
-[@furlong_human_2013]. As its name suggests, network biology models
-biology as a network, where the biomolecules under study, often genes,
-are nodes, and selected functional relationships between them are the
-edges that link them. These functional relationships come from evidence
-that the genes jointly contribute to a biological function; for
-instance, their expression is correlated, or their gene products
-establish a protein-protein interaction. Under this view, complex
-diseases are not the consequence of a single altered gene, but of the
-interaction of multiple interdependent biomolecules
-[@barabasi_network_2011]. In fact, an examination of biological networks
-shows that disease genes have differential properties
-[@barabasi_network_2011; @pinero_uncovering_2016]. This is particularly
-true for cancer driver genes, which tend to be key players in connecting
-different, densely-connected communities of genes. Additionally, as
-genes that contribute to a disease tend to participate in similar
-biological functions, guilt-by-association strategies have proved
-effective at identifying disease genes [@huang_systematic_2018].
-
-Network-based, biomarker discovery methods exploit the
-guilt-by-association strategy to identify disease genes on GWAS data
-[@azencott_network-guided_2016]. In essence, each SNP has a measure of
+tackle the the challenges in the GWAS field
+(Section \@ref(intro-gwas-challenges)). In essence, each SNP has a measure of
 association with the disease, given by the experiment, and functionally
 biological relationships, given by a network built on prior knowledge.
 Then, the problem becomes finding a functionally-related set of genes
-that is highly associated with the disease. Different solutions have
-been proposed to this problem, often stemming from divergent different
+that is highly associated with the disease. Such set is easier to 
+interpret, as it is related to known biological mechanisms, and trade 
+statistical significance for biological relevance, potentially improving
+the power of the study. This problem is addressed by the high-scoring 
+subnetwork search methods (Section \ref(intro-hs3)) which use a 
+guilt-by-association strategy to identify disease 
+susceptibility genes [@azencott_network-guided_2016].
+Different solutions have been proposed, often stemming from divergent different
 mathematical frameworks and considerations of what the optimal solution
 looks like. Some methods strongly constrain the problem to certain kinds
 of subnetworks. Such is the extreme case of LEAN
@@ -97,10 +49,11 @@ that are densely interconnected; such is the case of HotNet2
 [@leiserson_pan-cancer_2015], SConES [@azencott_efficient_2013], and
 SigMod [@liu_sigmod:_2017].
 
-In this work, we analyze the effectiveness of these six methods to
+In this chapter, we analyze the effectiveness of these six methods to
 discover new biomarkers on GWAS data. We focus on the GENESIS dataset
 [@sinilnikova_genesis:_2016], a study of familial breast cancer
-conducted in the French population. After following a classical GWAS
+conducted in the French population (Section \@ref(genesis-dataset)). 
+After following a classical GWAS
 approach, we use these network-based methods to recover additional
 familial breast cancer biomarkers. Some of them are known, while others
 are specific to this dataset. Lastly, we carry out a comparison of the
@@ -109,12 +62,9 @@ obtain a consensus network of predisposition to familial breast cancer.
 
 ## Methods
 
-### GENESIS
+### Data preprocessing and quality control
 
 In this study we used the GENESIS dataset, described in Section \@ref(genesis-dataset).
-
-### Preprocessing and quality control
-
 We discarded SNPs with a minor allele frequency lower than 0.1%, those
 not in Hardy - Weinberg equilibrium in controls (P-value \<0.001), and
 those missing on more than 10% of the samples. A subset of 20 duplicated
@@ -189,22 +139,42 @@ Lastly, the *Laplacian matrix* $L_G$ is defined as $L_G = D_G - W_G$.
 
 #### Methods used {#methods:methods}
 
+(ref:tab-method-comparison-footnote) *Field*: field in which the algorithm was developed. *Nodes*, the type of network, either gene (protein-protein interaction network usually) or a SNP network. *Exhaustive*: whether all the possible solutions given the selected hyperparameters are explored. *Solution*: additional properties are enforced on the solution subnetwork, other than being dense in high scores and connected. *Components*: number of connected subnetworks in the solution. *Input*: genotype data or GWAS summary statistics. *Scoring*: how SNP/gene P-values are transformed into node scores.
+
+(ref:dmgwas) [@jia_dmgwas:_2011]
+
+(ref:heinz) [@dittrich_identifying_2008]
+
+(ref:hotnet) [@leiserson_pan-cancer_2015]
+
+(ref:lean) [@gwinner_network-based_2016]
+
+(ref:scones) [@azencott_efficient_2013]
+
+(ref:sigmod) [@liu_sigmod:_2017]
+
+(ref:logten) -log~10~(P)
+
+(ref:chisq) $\chi^2$
+
 ```{r method-comparison, echo=FALSE}
 method_summary <- rbind(
-  c('dmGWAS', 'GWAS', 'Genes', 'No', '', '1', 'Summary', '-log~10~(P)', '[@jia_dmgwas:_2011]'),
-  c('heinz', 'Omics', 'Genes', 'Yes', '', '1', 'Summary', 'BUM', '[@dittrich_identifying_2008]'),
-  c('HotNet2', 'Omics', 'Genes', 'Yes', 'Modular', '$\\ge$ 1', 'Summary', 'Local FDR', '[@leiserson_pan-cancer_2015]'),
-  c('LEAN', 'Omics', 'Genes', 'Yes', 'Star', '$\\ge$ 1', 'Summary', '-log~10~(P)', '[@gwinner_network-based_2016]'),
-  c('SConES', 'GWAS', 'SNPs', 'Yes', 'Modular', '$\\ge$ 1', 'Genotypes', '$\\chi^2$', '[@azencott_efficient_2013]'),
-  c('SigMod', 'GWAS', 'Genes', 'Yes', 'Modular', '1', 'Summary', '-log~10~(P)', '[@liu_sigmod:_2017]')
+  c('dmGWAS', 'GWAS', 'Genes', 'No', '', '1', 'Summary', '(ref:logten)', '(ref:dmgwas)'),
+  c('heinz', 'Omics', 'Genes', 'Yes', '', '1', 'Summary', 'BUM', '(ref:heinz)'),
+  c('HotNet2', 'Omics', 'Genes', 'Yes', 'Modular', '> 1', 'Summary', 'Local FDR', '(ref:hotnet)'),
+  c('LEAN', 'Omics', 'Genes', 'Yes', 'Star', '> 1', 'Summary', '(ref:logten)', '(ref:lean)'),
+  c('SConES', 'GWAS', 'SNPs', 'Yes', 'Modular', '> 1', 'Genotypes', '(ref:chisq)', '(ref:scones)'),
+  c('SigMod', 'GWAS', 'Genes', 'Yes', 'Modular', '1', 'Summary', '(ref:logten)', '(ref:sigmod)')
 )
 
 colnames(method_summary) <- c('Method', 'Field', 'Nodes', 'Exhaustive', 'Solution', 'Components', 'Input', 'Scoring', 'Reference')
 
-kableExtra::footnote(knitr::kable(method_summary, 
-                                  caption = 'Summary statistics on the results of multiple network methods on the gene-gene interaction network. The first row contains the summary statistics on the whole network.'),
-                     general = '/Field/: field in which the algorithm was developed. /Nodes/, the type of network, either gene (protein-protein interaction network usually) or a SNP network. /Exhaustive/: whether all the possible solutions given the selected hyperparameters are explored. /Solution/: additional properties are enforced on the solution subnetwork, other than being dense in high scores and connected. /Components/: number of connected subnetworks in the solution. /Input/: genotype data or GWAS summary statistics. /Scoring/: how SNP/gene P-values are transformed into node scores.', 
-                     threeparttable = TRUE, escape = FALSE)
+kable(method_summary, 
+      caption = 'Summary statistics on the results of multiple network methods on the gene-gene interaction network. The first row contains the summary statistics on the whole network.', 
+      booktabs = TRUE) %>% 
+  kable_styling(latex_options = c("striped", "scale_down")) %>%
+  footnote(general = '(ref:tab-method-comparison-footnote)',
+           threeparttable = TRUE, fixed_small_size = TRUE)
 ```
 
 Beyond the assumption that genes that contribute to the same function
@@ -549,6 +519,14 @@ biological relevance.
 
 ### Network methods successfully identify genes associated with breast cancer {#results:separate-networks}
 
+(ref:tab-gene-solutions-footnote) *Num genes*: number of genes selected out of those that are part of the PPIN; for SConES GI the total number of genes, including RNA genes, was added in parentheses. $\overline{\mbox{Betweenness}}$: mean betweenness of the selected genes in the PPIN. $\hat{\mbox{P}}$~gene~: median P-value of the selected genes. $\rho$~consensus~: Pearson\'s correlation between the subnetwork and the consensus network.
+
+(ref:betweenness) $\overline{\mbox{Betweenness}}$
+
+(ref:p-gene) $\hat{\mbox{P}}_{gene}$
+
+(ref:rho) $\rho_{consensus}$
+
 ```{r gene-solutions, echo=FALSE}
 solution_summary <- rbind(
       c('HINT HT', 13619, 142541, 16706, 0.46,0.066),
@@ -561,31 +539,43 @@ solution_summary <- rbind(
       c('SigMod', 142, 249, 92603, 0.0083, 0.73)
   )
 colnames(solution_summary) <- c('Network','Num genes','Num edges', 
-                                '$\\overline{\\mbox{Betweenness}}$',
-                                '$\\hat{\\mbox{P}}_{gene}$','$\\rho_{consensus}$')
+                                '(ref:betweenness)',
+                                '(ref:p-gene)', '(ref:rho)')
 
-kableExtra::footnote(knitr::kable(solution_summary, 
-                                  caption = 'Summary statistics on the results of multiple network methods on the gene-gene interaction network. The first row contains the summary statistics on the whole network.'),
-                     general = '\\\\emph{Num genes}: number of genes selected out of those that are part of the PPIN; for SConES GI the total number of genes, including RNA genes, was added in parentheses. $\\overline{\\mbox{Betweenness}}$: mean betweenness of the selected genes in the PPIN. $\\hat{\\mbox{P}}$~gene~: median P-value of the selected genes. $\\rho$~consensus~: Pearson\'s correlation between the subnetwork and the consensus network.', 
-                     threeparttable = TRUE, escape = FALSE)
+footnote(kable(solution_summary, 
+               caption = 'Summary statistics on the results of multiple network methods on the gene-gene interaction network. The first row contains the summary statistics on the whole network.', 
+               booktabs = TRUE) %>% 
+           kable_styling(latex_options = c("striped", 'scale_down')),
+         general = '(ref:tab-gene-solutions-footnote)', 
+         threeparttable = TRUE, escape = FALSE)
 ```
+
+(ref:tab-snp-solutions-footnote) $\overline{\mbox{Betweenness}}$: mean betweenness of the selected SNPs in the corresponding full network; $\hat{\mbox{P}}$~SNP~: median P-value of the selected SNPs.
+
+(ref:p-snp) $\hat{\mbox{P}}$~SNP~
 
 ```{r snp-solutions, echo=FALSE}
 solution_summary <- read.table(text = "
-                  Network SNPs Edges Subnetworks $\\overline{\\mbox{Betweenness}}$ $\\hat{\\mbox{P}}$~SNP~
-                  GS 197083 197060 NA 2.03*(10^7) 0.49
-                  'SConES GS' 1590 1585 5 2.52*(10^7) 0.023
-                  GM 197083 6442446 NA 3.99*(10^6) 0.49
-                  'SConES GM' 1692 177611 5 4.40*(10^6) 0.055
-                  GI 197083 28733720 NA 1.46*(10^6) 0.49
-                  'SConES GI' 408 539 5 9.33*(10^6) 0.076
+                  Network SNPs Edges Subnetworks Betweenness P
+                  GS 197083 197060 NA 20300000 0.49
+                  'SConES GS' 1590 1585 5 25200000 0.023
+                  GM 197083 6442446 NA 3990000 0.49
+                  'SConES GM' 1692 177611 5 4400000 0.055
+                  GI 197083 28733720 NA 1460000 0.49
+                  'SConES GI' 408 539 5 9330000 0.076
                   ", header = TRUE, stringsAsFactors = FALSE)
 solution_summary$Edges <- formatC(solution_summary$Edges, digits = 2, format = 'e')
+solution_summary$Betweenness <- formatC(solution_summary$Betweenness, digits = 2, format = 'e')
 
-kableExtra::footnote(knitr::kable(solution_summary, 
-                                  caption = 'Summary statistics on the results of SConES on the three SNP-SNP interaction networks. The first row within each block contains the summary statistics on the whole network.'),
-                     general = '$\\overline{\\mbox{Betweenness}}$: mean betweenness of the selected SNPs in the corresponding full network; $\\hat{\\mbox{P}}$~SNP~: median P-value of the selected SNPs.', 
-                     threeparttable = TRUE, escape = FALSE)
+colnames(solution_summary) <- c('Network', 'SNPs', 'Edges', 'Subnetworks',
+                                '(ref:betweenness)', '(ref:p-snp)')
+
+kable(solution_summary, 
+      caption = 'Summary statistics on the results of SConES on the three SNP-SNP interaction networks. The first row within each block contains the summary statistics on the whole network.', 
+      booktabs = TRUE) %>% 
+  kable_styling(latex_options = c("striped", 'scale_down')) %>%
+  footnote(general = '(ref:tab-snp-solutions-footnote)', 
+           threeparttable = TRUE, escape = FALSE)
 ```
 
 We applied six network methods to the GENESIS dataset (Section
@@ -1031,24 +1021,4 @@ methods. To facilitate that other authors apply them to new datasets and
 aggregate their solutions, we built six nextflow pipelines
 [@di_tommaso_nextflow_2017] with a consistent interface and, whenever
 possible, parallelized computation. They are available on GitHub:
-<https://github.com/hclimente/gwas-tools>. Importantly, those methods
-that had a permissive license were compiled into a Docker image for
-easier use, which is available on Docker Hub
-[hclimente/gwas-tools](https://hub.docker.com/r/hclimente/gwas-tools).
-
-## Funding and acknowledgments {.unnumbered}
-
-This project was supported by funding from Agence Nationale de la
-Recherche (ANR-18-CE45-0021-01). Financial support for GENESIS resource and
-genotyping was provided by the Ligue Nationale contre le Cancer (grants
-PRE05/DSL, PRE07/DSL, PRE11/NA), the French National Institute of Cancer
-(INCa grant No b2008-029/LL-LC) and the comprehensive cancer center
-SiRIC, (Site de Recherche Intégrée sur le Cancer: Grant INCa-DGOS-4654).
-
-GENESIS (GENE SISters) is a French national study sponsored by UNICANCER
-(Sinilnikova et al. BMC Cancer 2016). We wish to thank the genetic
-epidemiology platform (the PIGE, Plateforme d'Investigation en Génétique
-et Epidemiologie : Séverine Eon-Marchais, M. Marcou, D. Le Gal, L.
-Toulemonde, J. Beauvallet, N. Mebirouk, E. Cavaciuti), the biological
-resource centre (S. Mazoyer, F. Damiola, L. Barjhoux, C. Verny-Pierre,
-V. Sornin) and all the GENESIS collaborating cancer clinics.
+<https://github.com/hclimente/gwas-tools>.
