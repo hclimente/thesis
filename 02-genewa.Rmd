@@ -30,7 +30,7 @@ that is highly associated with the disease. Such set is easier to
 interpret, as it is related to known biological mechanisms, and trade 
 statistical significance for biological relevance, potentially improving
 the power of the study. This problem is addressed by the high-scoring 
-subnetwork search methods (Section \ref(intro-hs3)) which use a 
+subnetwork search methods (Section \@ref(intro-hs3)) which use a 
 guilt-by-association strategy to identify disease 
 susceptibility genes [@azencott_network-guided_2016].
 Different solutions have been proposed, often stemming from divergent different
