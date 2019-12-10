@@ -3,7 +3,7 @@ title: "Network-guided genome-wide association studies"
 author: "Héctor Climente González"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-documentclass: yjiao
+documentclass: env/yjiao
 output: 
   bookdown::pdf_book: 
     dev: png
@@ -16,7 +16,7 @@ description: "PhD thesis of Héctor Climente-González"
 lof: yes
 lot: yes        
 fontsize: 11pt
-biblio-style: "yjiao"
+biblio-style: "env/yjiao"
 geometry: "left=1.5in,right=1.3in,top=1.1in,bottom=1.1in,includefoot,includehead,headheight=13.6pt"
 linestretch: 1.05
 ---

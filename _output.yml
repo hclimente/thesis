@@ -1,5 +1,5 @@
 bookdown::gitbook:
-  css: style.css
+  css: env/style.css
   config:
     toc:
       before: |
@@ -9,7 +9,7 @@ bookdown::gitbook:
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:
-    in_header: latex/preamble.tex
+    in_header: env/preamble.tex
   latex_engine: xelatex
   keep_tex: yes
   fig_caption: true
