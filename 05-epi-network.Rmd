@@ -2,16 +2,14 @@
 
 The contents of this chapter are based on *Héctor Climente-González, Diane Duroux, Chloé-Agathe Azencott, Kristel Van Steen*, High-order epistasis detection through fusion of epistasis networks (manuscript in preparation).
 
-```{r echo=FALSE}
-knitr::asis_output(if (knitr:::is_latex_output()) {
-"\\begin{chapabstract}{Abstract:}
+```{r echo=FALSE, results = "asis", eval='is_latex_output'}
+cat("\\begin{chapabstract}{Abstract:}
 TODO
 \\end{chapabstract}
 \\vskip 0.2in
 \\begin{chapabstract}{Résumé :}
 
-\\end{chapabstract}"
-})
+\\end{chapabstract}")
 ```
 
 ## Introduction
@@ -23,7 +21,7 @@ than two loci) strongly shape complex traits [@taylor_higher-order_2015]. Howeve
 
 ### Data, quality control and preprocessing
 
-We studied genetic data from the IIBDGC (Section \@ref(iibdgc-dataset)), and performed a quality control and preprocessing as in Section \@ref(snp2gene-qc). Lastly, we performed LD pruning $R^{2}>0.75$ to remove SNPs in strong LD, taking down the final number of SNPs to 38 225.
+We studied genetic data from the IIBDGC (Section \@ref(iibdgc-dataset)), and performed a quality control and preprocessing as in Section \@ref(snp2gene-qc). Lastly, we performed LD pruning $R^{2}>0.75$ to remove SNPs in strong LD, taking down the final number of SNPs to 38\,225.
 
 ### Epistasis detection methods {#methods-methods}
 

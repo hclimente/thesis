@@ -1,20 +1,18 @@
 # Boosting interpretability and statistical power in epistasis detection by using prior biological knowledge {#epi-snp2gene}
 
-The contents of this chapter are based on *Héctor Climente-González, Diane Duroux, Lars Wienbrandt, David Ellinghaus, Chloé-Agathe Azencott and Kristel Van Steen*, Boosting interpretability and statistical power in epistasis detection by using prior biological knowledge (manuscript in preparation).
+The contents of this chapter are based on *Diane Duroux, Héctor Climente-González, Lars Wienbrandt, David Ellinghaus, Chloé-Agathe Azencott and Kristel Van Steen*, Boosting interpretability and statistical power in epistasis detection by using prior biological knowledge (manuscript in preparation). Parts of this work were presented in IGES 2019 in the poster *Diane Duroux, Héctor Climente-González, Lars Wienbrandt, David Ellinghaus, Chloé-Agathe Azencott and Kristel Van Steen*, Improving efficiency in epistasis detection with a gene-based analysis using functional filters.
 
-```{r echo=FALSE}
+```{r echo=FALSE, results = "asis", eval='is_latex_output'}
 library(magrittr)
 library(kableExtra)
 
-knitr::asis_output(if (knitr:::is_latex_output()) {
-"\\begin{chapabstract}{Abstract:}
-Biological systems are the results of complex networks which are increasingly better understood. Such networks often are built around genes, making them the functional units of analysis. Hence, detecting epistatic interactions at the gene level is essential to understanding the biological mechanisms of these diseases. Unfortunately, genome-wide interaction association studies (GWAIS) involve many statistical challenges that make such detection hard. This project is based on three main procedures to analyze the conversion of SNP interactions into a gene-based network through the integration of biological knowledge. First, we investigated the use of known gene-gene interactions to focus on the most promising gene-pairs. Second, we looked into several functional SNP-to-gene mappings to map SNPs to these gene interactions, including eQTL and chromatin-based, and filtered the GWAIS data accordingly. Third, we explored the integration of SNP-pairs statistics into gene-pairs statistics using the adaptive truncated product method (ATPM). ATPM does not require parameters or a known null distribution, and it is fast to compute. We applied different variants of these three steps to a GWAS inflammatory bowel disease (IBD) dataset, and compared the results. Overall, knowledge integration decreases the number of tests performed, reducing computational time and boosting statistical power, and provides interpretability. We validate through a permutation analysis that type I error is under control. The different protocols produce different results which highlight different mechanisms implicated in IBD while, at the same time, overlapping with the known biology of the disease. Using eQTLs results in more interactions than what we call a Standard approach (not using any filter and physically mapping a SNP to a gene), albeit less significant gene-pairs. This pipeline not only detects interactions at the gene level, but also gives a global visualization that identifies neighbors, hubs and highly connected substructures.
+cat("\\begin{chapabstract}{Abstract:}
+Detecting epistatic interactions at the gene level is essential to understanding the biological mechanisms of complex diseases. Unfortunately, genome-wide interaction association studies (GWAIS) involve many statistical challenges that make such detection hard. This chapter considers three steps to analyze the conversion of SNP-SNP interactions into a gene network through the integration of biological knowledge. First, we investigate the use of known gene-gene interactions to focus on the most promising gene-pairs. Second, we explore several functional SNP-to-gene mappings to map SNPs to these gene interactions, including eQTL and chromatin-based, and filter the GWAIS data accordingly. Third, we integrate SNP-pairs statistics into gene-pairs statistics using the adaptive truncated product method (ATPM). ATPM does not require parameters or a known null distribution, and it is fast to compute. We apply different variants of these three steps to a GWAS inflammatory bowel disease (IBD) dataset, and compare the results. Overall, knowledge integration decreases the number of tests performed, reducing computational time and boosting statistical power, and provides interpretability. We validate through a permutation analysis that type I error is under control. The different protocols produce different results, which highlight different mechanisms implicated in IBD while, at the same time, overlapping with the known biology of the disease. Using eQTLs results in more interactions than the standard approach, where all possible SNP pairs are investigated and SNPs are mapped to genes based on their position on the genetic sequence, albeit fewer significant gene-pairs. This pipeline not only detects interactions at the gene level, but also gives a global visualization that identifies neighbors, hubs and highly connected substructures.
 \\end{chapabstract}
 \\vskip 0.2in
 \\begin{chapabstract}{Résumé :}
 
-\\end{chapabstract}"
-})
+\\end{chapabstract}")
 ```
 
 ## Introduction
@@ -30,23 +28,22 @@ several genes, we investigate the use of current knowledge on gene-gene
 interaction to focus on the most promising gene-pairs. We study whether
 the epistatic interactions driving the phenotype are likely to be
 currently in existing databases. Third, we used the adaptive truncated
-product method to estimate gene-pairs significance. Protocols and their
-associated outputs are compared through networks.
+product method to estimate gene-pairs significance.
 
 ## Materials and methods
 
 ### Dataset and initial quality control {#snp2gene-qc}
 
 We investigated the IIBDGC dataset, described in 
-Section \@ref(iibdgc-dataset). Its large sample size helps to overcome the 
-issue of reduced statistical power due, for example, to multiple testing and LD. 
+Section \@ref(iibdgc-dataset), whose large sample size helps to overcome the 
+issue of reduced statistical power common in GWAIS. 
 We performed a quality control as in @ellinghaus2016analysis, reducing the 
-number of SNPs from 196 524 to 130 071.
+number of SNPs from 196\,524 to 130\,071.
 
-The IIBDGC dataset aggregates different cohorts, and hence contains
+The IIBDGC dataset aggregates different cohorts, and contains
 confounding population structure (Section \@ref(pop-structure)). PLINK
 [@purcell2007plink] cannot take covariates in the logistic regression used to
-detect epistasis (Section \@ref(methods:snp-epistasis)). In consequence, we had to adjust the
+detect epistasis (Section \@ref(methods:snp-epistasis)). In consequence, we adjusted
 phenotypes to account for population structure using the top 7 principal
 components as in @ellinghaus2016analysis. Essentially, we derive adjusted 
 phenotypes from the logistic regression model by subtracting model-fitted 
@@ -86,12 +83,12 @@ every SNP is significant in order to perform such mapping on all the
 SNPs. We performed three SNP-gene mappings using SNP2GENE: physical,
 eQTL and 3D chromatin interaction. In the physical mapping, we mapped a
 SNP to a gene when the former was within the boundaries of the latter
-$\pm$ 10kb. The eQTL mapping uses eQTLs obtained
+$\pm$ 10 kb. The eQTL mapping uses eQTLs obtained
 from GTEx [@gtex_consortium_genetic_2017]. We mapped an eQTL SNP to its target gene when the
 association P-value was significant in any tissue ($\text{FDR} < 0.05$).
 Lastly, in the 3D chromatin interaction mapping, we mapped a SNP to a
 gene when a contact had been observed between the former the region
-around the latter's promoter (250bp upstream and 500bp downstream from
+around the latter's promoter (250 bp upstream and 500 bp downstream from
 the transcription start site) in any of the Hi-C datasets included in
 FUMA ($\text{FDR} < 10^{-6}$). The chromatin mapping might contain new,
 undiscovered, regulatory variants which, as eQTL, regulate the expression
@@ -103,9 +100,8 @@ subsequently investigated for epistasis evidence. Biofilter generates
 pairs of genes with evidence of co-function across multiple publicly
 available biological databases. It includes genomic locations of SNPs
 and genes, as well as known relationships among genes and proteins such
-as interaction pairs, pathways and ontological categories. Biofilter has
-become popular to reduce burden of tests and hopefully increase
-interpretability. Notably, it does not use trait information.
+as interaction pairs, pathways and ontological categories.
+Notably, it does not use trait information.
 Specifically, we considered only pairs of genes for which both genes
 could be mapped, using any of the mappings, to a SNP in our GWAS
 dataset. We used only gene pairs supported by evidence in at least 2
@@ -120,38 +116,33 @@ interactions between SNPs mapped to genes known to interact, according
 to Biofilter. For that purpose we first converted the Biofilter
 gene-pair models into SNP-pair models separately via each of the FUMA
 SNP-gene mappings described above. Then, from these SNP pairs sets, we
-built the four datasets enumerated above: one without any filter (*no
-filter*); and one for each SNP to gene mapping (*physical*, *eQTL*,
-*chromatin*). To reduce the number of statistical tests to the minimum,
-only the SNPs involved in at least one SNP-pair model were included in
-the respective analyses. It is worth pointing out that SNP-pair models
+built the four datasets enumerated above: one without any filter (*Standard*); 
+and one for each SNP to gene mapping (*Physical*, *eQTL*,
+*Chromatin*). It is worth pointing out that SNP-pair models
 were also built based exclusively on the corresponding mapping e.g.
 *physical* contains exclusively pairs of SNPs which can be associated to
 pairs of genes via a physical mapping. This helps interpretability and
-keeps the number of interactions in the network under control.
+keeps the number of tested interactions under control.
 
 #### Post-filtering quality control
 
-Additional quality controls are performed on each of the four generated
+Additional quality controls were performed on each of the four generated
 datasets. As motivated in @gusareva_practical_2014, only common variants
 ($\text{MAF} > 5$%) and in Hardy--Weinberg equilibrium ($\text{P-value} > 0.001$) are
-considered for analysis. Also, we pruned SNPs that are in linkage equilibrium 
+considered. Also, we pruned SNPs that are in linkage equilibrium 
 ($R^{2} > 0.75$). Lastly all risk SNP described in @liu2015association were 
 included.
 
 #### SNP-level epistasis detection and multiple test correction {#methods:snp-epistasis}
 
-We used PLINK 1.9 to detect epistasic association with the phenotype.
-Specifically, we performed a linear regression on the adjusted phenotypes
-with the option `–epistasis` to study the association of all the
-possible SNP pairs:
+We used PLINK 1.9 to detect epistasis through a linear regression on the adjusted phenotypes:
 
-$$Y = \beta_0 + \beta_1 g_A + \beta_2 g_B + \beta_3 g_A g_B$$
+$$Y = \beta_0 + \beta_1 g_A + \beta_2 g_B + \beta_3 g_A g_B,$$
 
 where $g_A$ and $g_B$ are the genotypes under additive encoding for SNPs
 A and B respectively; $\beta_0$, $\beta_1$, $\beta_2$, $\beta_3$, are
 the regression coefficients. PLINK performs a statistical test to
-evaluate if $\beta_3 \neq 0$. Crucially, PLINK only returns SNP-pairs
+evaluate if $\beta_3 \neq 0$. Crucially, it only returns SNP-pairs
 with a P-value lower than a specified threshold. We used the default
 0.0001.
 
@@ -159,8 +150,7 @@ We only considered pairs of SNPs not in strong LD ($R^{2}<0.75$) and
 that could be mapped to the corresponding SNP-model obtained from
 Biofilter, with self-gene interactions removed (Section
 \@ref(methods:prefiltering)). This impacted the total number of
-statistical tests. The exception was the *Standard* process, which only
-underwent LD pruning, but no Biofilter filtering.
+statistical tests. 
 
 To correctly account for multiple testing, the P-value threshold of
 significance had to be dataset-dependent as the number of tested SNP
@@ -176,11 +166,9 @@ permutations and set the threshold for 5% family-wise error rate
 
 #### From SNP-level to gene-level epistasis {#methods:gene-networks}
 
-Next we converted SNP-level epistasis into gene-level epistasis. For
-this purpose, first significant SNP pairs were converted into gene-gene
-interactions for each dataset. We associated SNP-pairs to gene-pairs
-using both FUMA and Biofilter, using the same procedure described in
-\@ref(methods:prefiltering). The exception was the *Standard*
+Next we converted SNP pairs into gene-pairs using their respective FUMA 
+and Biofilter mappings (Section \@ref(methods:prefiltering)). 
+The exception was the *Standard*
 dataset, where SNPs are physically mapped to genes, and no Biofilter
 restriction on which pairs of genes can interact was applied. Still,
 self-interactions were removed.
@@ -194,7 +182,7 @@ P-values on a same global hypothesis. It does so by computing the
 statistic $W(\tau)=\prod_{i=1}^{N} p_i^{I(p_{i}\le\tau)}$ where
 $I(\cdot)$ is the indicator function and $\tau$ is the truncation point.
 A P-value $\hat{s}(\tau)$ can be the estimated for a given $W(\tau)$.
-TPM is interesting since it is fast to compute and we do not have
+TPM was interesting since we did not not have
 P-values for every SNP pair but for the most strongly associated ones
 only (Section \@ref(methods:snp-epistasis)). However, TPM requires setting the
 truncation point $\tau$, a parameter that is arbitrary and might be
@@ -237,8 +225,8 @@ $\alpha=0.05$. The specific procedure goes as follows:
 We considered three procedures to map SNPs to their gene, as a proxy for
 their link to functionality (Section
 \@ref(methods:prefiltering)): *physical*, *eQTL* and *chromatin*.
-*Chromatin* produced the largest number of mappings (2 394 589), an
-order of magnitude more than *eQTL* (411 120) and *physical* (174 879)
+*Chromatin* produced the largest number of mappings (2\,394\,589), an
+order of magnitude more than *eQTL* (411\,120) and *physical* (174\,879)
 (Table \@ref(tab:datasets-snps)). Similarly, *chromatin* has 
 the largest number of SNPs mapped to an individual gene, followed by *eQTL* and
 *physical* (Figure \@ref(fig:snps-per-mapping)A). Nonetheless, 
@@ -276,14 +264,14 @@ kable(datasets_snps,
   kable_styling(latex_options = "striped")
 ```
 
-### The *physical* protocol does not recover any SNP interaction
+### The *Physical* protocol does not recover any SNP interaction
 
 We searched SNP epistasis in the four datasets (Section 
 \@ref(methods:snp-epistasis)). The different epistatic SNP-SNP networks are 
 described on Table \@ref(tab:snp-network) and Figure 
-\@ref(fig:snp-networks). Strikingly, while the Standard protocol generated the 
-largest network (55 nodes), the Chromatin was the largest by number of 
-interactions (64). Physical protocol produced no significant pairs.
+\@ref(fig:snp-networks). Strikingly, while the *Standard* protocol generated the 
+largest network (55 nodes), the *Chromatin* was the largest by number of 
+interactions (64). The *Physical* protocol produced no significant pairs.
 
 ```{r snp-network, echo=FALSE}
 snp_networks <- rbind(
@@ -301,7 +289,7 @@ kable(snp_networks,
   kable_styling(latex_options = "striped")
 ```
 
-(ref:fig-snp-networks-caption) SNP-level epistasis networks for *Standard* (orange), *eQTL* (green), and *Chromatin* (violet) (Sections \@ref(methods:prefiltering) and \@ref(methods:snp-epistasis)). The *physical* dataset is absent, as no SNP pairs were significant.
+(ref:fig-snp-networks-caption) SNP-level epistasis networks for *Standard* (orange), *eQTL* (green), and *Chromatin* (violet) (Sections \@ref(methods:prefiltering) and \@ref(methods:snp-epistasis)). The *Physical* dataset is absent, as no SNP pairs were significant.
 
 ```{r snp-networks, echo=FALSE, fig.cap='(ref:fig-snp-networks-caption)'}
 knitr::include_graphics('fig/snp_networks.pdf', dpi = NA)
@@ -310,7 +298,7 @@ knitr::include_graphics('fig/snp_networks.pdf', dpi = NA)
 ### Gene-level network {#results:gene-networks}
 
 We converted the aforementioned SNP-pair networks into gene-pair epistasis
-networks, estimating their significance through ARTP (Section 
+networks, estimating their significance through ATPM (Section 
 \@ref(methods:gene-networks)). Most of the SNP-pairs mapped to exclusively one 
 gene pair in *eQTL* and *Standard*, removing possible sources of ambivalence 
 (Figure \@ref(fig:sign-snps-per-gene-and-viceversa)A). That was 
@@ -330,11 +318,11 @@ knitr::include_graphics('fig/sign_snps_per_gene_and_viceversa.pdf', dpi = NA)
 
 We built an epistatic gene network from the significant gene pairs
 (Methods \@ref(methods:gene-networks)), shown in Figure \@ref(fig:gene-networks)
-and Table \@ref(tab:gene-networks-stats). Overall, the Standard protocol still
+and Table \@ref(tab:gene-networks-stats). Overall, the *Standard* protocol still
 produces the largest network, and contains more connected components and
-significant gene-pairs. On the other hand, chromatin and eQTL mappings
+significant gene-pairs. On the other hand, *Chromatin* and *eQTL* mappings
 produce similar networks in terms of sizes, number of gene-pairs and
-connected components. However, both *chromatin* and *eQTL*'s networks are
+connected components. However, both *Chromatin* and *eQTL*'s networks are
 notably smaller than *Standard*'s (11 and 10 nodes versus 29,
 respectively). 
 
@@ -377,7 +365,7 @@ involving 46 unique genes. Seven chromosome are involved in epistasis.
 Notably, 39% of the epistatic genes are located in chromosome 3 and 22%
 in chromosome 10.
 
-### Chromatin and Standard mappings partially replicate previous studies on IBD {#results-ibd-soa}
+### *Chromatin* and *Standard* mappings partially replicate previous studies on IBD {#results-ibd-soa}
 
 Several genetic studies studying epistasis on IBD have been conducted
 [@lin2017genetic; @vermeire2004genome; @pedros2015epistatic; @mcgovern2009genetic; @glas2009novel; @lin2013nod2].
@@ -389,18 +377,18 @@ alterations involving interleukins, like *IL-10* [@lin2017genetic],
 *IL-23R* [@glas2009novel]. Encouragingly, *Standard*'s results include
 interactions involving both *IL-10* and *IL-23*, although we do not find
 support for the specific interactions described in the aforementioned
-studies. In fact, the Standard protocol highlights the relevance of
+studies. In fact, the *Standard* protocol highlights the relevance of
 interleukins as hubs (Section \@ref(results:gene-networks)). Out of the five 
-gene interactions retrieved in Chromatin pipeline, three of them involve at 
+gene interactions retrieved in *Chromatin* pipeline, three of them involve at 
 least one interleukin. @lin2013nod2 detected interactions involving *NOD2*, 
-with both *IL-23R* and other genes. Our Standard protocol also detects two
+with both *IL-23R* and other genes. Our *Standard* protocol also detects two
 potentially new epistasis interactions involving *NOD2*.
 
 ### The type I error of the protocol is controlled
 
 The "multi-stage" nature of the protocol presented in Section
 \@ref(methods:pipeline) required controlling the type I error. For
-that purpose, we performed 1 000 permutation analyses for each of the
+that purpose, we performed 1\,000 permutation analyses for each of the
 four datasets, permuting the phenotypes and running the entire protocol
 to detect significant gene pairs. When at least one significant
 gene-pair is observed in a permutation, that permutation is considered a
@@ -411,12 +399,12 @@ Physical, Chromatin, and eQTL, respectively).
 
 ## Discussion
 
-In this chapter we explore a protocol for functional filtering for
-epistasis detection on an inflammatory bowel disease dataset (Section
+In this chapter we explore protocols for functional filtering for
+epistasis detection on an IBD dataset (Section
 \@ref(methods:pipeline)). This is expected to bring two
-advantages. The first one is an increase in statistical power. In GWAIS,
-the high dimensionality of data requires a conservative approach to
-multiple testing and limits the detection of epistasis with low effect
+advantages. The first one is an increase in statistical power.
+The high dimensionality of GWAIS data requires a conservative
+multiple testing correction and limits the detection of epistasis with low effect
 sizes. The proposed protocol tackles this issue, while controlling for
 type I error. It does so by limiting the number of tests by filtering
 the dataset with functional filters. As we observe in Section 
@@ -428,8 +416,8 @@ mappings provide results which match the biology of IBD, while corresponding
 to known interactions. On the other hand, the Standard protocol detects 
 multiple interactions that are hard to interpret. For instance, several 
 interactions involve RNA genes of unknown function (e.g. *LOC101927272* or 
-*LINC02178*). Hence, our results stress that considering the 3D structure of the
-genome in GWAIS might inform about the susceptibility.
+*LINC02178*). Hence, our results stress the relevance of regulatory variants
+in susceptibility to IBD.
 
 In this chapter, we aim at developing a set of guidelines for the detection of 
 gene epistasis, with an application to IBD. Nonetheless, epistasis detection 
@@ -442,7 +430,10 @@ detection algorithm, as it accepts a continuous outcome variable,
 corrects for main effects, and is computationally efficient. However,
 other algorithms like MBMDR [@calle2010mbmdr], which share these
 properties but make different assumptions about epistasis, would have
-been suitable as well. It would be of interest to the GWAIS community for us 
+been suitable as well. 
+
+With regards to the aspects of GWAIS that are within the scope of this work,
+it would interesting for the community for us 
 to provide set of recommendations based on our experience, and the results
 justifying each of them. Before we reach that point, a few extra experiments 
 are required.
@@ -470,10 +461,10 @@ to IBD (intestines and leukocytes).
 It would also be interesting to explore alternative sources of known
 interactions. In this chapter we worked
 exclusively on interactions from Biofilter, which compiles multiple databases.
-The database that Biofilter built contained 37 266 interactions. This
+The database that Biofilter built contained 37\,266 interactions. This
 is notably smaller than other gene interaction databases, like HINT 
-[@das_hint_2012] (173 797 interactions, used in Chapter \@ref(genesis)), or 
-STRING [@szklarczyk_string_2019] (11 759 455 interactions). Hence changing
+(@das_hint_2012, 173\,797 interactions, used in Chapter \@ref(genesis)), or 
+STRING (@szklarczyk_string_2019, 11\,759\,455 interactions). Hence changing
 databases might result in more, equally interpretable, detected interactions.
 
 Pathway enrichment analyses can inform about the broader framework 
@@ -487,8 +478,8 @@ gene set for a given pair of genes is obtained in three steps:
 3. Create a gene set including the initial two genes and all the genes in the
 shortest path that are part of the epistasis network as well.
 
-Another important question is which is the null hypothesis we are 
-testing in the pathway enrichment analyses. 
+Another important question is which null hypothesis
+to test in the pathway enrichment analyses. 
 In this regard, the literature often distinguishes two kinds of test:
 self-contained and competitive [@wang_gene_2011]. As in our study we do not
 have gene-wise statistics, we are restricted to the former.
@@ -496,16 +487,16 @@ Those tests compare the overlap between a pathway and the gene set to
 the expected overlap from taking equally-sized random sets from the universe
 of genes. This is often tested using a hypergeometric test. However, this 
 approach requires deciding *a priori* what that gene universe is. Selecting
-all the known genes is not an option, as a GWAS experiment surveys all the 
+all the known genes is not an option, as a GWAIS experiment surveys all the 
 genome unbiasedly, but not necessarily so all the genes. This is specially true
 in an array focused on immunogenomics. Hence, I propose computing the gene 
-background in a dataset specific way. For instance, the *chromatin* 
+background in a dataset specific way. For instance, the *Chromatin* 
 results are analyzed in a gene universe where only the genes with a chromatin
 mapping to the chip are used. However not all genes are surveyed at the same
 resolution, as we observe in Figure \@ref(fig:sign-snps-per-gene-and-viceversa).
 If two genes are equally involved in a disease, we are more likely to find an 
 association in the gene which we are testing more often. Hence, I would like to
-weight every gene by the number of SNPs that map to it, which should provide 
+weigh every gene by the number of SNPs that map to it, which should provide 
 a conservative null hypothesis.
 
 Lastly, the protocol presented here is a

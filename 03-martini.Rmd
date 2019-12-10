@@ -2,16 +2,14 @@
 
 Parts of this work were presented in ISMB/ECCB 2017 in the poster *Héctor Climente-González and Chloé-Agathe Azencott*, R package for network-guided Genome-Wide Association Studies.
 
-```{r echo=FALSE}
-knitr::asis_output(if (knitr:::is_latex_output()) {
-"\\begin{chapabstract}{Abstract:}
+```{r echo=FALSE, results = "asis", eval='is_latex_output'}
+cat("\\begin{chapabstract}{Abstract:}
 In this chapter I introduce martini and scones.nf. martini is an R implementation of SConES with three improvements over the previous ones. First, it includes measures of association for binary traits ($\\chi^2$ and logistic regression). Second, it accepts user-specified covariates, which are additional terms in the logistic regression. Third, it includes four ways of scoring the cross-validation folds: consistency (as other implementations), and three penalized log-likelihood measures (BIC, AIC, and AICc). martini is available in Bioconductor 3.7. scones.nf is a computational package that further facilitates the usage of martini. It does so by accepting common file formats for GWAS and networks, and by performing a two-staged cross-validation aimed at achieving better hyperparameters. scones.nf is available on \\url{https://github.com/hclimente/gwas-tools}.
 \\end{chapabstract}
 \\vskip 0.2in
 \\begin{chapabstract}{Résumé :}
 
-\\end{chapabstract}"
-})
+\\end{chapabstract}")
 ```
 
 ## Introduction
@@ -66,11 +64,11 @@ $$ AIC_c=AIC+\frac{2p_{in}(p_{in}+1)}{n-p_{in}-1}=-2L(X,y,\hat{\theta})+2\left(\
 
 AICc is a modification of AIC that penalizes complex models (many features) in high dimensional settings, where the number of features is much larger than the number of samples, as in GWAS.
 
-*martini* implements these three measures to score a particular combination of hyperparameters. As with consistency, every considered $\eta$ and $\lambda$ is tested in a 10-fold split of the data. Then, for each fold, a linear model is built, which aims to predict the phenotype from the SNPs selected in that fold. These scores relate the likelihood of these linear models to its complexity. Each combination of hyperparameters is scored by averaging the 10 folds, and the one that produces the lowest score on average is chosen. In some simulation studies (not shown), we observed that they produce solved the problems of the consistency score outlined above.
+*martini* implements these three measures to score a particular combination of hyperparameters. As with consistency, every considered $\eta$ and $\lambda$ is tested in a 10-fold split of the data. Then, for each fold, a linear model is built, which aims to predict the phenotype from the SNPs selected in that fold. These scores relate the likelihood of these linear models to its complexity. Each combination of hyperparameters is scored by averaging the 10 folds, and the one that produces the lowest score on average is chosen. In some simulation studies (not shown), we observed that they solved the problems of the consistency score outlined above.
 
 ### Network-based simulations
 
-We propose that SConES will detect biomarker with increased sensibility respect to non-network frameworks. In other words, it should be able to detect causal SNPs for less heritable phenotypes. In order to test this hypothesis, *martini* facilitates the simulation of phenotypes and interconnected causal networks on real GWAS datasets. This simulation tool is broken down into two functions.
+We conjecture that SConES will detect biomarker with increased sensibility respect to non-network frameworks. In other words, it should be able to detect causal SNPs for less heritable phenotypes. In order to test this hypothesis, *martini* facilitates the simulation of phenotypes and interconnected causal networks on real GWAS datasets. This simulation tool is broken down into two functions.
 
 The first of them is `simulate_causal_snps()`, which takes a SNP network in which each SNP is annotated with the genes it maps to (as can be obtained by `get_GI_network()`, see Section \@ref(martini-ui)). It takes two additional parameters: the number of genes $n$ involved in the disease, and the proportion of the SNPs $p$ mapped to a causal gene that are causal themselves. Then, it randomly scans the network until it finds maximum of two connected SNP subnetworks that are mapped to $n$ different genes. A fraction $p$ of such subnetwork are selected as causal.
 
@@ -78,7 +76,7 @@ The second function is `simulate_phenotype()`, which re-implements the `--simu-c
 
 $$ y_j = \sum\nolimits_i w_{ij} u_i + e_j ,$$
 
-where the weight $w_{ij}$ is the inclination of the genotype $i$ of patient $j$ over the phenotype; the allelic effect of the $i$-th causal variant $u_i$ in arbitrary units; and the residual effect $e_j$ is the the proportion of the trait not attributable to the genotype. The vector of effect sizes $u$ can be specified by the user via the `effectSize` parameter If it is not, by default it is sampled from a standard Normal distribution.
+where the weight $w_{ij}$ is the inclination of the genotype $i$ of patient $j$ over the phenotype; the allelic effect of the $i$-th causal variant $u_i$ in arbitrary units; and the residual effect $e_j$ is the the proportion of the trait not attributable to the genotype. The vector of effect sizes $u$ can be specified by the user via the `effectSize` parameter. If it is not, by default it is sampled from a standard Normal distribution.
 
 The weight $w_{ij}$ is calculated as
 
@@ -116,6 +114,6 @@ In addition to the changes implemented in *martini*, I developed a ready-to-use 
 
 In this chapter I introduced *martini* and the `scones.nf` pipeline. Jointly, they make SConES easily applicable to any GWAS dataset. Specially, they provide a wider range of options to the user in terms of how to measure the association between the genotypes and the phenotype, and how to select SConES hyper-parameters. Thanks to these improvements, we were able to obtain the SConES results presented in Chapter \@ref(genesis). Additionally, we provide a network-based phenotype simulation framework. *martini* [@martini] is available in Bioconductor (https://www.bioconductor.org/packages/martini); `scones.nf` is available on GitHub (https://github.com/hclimente/gwas-tools).
 
-However, *martini* and SConES still present shortcomings with regards to hyper-parameter selection (Sections \@ref(genesis-issues) and \@ref(results-benchmark)). As we note, SConES solutions were unstable despite using *consistency* for model selection. This requires further examination. Additionally, when applied to GENESIS the selected solutions did not use the protein-protein interaction network, but other methods did. Although this is, to some extent, expected in that dataset, it does not inform much about the biology of the disease. In other words, in this case, SConES should be more tolerant to including unassociated SNPs in order to interconnect subnetworks of strongly associated SNPs. Hence, different parameters (lower values of $\lambda$) might relax the connectivity constraints enough to capture biological mechanisms more broadly. In this regard, it would be promising to use topological measures as scores for hyperparameter selection, for instance favoring settings that lead to densely interconnected networks. In this vein, it also is worth further exploring SigMod [@liu_sigmod:_2017] a modification of SConES described in Section \@ref(methods:methods). While SConES penalizes the selecting SNPs with many outbound edges and does not account for inbound edges, SigMod favours SNPs with many inbound edges, while disregarding outbound edges.
+However, *martini* and SConES still present shortcomings with regards to hyper-parameter selection (Sections \@ref(genesis-issues) and \@ref(results-benchmark)). As we note, SConES solutions were unstable despite using *consistency* for model selection. This requires further examination. Additionally, when applied to GENESIS the selected solutions did not use the protein-protein interaction network, but other methods did. Although this is, to some extent, expected in that dataset, it does not inform much about the biology of the disease. In other words, in this case, SConES should be more tolerant to including unassociated SNPs in order to interconnect subnetworks of strongly associated SNPs. Hence, different parameters (lower values of $\lambda$) might relax the connectivity constraints enough to capture biological mechanisms more broadly. In this regard, it would be promising to use topological measures as scores for hyperparameter selection, for instance favoring settings that lead to densely interconnected networks. In this vein, it also is worth further exploring SigMod [@liu_sigmod:_2017] a modification of SConES described in Section \@ref(methods:methods). While SConES penalizes selecting SNPs with many outbound edges and does not account for inbound edges, SigMod favours SNPs with many inbound edges, while disregarding outbound edges.
 
 Lastly, I would like to explore SNP networks beyond the ones proposed in the original manuscript (Section \@ref(methods:snp-network)). As I described in Section \@ref(intro-interpretability), and will deepen in Chapter \@ref(epi-snp2gene), there are multiple ways of relating SNPs to a function, and hence to build SNP networks. One compelling idea is to build a SNP network that reflects the 3D structure of the genome. Another opportunity for development involves encoding the LD relationship between the SNPs in the network, by tuning the LD. This would allow to either favor the selection of LD blocks (large LD implies large edge weight), or favor the selection of independent, associated SNPs (large LD implies small edge weight). These networks are very complex, involving hundreds of thousands of nodes and tens of millions of edges. In this regard, the ability of SConES to efficiently handle such networks enables this research and motivates working on solving the aforementioned issues. 
