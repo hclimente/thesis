@@ -489,7 +489,17 @@ of genes. This is often tested using a hypergeometric test. However, this
 approach requires deciding *a priori* what that gene universe is. Selecting
 all the known genes is not an option, as a GWAIS experiment surveys all the 
 genome unbiasedly, but not necessarily so all the genes. This is specially true
-in an array focused on immunogenomics. Hence, I propose computing the gene 
+in an array focused on immunogenomics. Indeed, we observe this bias across all
+mappings in the genes mapped to the SNPs with main effects 
+(Figure \@ref(fig:platform-bias)).
+
+(ref:fig-platform-bias-caption) Plaform bias in the genes hit by SNPs with significant main effects. Every data point is a gene. The *x*-axis represents the number of significant SNPs mapped to that gene. The *y*-axis represents the expected number, if a random set of SNPs of the same size were selected $\left( \frac {\text{(# significant SNPs)} \times \text{(# SNPs mapped to gene)}} {\text{# SNPS}} \right)$. In red, a line with a slope of 1 representing the case were SNPs are selected at random.
+
+```{r platform-bias, echo=FALSE, fig.cap='(ref:fig-platform-bias-caption)'}
+knitr::include_graphics('fig/main_effect_bias.png', dpi = NA)
+```
+
+Hence, I propose computing the gene 
 background in a dataset specific way. For instance, the *Chromatin* 
 results are analyzed in a gene universe where only the genes with a chromatin
 mapping to the chip are used. However not all genes are surveyed at the same
@@ -497,7 +507,7 @@ resolution, as we observe in Figure \@ref(fig:sign-snps-per-gene-and-viceversa).
 If two genes are equally involved in a disease, we are more likely to find an 
 association in the gene which we are testing more often. Hence, I would like to
 weigh every gene by the number of SNPs that map to it, which should provide 
-a conservative null hypothesis.
+a conservative null hypothesis. 
 
 Lastly, the protocol presented here is a
 complex, multi-stage approach which can be useful to any researcher with any

@@ -67,9 +67,14 @@ We discarded SNPs with a minor allele frequency lower than 0.1%, those
 not in Hardy - Weinberg equilibrium in controls (P-value \<0.001), and
 those missing on more than 10% of the samples. A subset of 20 duplicated
 SNPs in *FGFR2* were also removed. In addition, we removed the samples
-with more than 10% missing genotypes, and those related to other samples. 
-Additionaly 11 samples were removed for other reasons. The final dataset
-included 1\,271 controls and 1\,280 cases, genotyped over 197\,083 SNPs.
+with more than 10% missing genotypes. After control for relatedness, 17 
+additional samples were removed (6 for sample identity error, 6 false 
+“friend/control” having family link with other samples, 3 “friend/control” 
+having a high relatedness score). Lastly, based on study selection criteria, 
+11 other samples were removed (1 control having cancer, 4 index cases with no 
+affected sister, 3 half-sisters, 1 sister with CLIS, 1 with BRCA mutation 
+detected in the family, 1 with molecular diagnosis not received). The final 
+dataset included 1\,271 controls and 1\,280 cases, genotyped over 197\,083 SNPs.
 
 We looked for population structure that could create confounding
 associations (Section \@ref(pop-structure)). A PCA revealed no differential 
