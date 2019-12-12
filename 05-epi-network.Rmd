@@ -4,7 +4,7 @@ The contents of this chapter are based on *Héctor Climente-González, Diane Dur
 
 ```{r echo=FALSE, results = "asis", eval='is_latex_output'}
 cat("\\begin{chapabstract}{Abstract:}
-TODO
+In this chapter we explore the detection of high-order epistasis in IBD. We do so through a linear regression with interaction terms of orders up to 4. As the number of tests increases exponentially with the order of the interactions and, hence, resulting in low statistical power, we devised a two-step approach. In a first step we apply a variety second-order epistasis detection methods, and build a epistasis network that aggregates all the detected interactions. In a second step we take all star subnetworks composed of 3 and 4 nodes, and search for high-order epistasis between them. The rationale is that SNPs involved in high-order epistasis are more likely to display second-order as well. The advantage of this approach is that we keep the number of tests under control. Indeed, we are able to detect 37 high-order interactions (FDR 10\\%). Mapping these SNP interactions to gene interactions suggests the involvement of the complement system in susceptibility to IBD.
 \\end{chapabstract}
 \\vskip 0.2in
 \\begin{chapabstract}{Résumé :}
@@ -14,8 +14,7 @@ TODO
 
 ## Introduction
 
-Although in the previous chapter we focused interactions between two loci, there is evidence that high-order epistasis (interactions between more
-than two loci) strongly shape complex traits [@taylor_higher-order_2015]. However, the higher the order of the searched epistasis, the more pressing GWAIS challenges become (Section \@ref(gwais)). Under the rationale that high-order interactions are likely to show also second-order effect, second-order epistasis networks have been leveraged on in the past to detect high-order epistasis [@hu_statistical_2012]. In this chapter we explore high-order epistasis interactions in IBD using a similar approach. We do so in three steps. First, we apply a representative variety of second-order epistasis detection methods, and construct an equal number of epistasis networks. Second, we pool together the results into a consensus network. Last, we search for epistasis between the SNPs in the consensus network. As in Chapter \@ref(genesis), in the process we also compare the different methods.
+Although in the previous chapter we focused interactions between two loci, some studies suggest that high-order epistasis (interactions between more than two loci) strongly shape complex traits [@taylor_higher-order_2015]. However exhaustively searching high-order epistasis worsens the challenges of GWAIS (Section \@ref(gwais)): a large number of statistical tests to consider, higher diversity of ways an interaction can occur, results harder to interpret, etc. Under the rationale that high-order interactions are likely to show also second-order effect, second-order epistasis networks have been leveraged on in the past to detect high-order epistasis [@hu_statistical_2012]. In this chapter we explore high-order epistasis interactions in IBD using a similar approach. We do so in two steps. First, we apply a representative variety of second-order epistasis detection methods, and construct an epistasis network. Then we search for high order epistasis between the SNPs in the network and their neighbors. As in Chapter \@ref(genesis), in the process we also compare the different methods.
 
 ## Materials and methods
 
@@ -37,64 +36,66 @@ MB-MDR [@lishout_efficient_2013] is an extension of the classical MDR method. Fo
 
 #### EpiHSIC
 
-
-
 TODO EpiHSIC [@kam-thong_epistasis_2011]
 
 We used *gpuEpiScan*'s implementation in R of EpiHSIC [@gpuEpiScan].
 
-### Consensus clustering
-
-TODO Which fusion algorithm to use?
-
 ### High-order epistasis detection {#methods-high-order}
 
-From the fusion network, we obtained candidate set of SNPs for high-order epistasis. For each of these sets, we built a linear model that included all possible interaction terms. For instance, for a network with three SNPs, *A*, *B* and *C*, we built the following model:
+We built a SNP-epistasis network using all the significant interactions from the presented methods. On this network, we selected star networks (one central node connected to all the others) as candidate sets for high-order epistasis detection. For each candidate set we built a linear model that included all possible interaction terms. For instance, for a network with three SNPs, *A*, *B* and *C*, we built the following model:
 
-$$Y = \beta_0 + \beta_1 g_A + \beta_2 g_B + \beta_3 g_A g_B + \beta_4 g_A g_C  + \beta_5 g_B g_C + \beta_6 g_A g_B g_C,$$
+$$Y = \beta_0 + \beta_1 g_A + \beta_2 g_B + \beta_3 g_A g_B + \beta_4 g_A g_C + \beta_5 g_B g_C + \beta_6 g_A g_B g_C,$$
 
-were the coefficients are the $\beta$ terms, and $g_A$, $g_B$ and $g_C$ are the genotypes under additive encoding for SNPs *A*, *B* and *C* respectively.  Under the null hypothesis, the $\beta$ coefficients follow a standard Normal distribution. As the number of tests grows exponentially with the number of SNPs, we restricted the sets to star subnetworks of size 3 and 4. We accounted for multiple testing by setting the false discovery rate to 10%. For this purposes, the total number of tests was the number of $\beta$ for terms of order 3 and 4 for which we could have a value.
+were the coefficients are the $\beta$ terms, and $g_A$, $g_B$ and $g_C$ are the genotypes under additive encoding for SNPs *A*, *B* and *C* respectively. Under the null hypothesis, the $\beta$ coefficients follow a standard Normal distribution. We restricted the sets to star subnetworks of size 3 and 4, as the number of tests grows exponentially with the number of SNPs. We accounted for multiple testing by setting the false discovery rate to 10%. For this purposes, the total number of tests was the number of $\beta$ for terms of order 3 and 4 for which a $\beta$ was obtained.
 
 ### Code availability
 
-The different epistasis detection methods are implemented in pipelines, available on GitHub (https://github.com/hclimente/gwas-tools). The code necessary to reproduce this chapter's results, altogether with the corresponding analyses, are available in GitHub as well (https://github.com/hclimente/waffles).
+The different epistasis detection methods are implemented in pipelines, available on GitHub (https://github.com/hclimente/gwas-tools). The code necessary to reproduce this chapter's results, altogether with the corresponding analyses, are available on GitHub as well (https://github.com/hclimente/waffles).
 
 ## Results
 
-### TODO Main effects
-
 ### Epistasis detection methods produce relatively similar results
 
-We applied different methods to search for epistatic interactions in the IIBDGC dataset (Section \@ref(methods-methods)). From these interactions, we built an epistasis network per method (Figure \@ref(fig:overview)). MB-MDR is the method that detects the larger number of interactions (741), followed by logistic regression (68) and EpiHSIC (14). Despite the differences in size, MB-MDR's solutions greatly overlap with logistic regression's (37, 54.4%) and EpiHSIC (3, 21.4%) (Figure \@ref(fig:solutions-overlap)).
+We applied different methods to search for epistatic interactions in the IIBDGC dataset (Section \@ref(methods-methods)). From these interactions, we built an epistasis network that included all significant pairs from any of the methods. In total they retrieved 823 epistatic interactions involving 459 SNPs (Figure \@ref(fig:overview)). MB-MDR is the method that detects the largest number of interactions (741), followed by logistic regression (68) and EpiHSIC (14). Despite difference in size, MB-MDR's solutions greatly overlap with logistic regression's (37, 54.4%) and EpiHSIC (3, 21.4%) (Figure \@ref(fig:solutions-overlap)). In the same vein, 110 of the 459 SNPs in epistasis have significant main effects themselves (Fisher's Exact Test $\text{P-value} < 2.2 \times 10^{-16}$ on the overlap), despite both MB-MDR and logistic regression accounting for main effects. This large overlap points to a large agreement on the biological mechanisms of the disease.
 
-(ref:fig-overview-caption) Overview of the SNP epistasis networks produced by the epistasis detection methods described in Section \@ref(methods-methods). Any node participating in an interaction detected by any method is depicted in all panels.
+(ref:fig-overview-caption) Overview of the SNP epistasis networks produced by different epistasis detection (Section \@ref(methods-methods)). The network is split into several panels to depict the source of each interaction.
 
 ```{r overview, echo=FALSE, fig.cap='(ref:fig-overview-caption)'}
 knitr::include_graphics('fig/overview_snp_solutions.png', dpi = NA)
 ```
 
-(ref:fig-solutions-overlap-caption) Overlap between the solutions from the different methods. Note that the *y*-axis is in logarithmic scale.
+(ref:fig-solutions-overlap-caption) Overlap between the solutions from the different epistasis detection methods. Note that the *y*-axis is in logarithmic scale.
 
 ```{r solutions-overlap, echo=FALSE, fig.cap='(ref:fig-solutions-overlap-caption)'}
 knitr::include_graphics('fig/overlap_solutions.png', dpi = NA)
 ```
 
+(ref:fig-main-effect-overlap-caption) Main effects on IBD, measured using a logistic regression on the case-control phenotype. The 7 largest principal components are included in the model as covariates. SNPs involved in an epistasis interaction are colored in dark grey.
+
+```{r main-effect-overlap, echo=FALSE, fig.cap='(ref:fig-main-effect-overlap-caption)'}
+knitr::include_graphics('fig/manhattan_epistasis.png', dpi = NA)
+```
+
 ### High-order epistasis interactions in IBD
 
-We searched high-order epistasis in star subnetworks from the aggregated network (Section \@ref(methods-high-order)). In total, we tested 124 interactions 3rd and 4th order interactions, out of which 37 are significant (Figure \@ref(fig:high-order)). The high proportion of the tested interactions that are significant validates this approach. However, most of the edges come from MB-MDR: only three of the tested star subnetworks involve edges from different sources.
+We searched for high-order epistasis in star subnetworks from the aggregated network (Section \@ref(methods-high-order)). In total, we tested 124 interactions 3rd and 4th order interactions, out of which 37 are significant (Figure \@ref(fig:high-order)). The high proportion of the tested interactions that are significant supports the pertinence of our approach. Only three of the tested star subnetworks involved edges from different sources , probably due to the difference in solution size between MB-MDR and the other methods.
 
-(ref:fig-high-order-caption) Overview of the detected high order epistasis interactions. The edges involved in the 124 tested 3rd and 4th order interactions are highlighted in blue; the 37 among those that were significant, in red.
+(ref:fig-high-order-caption) Overview of the detected high order epistasis interactions, shown on the binary epistasis network. The edges involved in the 124 tested 3rd and 4th order interactions are highlighted in blue; the 37 among those that were significant, in red.
 
 ```{r high-order, echo=FALSE, fig.cap='(ref:fig-high-order-caption)'}
 knitr::include_graphics('fig/high_order_significant.png', dpi = NA)
 ```
 
-### TODO Map to genes
+### Mapping SNP to genes involves the complement system
+
+We mapped the high order epistatic interactions to genes with a HUGO symbol, using any of the maps described in Section \@ref(methods:prefiltering). As in Chapter \@ref(epi-snp2gene), we removed genes in the HLA regions and self-interactions. But, in contaposition to that chapter, we make use of all three mappings at once, and hence gene interactions where the genes were mapped via two different mappings are expected. This resulted in 20\,826 potential gene-gene interactions. When we restricted outselves only to those binary interactions that we mapped to a significant high-order interaction, we obtained 5\,273 candidate gene-gene interactions. This one-to-many mapping illustrates well the problem of linking SNP interactions to their functional consequences. Restricting the 5\,273 interactions only to those that exist on STRING [@szklarczyk_string_2019], we reduced the number to 892. We decided to focus on this latter set of interactions. Although it is doubtful that all these gene-gene interactions are truly linked to the disease, we conjecture that it will be enriched in relationships truly associated to the disease. The high interconnectedness of the network (Figure \@ref(fig:overview)) gives support to this idea, seeming to capture a reduced number of susceptibility mechanisms.
+
+We first studied how many SNP-interactions supported every gene-interaction. The gene interactions with higher support are, indeed involve immune related genes. Specifically, they involve multiple genes from the complement system (*C4A*, *C4B* and, to a lesser extent, *C2*). This set of genes is part of the innate system, and is part of the organism's reaction to pathogens. The involvement of the complement system in IBD has received some attention lately [@jain_complement_2014;@heybeli_complement_2016;@sina_intestinal_2018], as mice lacking complement proteins suffer intestinal infammation similar to IBD. In our results, we observe an interaction between the three aforementioned genes of the complement, and in greater numbers with other genes, the one supported by most SNP interactions being *NOTCH4*.
 
 ## Discussion
 
-In this chapter I apply multiple methods for second order epistasis detection to the IIBDGC dataset. MB-MDR detected more interactions than any other method, exhibiting a high sensitivity to detection.
+In this chapter I apply three methods for second order epistasis detection to the IIBDGC dataset. Yet, most of the detected interactions came from the same method, MB-MDR, which exhibited a high sensitivity. Consistent with the observation that SNPs with main effects are involved in such epistatic interactions, we detected 3rd and 4th order interactions between the many SNPs with two-way epistasis. When we mapped the SNP pairs to candidate gene pairs, we observed that many gene interactions involved genes involved in the complement system. This supports a genetic component to the recent observations of the involvement of the complement system in the etiology of IBD.
 
-By combining different methods, we detect epistasis that none of the methods could find by itself.
+However, our approach have some shortcomings. First, searching high-order epistasis in hubs from the epistatis network is inviable under the current approach. For instance, the node with the highest degree has 39 neighbors, which implies building a model which includes interaction terms up to order 39th. In this regard, a possible way forward would be dividing such star subnetworks into sets of 3 and 4 nodes, and looking exclusively for 3rd and 4th order interactions respectively within them. Another issue is the mapping of SNPs pairs to gene pairs. With this aspect, our work in Chapter \@ref(epi-snp2gene) is promising, and answering questions there is tantamount to paving our progress here. Some of these questions are whether it is beneficial to use tissue-specific SNP-gene mappings, when should a gene-gene filter be used, or how to appropriately carry out a pathway enrichment analysis on epistasis results. However, this chapter presents new challenges in those fronts as well. For instance, how to use binary interactions when we work on ternary interactions. Although in this chapter I still decomposed them into binary interactions, it is worth considering higher order gene-interactions obtained from databases, namely co-complexes.
 
-During this study, we faced a scarcity of methods which work on continuous phenotypes, or accept covariates. Although we found comparisons of methods which study case-control phenotypes [@Shang2011;@chatelain_performance_2018], to the best of our knowledge the equivalent does not exist for continuous phenotypes. As dealing with such outcomes is key to deal with population structure, I would like to extend this work to be such a comparison. In this chapter I have presented three such methods, and we have located three more: GenEpi [@chang_genepi:_2018], a random forest-based approach (e.g. [@yoshida_snpinterforest:_2011; @li_detecting_2016]), or mutual information [@pensar_genome-wide_2019].
+Additionally, during this study we faced a scarcity of methods which work on continuous phenotypes or accept covariates. Such methods are necessary to account for population structure in epistasis detection. In this chapter I have presented three such methods, and we have located a few more: GenEpi [@chang_genepi:_2018], and several approaches based on random forest-based approaches (e.g. [@yoshida_snpinterforest:_2011; @li_detecting_2016]) or mutual information [@pensar_genome-wide_2019]. Adding some of these methods to protocol is likely to increase the number of detected high-order interactions. Additionally, I see this as a good opportunity to compare the methods, as has been done already on methods that work on case-control phenotypes [@Shang2011;@chatelain_performance_2018].

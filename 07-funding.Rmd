@@ -1,4 +1,4 @@
-# Funding and acknowledgments {-}
+# Funding acknowledgments {-}
 
 This thesis was funded by the European Union's Horizon 2020 research and innovation program under the Marie Skłodowska-Curie [666003]. Additionally, the work presented in Appendix \@ref(block-hsic-lasso) was made possible by a scholarship from RIKEN AIP, which allowed me to spend 3 months in Makoto Yamada's laboratory in Kyoto. 
 
