@@ -23,9 +23,9 @@ linestretch: 1.05
 
 # Preface {-}
 
-Ph.D. thesis
+Ph.D. thesis supervised by Chloé-Agathe Azencott and Véronique Stoven.
 
-Supervised by Chloé-Agathe Azencott and Véronique Stoven.
+It was written in R markdown and LaTeX using [bookdown](https://github.com/rstudio/bookdown). All the files required to compile it are available at https://github.com/hclimente/thesis.
 
 <!-- 
 Cover dimensions wrong because

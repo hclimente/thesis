@@ -1,1 +1,3 @@
-These are the source materials to compile my thesis, entitled *Network-guided genome-wide association studies*.
+These are the source materials to compile my thesis, entitled *Network-guided genome-wide association studies*. I obtained the presented results between 2016 and 2019 at [CBIO](http://cbio.mines-paristech.fr/), a joint initiative between [Institut Curie](https://curie.fr/) and [Mines ParisTech](http://www.mines-paristech.fr/) to develop machine learning methods to address biology problems. The full manuscript is available for download in [PDF](book/hclimente_thesis.pdf).
+
+The thesis is written in R markdown using [bookdown](https://github.com/rstudio/bookdown).

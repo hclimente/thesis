@@ -67,9 +67,9 @@ We discarded SNPs with a minor allele frequency lower than 0.1%, those
 not in Hardy - Weinberg equilibrium in controls (P-value \<0.001), and
 those missing on more than 10% of the samples. A subset of 20 duplicated
 SNPs in *FGFR2* were also removed. In addition, we removed the samples
-with more than 10% missing genotypes, and an additional 28 samples with
-TODO. The final dataset included 1\,271 controls and 1\,280 cases,
-genotyped over 197\,083 SNPs.
+with more than 10% missing genotypes, and those related to other samples. 
+Additionaly 11 samples were removed for other reasons. The final dataset
+included 1\,271 controls and 1\,280 cases, genotyped over 197\,083 SNPs.
 
 We looked for population structure that could create confounding
 associations (Section \@ref(pop-structure)). A PCA revealed no differential 
@@ -819,17 +819,11 @@ with which the GS network captures the genome structure.
 
 ### Aggregating solutions provides insights into the biology of cancer {#results:consensus}
 
-(ref:fig-consensus-caption) Consensus subnetwork on GENESIS (Section \@ref(methods:consensus)). Each node is represented by a pie chart, which shows the methods that selected it. The labeled genes have a VEGAS2v2 P-value \< 0.001 and/or are known breast cancer susceptibility genes (colored in pink).
-
-```{r consensus, echo=FALSE, fig.cap='(ref:fig-consensus-caption)'}
-knitr::include_graphics('fig/figure_3', dpi = NA)
-```
-
 To leverage on the strengths of each of the methods and compensate their
 respective weaknesses, we built a consensus subnetwork that captures the
 mechanisms most shared among the solution subnetworks (Section
 \@ref(methods:consensus)). The consensus subnetwork (Figure
-\@ref(fig:consensus)) contains 93 genes and is enriched in breast
+\@ref(fig:consensus-names)) contains 93 genes and is enriched in breast
 cancer susceptibility genes (Fisher's exact test P-value = 7.8 10^-5^).
 Due to the limited overlap between methods, only 20 genes were common to
 more than two of them (Figure \@ref(fig:consensus-stats)A). Encouragingly, 
@@ -847,6 +841,10 @@ network includes a 2-node subnetwork composed of two mitochondrial
 ribosomal protein (MRPS31 - VEGAS P-value = 7.67 10^-3^ - and MRPS18B -
 VEGAS P-value = 7.92 10^-3^), which suggests an involvement of
 mitochondrial ribosomes in carcinogenesis.
+
+```{r consensus-names, echo=FALSE, fig.cap='(ref:fig-consensus-names-caption)', out.height='75%', fig.align='center'}
+knitr::include_graphics('fig/sfigure_7', dpi = NA)
+```
 
 We also examined the topological properties of the nodes. The genes in
 the consensus network have higher betweenness centrality than the rest
@@ -869,11 +867,7 @@ association in GENESIS (VEGAS P-value = 0.22), its neighbors in the
 consensus subnetwork have consistently low P-values (median VEGAS
 P-value = 0.006).
 
-(ref:fig-consensus-names-caption) Consensus subnetwork on GENESIS (Section \@ref(methods:consensus)). **(A)** Each node is represented by a pie chart, which shows the methods that selected it. The labeled genes have a VEGAS2v2 P-value \< 0.001 and/or are known breast cancer susceptibility genes (colored in pink). This panel is identical to Figure \@ref(fig:consensus). **(B)** The name of every gene is indicated.
-
-```{r consensus-names, echo=FALSE, fig.cap='(ref:fig-consensus-names-caption)', out.height='75%', fig.align='center'}
-knitr::include_graphics('fig/sfigure_7', dpi = NA)
-```
+(ref:fig-consensus-names-caption) Consensus subnetwork on GENESIS (Section \@ref(methods:consensus)). **(A)** Each node is represented by a pie chart, which shows the methods that selected it. The labeled genes have a VEGAS2v2 P-value \< 0.001 and/or are known breast cancer susceptibility genes (colored in pink). **(B)** The name of every gene is indicated.
 
 The consensus subnetwork is not completely connected: out of the 93
 genes, the largest connected subnetwork includes only 49. A GO
