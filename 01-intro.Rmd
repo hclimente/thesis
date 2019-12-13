@@ -187,7 +187,7 @@ In the context of disease, densely interconnected subnetworks (modules) of consi
 
 #### Aggregation of networks
 
-During my research, often I obtained multiple high-scoring subnetworks using different approaches, which provided complementary perspectives of the same disease. In consequence, I was interested in integrating them into a single subnetwork, which I would analyze. In Chapter \@ref(genesis) we discuss a naive way of aggregating subnetworks from different high-score subnetwork search algorithms, were the edges are unweighted. @wang_similarity_2014 and @glass_passing_2013 used information theory principles to integrate different networks, finding the closest network to al of them. In Chapter \@ref(epi-network), we discuss how to apply such methods to networks coming from different epistasis detection methods, whose edges are weighed by the confidence they exist.
+During my research, often I obtained multiple high-scoring subnetworks using different approaches, which provided complementary perspectives of the same disease. In consequence, I was interested in integrating them into a single subnetwork, which I would analyze. In Chapter \@ref(genesis) we discuss a naive way of aggregating subnetworks from different high-score subnetwork search algorithms, were the edges are unweighted. In Chapter \@ref(epi-network) we create an epistasis network from interactions from several epistasis detection methods, whose edges are weighed by the confidence they exist.
 
 ## Contributions
 

@@ -583,7 +583,7 @@ kable(solution_summary,
 
 We applied six network methods to the GENESIS dataset (Section
 \@ref(methods:methods)), obtaining six solutions (Figure 
-\@ref(fig:overview-solutions), Supplementary Files 1 and 2): one
+\@ref(fig:overview-solutions)): one
 for each of the five gene-based methods (Section
 \@ref(methods:gene-network)), and one for SConES GI (Section
 \@ref(methods:snp-network)). The solutions are very heterogeneous
@@ -847,7 +847,7 @@ ribosomal protein (MRPS31 - VEGAS P-value = 7.67 10^-3^ - and MRPS18B -
 VEGAS P-value = 7.92 10^-3^), which suggests an involvement of
 mitochondrial ribosomes in carcinogenesis.
 
-```{r consensus-names, echo=FALSE, fig.cap='(ref:fig-consensus-names-caption)', out.height='75%', fig.align='center'}
+```{r consensus-names, echo=FALSE, fig.cap='(ref:fig-consensus-names-caption)', out.height='80%', fig.align='center'}
 knitr::include_graphics('fig/sfigure_7', dpi = NA)
 ```
 

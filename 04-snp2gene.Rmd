@@ -351,7 +351,7 @@ kable(gene_networks,
 
 (ref:fig-gene-networks-caption) Gene-level epistasis networks for *Standard* (orange), *eQTL* (green), and *Chromatin* (violet) (Section \@ref(methods:prefiltering)).
 
-```{r gene-networks, echo=FALSE, fig.cap='(ref:fig-gene-network-caption)'}
+```{r gene-networks, echo=FALSE, fig.cap='(ref:fig-gene-networks-caption)'}
 knitr::include_graphics('fig/gene_networks.pdf', dpi = NA)
 ```
 
@@ -428,9 +428,9 @@ encoding, which can lead to an increased false positive rate
 [@van2019increase]. Also we focused on linear regression as epistasis
 detection algorithm, as it accepts a continuous outcome variable,
 corrects for main effects, and is computationally efficient. However,
-other algorithms like MBMDR [@calle2010mbmdr], which share these
-properties but make different assumptions about epistasis, would have
-been suitable as well. 
+other algorithms which share these properties but make different 
+assumptions about epistasis (like the ones used in Chapter \@ref(epi-network)), 
+would have been suitable as well. 
 
 With regards to the aspects of GWAIS that are within the scope of this work,
 it would interesting for the community for us 
