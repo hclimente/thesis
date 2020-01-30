@@ -4,11 +4,32 @@
 
 ```{r echo=FALSE, results="asis", eval='is_latex_output'}
 cat("\\begin{chapabstract}{Abstract:}
-Complex diseases arise from a mixture of genetic and environmental factors. In this thesis I focus on the identification of the former. This is done via genome-wide association studies (GWAS), when univariate association is studied, and genome-wide association interaction studies, when interactions between genetic factors are considered (GWAIS). Both experimental settings involve the genotyping of hundreds of thousands of SNPs over thousands of individuals, both with the disease and from the healthy population. Despite their success in identifying many variants behind common diseases, they still present some challenges, namely low statistical power, difficult interpretation, and arbitrary choices at multiple points of the study. Approaching the problem from a network perspective might help tackling these issues. In essence, this involves considering both the individual association with the disease of each gene and its biological context, modeled as a network built from known pairwise interactions. In this thesis I focus on how network-based methods can boost biomarker discovery and interpretability on GWAS and GWAIS. I apply these methods to two complex diseases: familial breast cancer and inflammatory bowel disease.
+This thesis treats the identification of the genetic factors underlying complex diseases. Usually this is done via genome-wide association studies (GWAS), when univariate association is studied, and via genome-wide association interaction studies (GWAIS), when interactions between genetic factors are considered. Both experimental settings involve the genotyping of hundreds of thousands of single-nucleotide polymorphism (SNPs) over thousands of individuals, both affected by the disease under study and unaffected. Despite their success in identifying many variants behind common diseases, GWA(I)S still present challenges, namely low statistical power, difficult interpretation, and arbitrary choices at multiple points of the study. Approaching the problem from a network perspective might help tackling these issues. In essence, this involves considering both the individual association with the disease of each gene and their biological context, modeled as a network built from known gene-gene interactions. In this thesis I focus on how network-based methods can boost biomarker discovery and interpretability on GWA(I)S. I apply these methods to two complex diseases: familial breast cancer and inflammatory bowel disease.
 \\end{chapabstract}
 \\vskip 0.2in
 \\begin{chapabstract}{Résumé :}
-
+Cette th\\`ese porte sur l'identification des facteurs g\\'en\\'etiques qui 
+sous-tendent des maladies complexes. Les \\'etudes d'association g\\'enome 
+entier (GWAS), sont g\\'en\\'eralement utilis\\'ees pour \\'etudier des associations 
+univari\\'ees, tandis que les \\'etudes d'association d'interactions g\\'enome 
+entier (GWAIS) prennent en consid\\'eration des interactions entre facteurs 
+g\\'en\\'etiques (ou \\'epistasie). Ces deux approches n\\'ecessitent de g\\'enotyper 
+des centaines de milliers de polymorphismes d'un seul nucl\\'eotide (SNPs) 
+pour des milliers d'individus, affect\\'es ou non par la maladie \\'etudi\\'ee. 
+Bien qu'elles aient permis d'identifier de nombreux variants associ\\'es \\`a 
+des maladies courantes, les GWA(I)S pr\\'esentent toujours de nombreux 
+d\\'efis, parmi lesquels leur faible puissance statistique, la difficult\\'e 
+de leur interpr\\'etation, ainsi que les choix arbitraires qui doivent \\^etre 
+faits \\`a diff\\'erentes \\'etapes de ces \\'etudes. Consid\\'erer ces \\'etudes sous 
+l'angle des r\\'eseaux biologiques peut permettre de r\\'epondre \\`a ces d\\'efis. 
+Il s'agit de consid\\'erer \\`a la fois l'association individuelle entre 
+chaque g\\`ene et la maladie, et le contexte biologique de ces g\\`enes, 
+mod\\'elis\\'e par un r\\'eseau contruit \\`a partir d'interactions g\\`ene-g\\`ene 
+connues. Dans cette th\\`ese, j'\\'etudie comment l'utilisation de r\\'eseaux 
+biologiques facilite la d\\'ecouverte de nouveaux biomarqueurs ainsi que 
+l'interpr\\'etation des GWAS(I)S. J'applique ces m\\'ethodes \\`a deux maladies 
+complexes : le cancer du sein familial, et les maladies chroniques 
+inflammatoires de l'intestin.
 \\end{chapabstract}")
 ```
 
@@ -133,7 +154,7 @@ as functional candidate variants in selected genes and pathways.
 
 Inflammatory bowel disease (IBD) is a group of complex diseases that, as the name indicates, share a common theme of inflammation of the intestines. The two main subtypes are ulcerative colitis and Chron's disease. Clinically, these two share a lot of the symptoms, mainly intermittent abdominal pain and diarrhea [@liu_genetics_2016]. However, they differ in the specific regions of the digestive tract that get affected, as well as the specific lesions. IBD's incidence worldwide has been continually growing, specially in newly industrialized countries, and after decades of growth it has stabilized in North America, Oceania and Europe [@ng_worldwide_2017]. In these latter countries the prevalence is slightly above 0.3\%. 
 
-The genetic component of IBD was recognized more than a century ago [@ek_history_2014]. However, it was not until 2001 that the first gene, *NOD2*, was linked to IBD susceptibility. Ever since, hundreds loci have been associated to IBD as well, in positions related to immune system genes, both innate and adaptive [@loddo_inflammatory_2015;@ellinghaus_analysis_2016;@liu_genetics_2016]. For instance *NOD2*, and other susceptibility genes like *IL23R*, and *PTPN2*, are related to cell signalling in immune cells. However, most of the loci associated to genes are rare variants (< 0.5\%) with large effect sizes. By contrast, several GWAS have identified very common SNPs (20-50\%) with small effect sizes (odds ratio < 1.1) [@liu_genetics_2016], but which do not encode any coding change [@jostins_hostmicrobe_2012]. This raises questions about the underlying biology (see Section \@ref(intro-interpretability)). For a comprehensive view of the genetics of IBD, interested readers can read [@liu_genetics_2016] and [@loddo_inflammatory_2015].
+The genetic component of IBD was recognized more than a century ago [@ek_history_2014]. However, it was not until 2001 that the first gene, *NOD2*, was linked to IBD susceptibility. Ever since, hundreds loci have been associated to IBD as well, in positions related to immune system genes, both innate and adaptive [@loddo_inflammatory_2015;@ellinghaus_analysis_2016;@liu_genetics_2016]. For instance *NOD2*, and other susceptibility genes like *IL23R*, and *PTPN2*, are related to cell signalling in immune cells. However, most of the loci associated to genes are rare variants (< 0.5\%) with large effect sizes. By contrast, several GWAS have identified very common SNPs (20-50\%) with small effect sizes (odds ratio < 1.1) [@liu_genetics_2016], but which do not encode any coding change [@jostins_hostmicrobe_2012]. This raises questions about the underlying biology (see Section \@ref(intro-interpretability)). For a comprehensive view of the genetics of IBD, interested readers can read @liu_genetics_2016 and @loddo_inflammatory_2015.
 
 #### The IIBDGC dataset {#iibdgc-dataset}
 

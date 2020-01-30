@@ -6,7 +6,7 @@ Nearly all known HBOC susceptibility genes encode tumor suppressors that partici
 
 The homologous recombination repair pathway (HRR) deals with double strand DNA breaks by using the undamaged chromosome as template for error-free repair. After a DSB occurs, the MRN complex (MRE11, RAD50 and NDN) detects and binds the free DNA ends. Then, it promotes DNA damage checkpoint signaling.
 
-HRR involves BRCA1, BRCA2 and, actually, most of the HBOC genes. Because of its ability to interact with a wide range of proteins, BRCA1 is hypothetized to act as a recruitment scaffold. A deficiency of BRCA1 is linked to the inability to trigger HRR. Mutations in the MRN complex have also been clinically associated to breast cancer, although dubiously so in the case of RAD50 variants. Reassuringly, some other HBOC genes are interactors of the MRN complex and BRCA1/2.
+HRR involves *BRCA1*, *BRCA2* and, actually, most of the HBOC genes. Because of its ability to interact with a wide range of proteins, BRCA1 is hypothetized to act as a recruitment scaffold. A deficiency of *BRCA1* is linked to the inability to trigger HRR. Mutations in the MRN complex have also been clinically associated to breast cancer, although dubiously so in the case of *RAD50* variants. Reassuringly, some other HBOC genes are interactors of the MRN complex and BRCA1/2.
 
 ## Replication fork stability
 
@@ -40,26 +40,26 @@ BLM Unknown - (ref:checkmark) - - - -
 BRCA1 57-65%_by_age_70 (ref:checkmark) (ref:checkmark) (ref:checkmark) - (ref:checkmark) -
 BRCA2 45-55%_by_age_70 (ref:checkmark) (ref:checkmark) (ref:checkmark) - (ref:checkmark) -
 BRIP1 OR:_<_2.0 - - - - - -
-CDH1 42%_by_age 80 - - - - - (ref:checkmark) 
-CHEK2 37%_by_age 70 - - - - (ref:checkmark) -
+CDH1 42%_by_age_80 - - - - - (ref:checkmark)
+CHEK2 37%_by_age_70 - - - - (ref:checkmark) -
 FAM175A Unknown (ref:checkmark) - - - - -
 FANCC Unknown - (ref:checkmark) - - - -
 FANCM Unknown - (ref:checkmark) - - - -
 MLH1 ~19%_by_age_70 - (ref:checkmark) - (ref:checkmark) - -
 MRE11 Unknown - - - (ref:checkmark) - -
 MSH2 ~11%_by_age_70 - - - (ref:checkmark) - -
-NBN OR:_3.0 - (ref:checkmark) - - - - -
-NF1 6.5-fold_up_ages_30-39 - - - - - (ref:checkmark) 
+NBN OR:_3.0 (ref:checkmark) - - - - -
+NF1 6.5-fold_up_ages_30-39 - - - - - (ref:checkmark)
 PALB2 35%_by_age_70 (ref:checkmark) (ref:checkmark) - - - -
 PMS2 SIR:_3.8 - - - (ref:checkmark) - -
-PTEN 85%_by_age_70 - - - - - (ref:checkmark) 
+PTEN 85%_by_age_70 - - - - - (ref:checkmark)
 RAD51B Unknown (ref:checkmark) - - - - -
 RAD51C Unknown (ref:checkmark) - - - - -
 RAD51D Unknown (ref:checkmark) - - - - -
 RECQL Unknown - (ref:checkmark) - - - -
 RINT1 Unknown (ref:checkmark) - - - - -
-STK11 32%_by_age_60 - - - - - (ref:checkmark) 
-TP53 25%_by_age_70 - - - - (ref:checkmark) - 
+STK11 32%_by_age_60 - - - - - (ref:checkmark)
+TP53 25%_by_age_70 - - - - (ref:checkmark) -
 ", col_names = FALSE, col_types = 'cccccccc')
 
 colnames(hboc_genes) <- c('Gene', 'Lifetime risk', 'HRR', 'Rep. fork stab.', 'Tr.-rep. clash', 'MMR', 'DNA Damage, apoptosis', 'Other')

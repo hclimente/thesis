@@ -1,7 +1,7 @@
 --- 
 title: "Network-guided genome-wide association studies"
 author: "Héctor Climente González"
-date: "`r Sys.Date()`"
+date: "4 Février 2020"
 site: bookdown::bookdown_site
 documentclass: env/yjiao
 output: 
@@ -21,11 +21,27 @@ geometry: "left=1.5in,right=1.3in,top=1.1in,bottom=1.1in,includefoot,includehead
 linestretch: 1.05
 ---
 
-# Preface {-}
+# Acknowledgements {-}
 
-Ph.D. thesis supervised by Chloé-Agathe Azencott and Véronique Stoven.
+This thesis articulates the last 3 years of my research into a moderately thick book, and I do take some pride in having written it. However, this work would not exist in the first place without all the people who believed in me, guided me when I was lost, and plucked a smile out of me when I most needed it. For that reason, I understand now the convention of preceding theses with a shoutout to everyone who actually made them possible. The following lines are a poor attempt at that.
 
-It was written in R markdown and LaTeX using [bookdown](https://github.com/rstudio/bookdown). All the files required to compile it are available at https://github.com/hclimente/thesis.
+First I want to acknowledge the role of my supervisor, **Chloé**. Thank you for the freedom to pursue my own interests, and thank you for the guidance to get there. For finding time for me when you did not have any, and for the cheerful random chats. For teaching me how to be a meticulous researcher, to think better, and to communicate my science to all sorts of people. Lastly, I will forever thank you for the trust you put in me and for giving me the opportunity to learn from you and from the rest of CBIO.
+
+During my doctorate I was fortunate to collaborate with three excellent laboratories. I not only learned a lot in them, but also met wonderful colleagues and mentors. I want to thank **Nadine Andrieu**, **Makoto Yamada** and **Kristel Van Steen** for such opportunities. Thank you as well to the members of their teams, who welcomed me with open arms and made me feel at home when I was so far away. Most especially, thank you to **Christine Lonjou**, **Diane Duroux**, and **Fabienne Lesueur**, with whom it has really been a pleasure to work.
+
+I would like to thank Institute Curie's Training Unit for organizing the IC3i program, for always supporting me and helping me out when needed. My most sincere thank you to Anémone Trysavath, Jennifer Henry Lemoine, João Vilhena, Melanie Herrbach, and the rest of the members of the Training Unit. Thank you to all the recipients of the IC3i scholarship for creating such a friendly environment. Thank you to Institut Curie in general, and to U900 in particular for the amazing scientific support. Most specially, thank you, **Christine Lonjou**, for all the times you sat with me to discuss my results, for our little conversations in Japanese, and for all your advice. I really appreciate the pinch of joy that you bring to our floor. And thank you, **Om Kulkarni**, for, as you would put it, *being an awesome human being*. Thank you for your enthusiasm, your attention to detail, your humanity, and for the wave of positivity you bring along.
+
+Thank you to the current and former members of CBIO. All of you created a fun and constructive environment, and gave me many moments to treasure. My warmest thanks to **Joe**, for always having something to share: a joke, a gaze, an ear, a helping hand, or your latest idea; **Peter**, for all the hours sharing animes, technology and games, and for all those moments of helping each other out; **Beubeu-chan**, for always talking with passion about the big picture, the small picture, and the pictures we didn't even know were there when we started; **Judith**, for being such a positive force of change; **Maguette**, for enduring my awful jokes; **Lotfi**, for our shared fascinations and frustrations (mostly for the latter though); **Asma**, for your sense of humor and our little jokes; and **Thomas**, for dissecting my problems with surgical precision.
+
+I would not be half the scientist and the person I am today if not for the exceptional concurrence of twisted minds that I met during my time at GRIB. It was an absolute privilege to share so many nerdy days and great nights with you all. Thank you to **Eduardo**, **Babita**, **JC**, **Caterina**, **Emma**, **Will**, **Pau**, **Jorge**, **Juanlu**, **José Luis**, and **Isaac**.
+
+Mi Lobe **Yunlong**, coming to Paris was worth it since you blinded me with your inner light.^[You are a funny guy.] Which is ironic, since you worked restlessly to make me hate this city so much.^[:)] Thanks for showing me the ways of the eigens, as well as the ways of the alitas. For knowing that I can always count on you, and for our trips together. Most specially, thank you for that heartwarming feeling of deep syntony when we are together: the laughs, the long conversations, the gossiping and the shared fascinations.
+
+Oiee **Shona**, querida, why are you mi parti only? Thank you for all the sacrifice and the compromise, and thank you as well for all the hopes and shared dreams. Thank you for all our little things, the words, the dances, the dishes, the glances, the cards, the songs, and the flags with which we spice up our lives. Thanks for completing me, for taking care of me and for letting me take care of you. Thanks for our deep talks, and for sharing your brain with me. Thanks for listening when I do not see a way forward, and for taking me by the hand to look for that way together.
+
+**Peke**, ni este párrafo, ni un libro serían suficientes para agradecerte el haber entrado en mi vida. Mereces un premito por todas las buenas decisiones que he tomado, y otro por todas las malas, por saber que mientras puediésemos reirnos juntos de ellas, serían soportables. Gracias por permitirme ser cómo soy desde el momento en que nos conocimos, amando mis virtudes y perdonando cuando te he herido. Y gracias por ser el pilar de mi vida, pues todo es impermanente menos nosotros.
+
+Lastly, I would like to thank my family, to whom I ultimately owe everything I am today. Gracias a mis **tíos**, Esther y Manolo, y a mi primo **Alexis**, por hacer de cualquier celebración un placer. Gracias **Pili** por la alegría que irradias. Gracias **Paquita** por haberme cuidado, educado (y soportado) como a un nieto más. Gracias a mi **Yaya** Gloria, que con su cariño, su humor, y sus patatas rebozadas, me sostuvo durante años en Barcelona. Gracias a mi **Abuelo** Manolo, quien me enseñó la paciencia, la dedicación y la bondad. Y gracias a mi **Abuela** Esther, de quién aprendí a querer incondicionalmente. Gracias **Alicia** por haber sido tanto mi hermana pequeña como un ejemplo a seguir. Gracias **Mamá** por tu amor; por todas nuestras conversaciones; por haber recorrido lo que hiciese falta para estar a mi lado; por tus consejos y tu soporte; por enseñarme con rigidez y con flexbilidad a partes iguales; por inculcarme el respeto y la consideración. Por esto y por mil cosas más, esta tesis es posible, sobre todo, gracias a ti.
 
 <!-- 
 Cover dimensions wrong because

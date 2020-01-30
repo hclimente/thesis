@@ -4,11 +4,30 @@ The contents of this chapter are based on *Héctor Climente-González, Diane Dur
 
 ```{r echo=FALSE, results = "asis", eval='is_latex_output'}
 cat("\\begin{chapabstract}{Abstract:}
-In this chapter we explore the detection of high-order epistasis in IBD. We model high-order epistasis through a linear regression with interaction terms of orders up to 4. As the number of tests increases exponentially with the order of the interactions, resulting in low statistical power and computational challenges, we devised a two-step approach to restrict the number of tests. In a first step, we apply a variety of second-order epistasis detection methods, and build an epistasis network that aggregates all the detected interactions. In a second step, we take all star subnetworks composed of 3 and 4 nodes, and search for high-order epistasis between them. The rationale is that SNPs involved in high-order epistasis are more likely to display second-order as well. The advantage of this approach is that we keep the number of tests under control, performing 124 tests instead of the $5 \\times 10^{17}$ required to exhaustively search order 4 interactions. Indeed, we are able to detect 37 high-order interactions (FDR 10\\%). Mapping these SNP-SNP interactions to gene-gene interactions suggests the involvement of the complement system in susceptibility to IBD.
+In this chapter we explore the detection of high-order epistasis in inflammatory bowel disease (IBD). We model high-order epistasis through a linear regression with interaction terms of orders up to 4. The number of tests increases exponentially with the order of the interactions, resulting in low statistical power and computational challenges. To tackle this, we devised a two-step approach to restrict the number of tests. In a first step, we apply a variety of second-order epistasis detection methods, and build an epistasis network that aggregates all the detected interactions. In a second step, we take all star subnetworks composed of 3 and 4 nodes, and search for high-order epistasis between them. The rationale is that SNPs involved in high-order epistasis are more likely to display second-order as well. The advantage of this approach is that we keep the number of tests under control, performing 124 tests instead of the $5 \\times 10^{17}$ required to exhaustively search order 4 interactions. Indeed, we are able to detect 37 high-order interactions (FDR 10\\%). Mapping these SNP-SNP interactions to gene-gene interactions suggests the involvement of the complement system in susceptibility to IBD.
 \\end{chapabstract}
 \\vskip 0.2in
 \\begin{chapabstract}{Résumé :}
-
+Dans ce chapitre nous nous int\\'eressons \\`a la d\\'etection d'interactions 
+\\'epistatiques d'ordre sup\\'erieur dans les maladies chroniques 
+inflammatoires de l'intestin (MICI). Nous mod\\'elisions ces interactions 
+par une r\\'egression lin\\'eaire comportant des termes d'interaction allant 
+jusqu'\\`a l'ordre 4. Le nombre de tests statistiques augmentant de façon 
+exponentielle avec l'ordre des interactions, cela r\\'eduit fortement la 
+puissance statistiques tout en cr\\'eant des difficult\\'es calculatoires. 
+Pour r\\'esoudre ces probl\\`emes, nous proposons une approche en deux \\'etapes 
+pour r\\'eduire le nombre de tests. Dans la premi\\`ere \\'etape, nous appliquons 
+diverses m\\'ethodes de d\\'etection d'\\'epistasie d'ordre 2, et construisons un 
+r\\'eseau d'\\'epistasie qui agr\\`ege toutes les interactions ainsi d\\'ecouvertes. 
+Dans un second temps, nous testons tous les sous-r\\'eseaux en \\'etoiles de 3 
+ou 4 nœuds. Nous faisons ici l'hypoth\\`ese que les SNPs impliqu\\'es dans des 
+interactions d'ordre 3 ou 4 sont plus susceptibles d'apparaître aussi 
+dans des interactions d'ordre 2. L'avantage de notre approche est de 
+contr\\^oler fortement le nombre de tests statistiques, ici 124 au lieu des 
+$5 \\times 10^{17}$ requis pour une recherche exhaustive. Cela nous 
+permet de d\\'etecter 37 interaction d'ordre 3 ou 4 (FDR 10\\%). Traduire 
+ces interactions SNP-SNP en interactions g\\`ene-g\\`ene sugg\\`ere l'implication 
+du syst\\`eme du compl\\'ement dans la susceptibilit\\'e aux MICI.
 \\end{chapabstract}")
 ```
 

@@ -1,3 +1,7 @@
+# References {-}
+
+<div id="refs"></div>
+
 # (APPENDIX) Appendix {-}
 
 # Block HSIC Lasso: model-free biomarker detection for ultra-high dimensional data {#block-hsic-lasso}

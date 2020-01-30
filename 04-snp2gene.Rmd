@@ -7,11 +7,43 @@ library(magrittr)
 library(kableExtra)
 
 cat("\\begin{chapabstract}{Abstract:}
-Detecting epistatic interactions at the gene level is essential to understanding the biological mechanisms of complex diseases. Unfortunately, genome-wide interaction association studies (GWAIS) involve many statistical challenges that make such detection hard. This chapter considers three steps to analyze the conversion of SNP-SNP interactions into a gene network through the integration of biological knowledge. First, we investigate the use of known gene-gene interactions to focus on the most promising gene-pairs. Second, we explore several functional SNP-to-gene mappings to map SNPs to these gene interactions, including eQTL and chromatin-based, and filter the GWAIS data accordingly. Third, we integrate SNP-pairs statistics into gene-pairs statistics using the adaptive truncated product method (ATPM). ATPM does not require parameters or a known null distribution, and it is fast to compute. We apply different variants of these three steps to a GWAS inflammatory bowel disease (IBD) dataset, and compare the results. Overall, knowledge integration decreases the number of tests performed, reducing computational time and boosting statistical power, and provides interpretability. We validate through a permutation analysis that type I error is under control. The different protocols produce different results, which highlight different mechanisms implicated in IBD while, at the same time, overlapping with the known biology of the disease. Using eQTLs results in more interactions than the standard approach, where all possible SNP pairs are investigated and SNPs are mapped to genes based on their position on the genetic sequence, albeit fewer significant gene-pairs. This pipeline not only detects interactions at the gene level, but also gives a global visualization that identifies neighbors, hubs and highly connected substructures.
+Detecting epistatic interactions at the gene level is essential to understanding the biological mechanisms of complex diseases. Unfortunately, genome-wide interaction association studies (GWAIS) involve many statistical challenges that make such detection hard. This chapter considers three steps to analyze the conversion of SNP-SNP interactions into a gene-gene network through the integration of biological knowledge. First, we investigate the use of known gene-gene interactions to focus on the most promising gene-pairs. Second, we explore several functional SNP-to-gene mappings to map SNPs to these gene interactions, including expression quantitative trait loci (eQTL) and chromatin-based, and filter the GWAIS data accordingly. Third, we integrate SNP-pairs statistics into gene-pairs statistics using the adaptive truncated product method (ATPM). ATPM does not require parameters or a known null distribution, and it is fast to compute. We apply different variants of these three steps to a GWAS inflammatory bowel disease (IBD) dataset, and compare the results. Overall, knowledge integration decreases the number of tests performed, reducing computational time and boosting statistical power, and provides interpretability. We validate through a permutation analysis that type I error is under control. The different protocols produce different results, which highlight different mechanisms implicated in IBD while, at the same time, overlapping with the known biology of the disease. Using eQTLs results in more interactions than the standard approach, where all possible SNP pairs are investigated and SNPs are mapped to genes based on their position on the genetic sequence, albeit fewer significant gene-pairs. This pipeline not only detects interactions at the gene level, but also gives a global visualization that identifies neighbors, hubs and highly connected substructures.
 \\end{chapabstract}
 \\vskip 0.2in
 \\begin{chapabstract}{Résumé :}
-
+La d\\'etection d'interactions \\'epistatiques entre g\\`enes est essentielle \\`a 
+la compr\\'ehension des m\\'ecanismes des maladies complexes. Malheureusement, 
+les \\'etudes d'association d'interactions g\\'enome entier (GWAIS) posent de 
+nombreux d\\'efis statistiques qui rendent cette d\\'etection difficile. Ce 
+chapitre consid\\`ere trois \\'etapes pour analyser la conversion 
+d'interactions SNP-SNP en un r\\'eseaux de g\\`enes, \\`a travers l'int\\'egration 
+de connaissances biologiques. Tout d'abord, nous nous int\\'eressons \\`a 
+l'utilisation d'interactions g\\`ene-g\\`ene connues afin de nous limiter aux 
+paires de g\\`enes les plus prometteuses. Deuxi\\`emement, nous \\'etudions 
+plusieurs correspondances fonctionnelles entre SNPs et g\\`enes, bas\\'ees 
+entre autre sur les loci r\\'egulant l'expression (eQTL) ou les contacts de 
+chromatine, que nous utilisons aussi pour filtrer les donn\\'ees. 
+Troisi\\`emement, nous proposons de d\\'eriver, des statistiques obtenues pour 
+des paires de SNPs, une statistique pour une paire de g\\`enes, par une 
+m\\'ethode de produit tronqu\\'e adaptative (ATPM). L'ATPM ne requiert ni de 
+fixer des param\\`etres, ni de connaître la distribution nulle, et peut 
+\\^etre calcul\\'ee efficacement. Nous appliquons diff\\'erentes variantes de ces 
+trois \\'etapes \\`a un jeu de donn\\'ees GWAS des maladies chroniques 
+inflammatoires de l'intestin (MICI), et comparons les r\\'esultats obtenus. 
+L'int\\'egration de connaissances \textit{a priori} permet de r\\'eduire le 
+nombre de tests statistiques \\`a effectuer, ce qui r\\'eduit les temps de 
+calculs et augmente la puissance statistique. Elle facilite aussi 
+l'interpr\\'etation des r\\'esultats. Une analyse par permutations nous permet 
+de valider que l'erreur de type I est bien contr\\^ol\\'ee. Diff\\'erents 
+protocoles produisent des r\\'esultats diff\\'erents, qui mettent en lumi\\`ere 
+diff\\'erents m\\'ecanismes impliqu\\'es dans les MICI, tout en coïncidant avec 
+des m\\'ecanismes d\\'ej\\`a connus de ces maladies. L'utilisation de 
+correspondances SNPs identifi\\'es dans des eQTLs permet d'obtenir plus 
+d'interactions SNP-SNP que l'approche standard, mais moins de paires de 
+g\\`enes significatives. Notre pipeline permet non seulement de d\\'etecter 
+des interactions entre g\\`enes, mais aussi de les visualiser dans un 
+r\\'eseau global, et d'identifier voisinages, hubs, et structures fortement 
+interconnect\\'ees.
 \\end{chapabstract}")
 ```
 
@@ -37,7 +69,7 @@ product method to estimate gene-pairs significance.
 We investigated the IIBDGC dataset, described in 
 Section \@ref(iibdgc-dataset), whose large sample size helps to overcome the 
 issue of reduced statistical power common in GWAIS. 
-We performed a quality control as in @ellinghaus2016analysis, reducing the 
+We performed a quality control as in @ellinghaus_analysis_2016, reducing the 
 number of SNPs from 196\,524 to 130\,071.
 
 The IIBDGC dataset aggregates different cohorts, and contains
@@ -45,7 +77,7 @@ confounding population structure (Section \@ref(pop-structure)). PLINK
 [@purcell2007plink] cannot take covariates in the logistic regression used to
 detect epistasis (Section \@ref(methods:snp-epistasis)). In consequence, we adjusted
 phenotypes to account for population structure using the top 7 principal
-components as in @ellinghaus2016analysis. Essentially, we derive adjusted 
+components as in @ellinghaus_analysis_2016. Essentially, we derive adjusted 
 phenotypes from the logistic regression model by subtracting model-fitted 
 values from observed phenotype values (i.e. response residuals).
 
