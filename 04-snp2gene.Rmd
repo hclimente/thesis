@@ -97,7 +97,7 @@ entire pipeline described below is applied and the four obtained outputs
 are subsequently compared. An overview of the whole pipeline is
 available in Figure \@ref(fig:pipeline).
 
-(ref:fig-pipeline-caption) Overview of the gene-gene interaction detection procedure. The whole protocol is described in Section \@ref(methods:pipeline).
+(ref:fig-pipeline-caption) Overview of the gene-gene interaction detection procedure (from @duroux_2019_iges). The whole protocol is described in Section \@ref(methods:pipeline).
 
 ```{r pipeline, echo=FALSE, fig.cap='(ref:fig-pipeline-caption)'}
 knitr::include_graphics('fig/pipeline2.PNG', dpi = NA)
@@ -119,7 +119,7 @@ $\pm$ 10 kb. The eQTL mapping uses eQTLs obtained
 from GTEx [@gtex_consortium_genetic_2017]. We mapped an eQTL SNP to its target gene when the
 association P-value was significant in any tissue ($\text{FDR} < 0.05$).
 Lastly, in the 3D chromatin interaction mapping, we mapped a SNP to a
-gene when a contact had been observed between the former the region
+gene when a contact had been observed between the former and the region
 around the latter's promoter (250 bp upstream and 500 bp downstream from
 the transcription start site) in any of the Hi-C datasets included in
 FUMA ($\text{FDR} < 10^{-6}$). The chromatin mapping might contain new,
@@ -225,32 +225,43 @@ problems the adaptive truncated product method (ATPM) was proposed
 that produces the minimum P-value $\hat{s}(\tau)$. We estimated the
 distribution of the ATPM using permutations as in @ge2003resampling.
 Specifically, we created $B = 999$ permuted datasets by permuting the
-phenotype vector. Based on these $b^{th}$ permuted dataset,
+phenotype vector. Based on the $b^{th}$ permuted dataset,
 $1 \leq b \leq B$, we perform the N individual tests. We used three
 values for $\tau$ (0.001, 0.01, 0.05) and set the significance level
 $\alpha=0.05$. The specific procedure goes as follows:
 
 1.  For each gene-pair in the output of the original data analysis,
-    based on $p{_1}^{(b)},...,p{_N}^{(b)},0\le b\le B$, calculate the
+    based on $p{_1}^{(b)},...,p{_N}^{(b)},1\le b\le B$, calculate the
     truncated product statistics for each candidate truncation threshold
     for the original data and B permuted datasets.
 
-2.  Based on $W(\tau)_b$, use Ge's algorithm to obtain the estimated
-    P-value
-    $\hat{s}_{k}^{b}=\frac{\sum_{l=0}^B I(W(\tau)_b \geq W(\tau)_l)}{B+1}$,
-    $1 \le k \le K$, $0 \le b \le B$
+2.  Use Ge's algorithm to obtain the estimated P-value
+    $\hat{s}_{k}^{b}=\frac{\sum_{l=0}^B I(W(\tau_k)_b \geq W(\tau_k)_l)}{B+1}$,
+    $1 \le k \le 3$, $0 \le b \le B$
 
-3.  Calculate $M_{b}, 0 \le b \le B$, as
-    $M{_b}=min_{1 \le k \le }\hat{s}_{k}^{b}$
+3.  Calculate $M{_b}=min_{1 \le k \le 3}\hat{s}_{k}^{b}$
 
 4.  The adjusted P-value for the adaptive truncated product statistic
     $M$ is estimated as
     $P_{minP^{(b)}}=\frac{\sum_{b=0}^B I(M \geq M_b)}{B+1}$.
 
 5.  We reject the joint null hypothesis if the adjusted P-value is
-    smaller than the significance level $\alpha$.
+    smaller than the global significance level $\alpha$.
 
 ## Results
+
+### Type I error
+
+The "multi-stage" nature of the protocol presented in Section
+\@ref(methods:pipeline) required controlling the type I error. For
+that purpose, we performed 1\,000 permutation analyses for each of the
+four datasets, permuting the phenotypes and running the entire protocol
+to detect significant gene pairs. When at least one significant
+gene-pair is observed in a permutation, that permutation is considered a
+false positive (FP). This allowed to compute the type I error rate as
+$\frac{ \text{\# FP}}{1000}$. We observed that the type I error was
+under control for all four datasets (3.6%, 3.7%, 6.1%, and 3.9% for *Standard*, 
+*Physical*, *Chromatin*, and *eQTL*, respectively).
 
 ### Chromatin contacts map more SNPs per gene than other mappings {#results-power-gain}
 
@@ -264,8 +275,8 @@ the largest number of SNPs mapped to an individual gene, followed by *eQTL* and
 *physical* (Figure \@ref(fig:snps-per-mapping)A). Nonetheless, 
 different genes had very unequal contributions from each of the mappings 
 (Figure \@ref(fig:snps-per-mapping)B). This is consistent with 
-the stark differences between the ranking of genes according to the number of 
-SNPs mapped them (Figures \@ref(fig:snps-per-mapping)C, D and E): 
+the striking differences between the ranking of genes according to the number of 
+SNPs mapped on them (Figures \@ref(fig:snps-per-mapping)C, D and E): 
 in general, the genes with the most SNPs mapped using the eQTL mapping had 
 relatively few SNPs mapped in the chromatin mapping, and viceversa.
 
@@ -302,7 +313,7 @@ We searched SNP epistasis in the four datasets (Section
 \@ref(methods:snp-epistasis)). The different epistatic SNP-SNP networks are 
 described on Table \@ref(tab:snp-network) and Figure 
 \@ref(fig:snp-networks). Strikingly, while the *Standard* protocol generated the 
-largest network (55 nodes), the *Chromatin* was the largest by number of 
+largest network (55 nodes), the *eQTL* one was the largest by number of 
 interactions (64). The *Physical* protocol produced no significant pairs.
 
 ```{r snp-network, echo=FALSE}
@@ -338,7 +349,7 @@ not the case under the chromatin mapping, where it was more common for the same
 SNP pair to map to different gene pairs. We then compared the relationship
 between significant gene-pairs and the number of significant SNP pairs that map
 to them (Figure \@ref(fig:sign-snps-per-gene-and-viceversa)B). 
-Interestingly, we observe that most significant gene pairs are supported by 
+Interestingly, most significant gene pairs are supported by 
 relatively small number of SNPs: either few in number, or few with respect to 
 the total number of SNP pairs for that gene pair.
 
@@ -359,7 +370,7 @@ notably smaller than *Standard*'s (11 and 10 nodes versus 29,
 respectively). 
 
 *Standard*'s nodes are proportionally more clustered in
-connected components, while most *eQTL* and *chromatin*'s connected
+connected components, while most *eQTL* and *Chromatin*'s connected
 components are composed of only a pair of genes. Although this might
 reveal the affection of a common mechanism, it is likely a result of the
 overlap in the genome of multiple genes, which are mapped to highly
@@ -389,11 +400,11 @@ knitr::include_graphics('fig/gene_networks.pdf', dpi = NA)
 
 A hub is node with a number of links that greatly exceeds the average.
 For this application, we define a hub as a node having a degree strictly
-superior to three. Only the Standard process contains such hubs: *P4HA2*,
+superior to three. Only the *Standard* process contains such hubs: *P4HA2*,
 *NKD1*, *RNU4ATAC4P*, *C1orf141*, *IL12RB2*, *IL23R* and *USP4*.
 
 Jointly, 38 significant gene pairs are involved in at least one method,
-involving 46 unique genes. Seven chromosome are involved in epistasis.
+involving 46 unique genes. Seven chromosomes are involved in epistasis.
 Notably, 39% of the epistatic genes are located in chromosome 3 and 22%
 in chromosome 10.
 
@@ -416,19 +427,6 @@ least one interleukin. @lin2013nod2 detected interactions involving *NOD2*,
 with both *IL-23R* and other genes. Our *Standard* protocol also detects two
 potentially new epistasis interactions involving *NOD2*.
 
-### The type I error of the protocol is controlled
-
-The "multi-stage" nature of the protocol presented in Section
-\@ref(methods:pipeline) required controlling the type I error. For
-that purpose, we performed 1\,000 permutation analyses for each of the
-four datasets, permuting the phenotypes and running the entire protocol
-to detect significant gene pairs. When at least one significant
-gene-pair is observed in a permutation, that permutation is considered a
-false positive (FP). This allowed to compute the type I error rate as
-$\frac{ \text{\# FP}}{1000}$. We observed that the type I error was
-under control for all four datasets (3.6%, 3.7%, 6.1%, and 3.9% for Standard, 
-Physical, Chromatin, and eQTL, respectively).
-
 ## Discussion
 
 In this chapter we explore protocols for functional filtering for
@@ -445,7 +443,7 @@ improvement of the interpretability of the results, by examining only
 statistical interactions that map to a known biological interaction. As shown
 in Section \@ref(results-ibd-soa), the proposed eQTL and, specially, chromatin 
 mappings provide results which match the biology of IBD, while corresponding 
-to known interactions. On the other hand, the Standard protocol detects 
+to known interactions. On the other hand, the *Standard* protocol detects 
 multiple interactions that are hard to interpret. For instance, several 
 interactions involve RNA genes of unknown function (e.g. *LOC101927272* or 
 *LINC02178*). Hence, our results stress the relevance of regulatory variants
@@ -466,7 +464,7 @@ would have been suitable as well.
 
 With regards to the aspects of GWAIS that are within the scope of this work,
 it would interesting for the community for us 
-to provide set of recommendations based on our experience, and the results
+to provide a set of recommendations based on our experience, and the results
 justifying each of them. Before we reach that point, a few extra experiments 
 are required.
 
@@ -487,7 +485,7 @@ mapping. Related to this point, risk SNPs from GWAS are often located
 in chromatin that is active in the tissues involved in the disease 
 [@boyle_expanded_2017]. Hence, the presented protocol might lead to the most biologically
 plausible epistatic interactions while boosting the power if it focused exclusively
-on mappings the eQTLs and chromatin mappings obtained in the tissues relevant 
+on eQTLs and chromatin mappings obtained in the tissues relevant 
 to IBD (intestines and leukocytes).
 
 It would also be interesting to explore alternative sources of known

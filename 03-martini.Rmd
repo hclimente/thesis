@@ -82,7 +82,7 @@ AICc is a modification of AIC that penalizes complex models (many features inclu
 
 ### Network-based simulations
 
-We conjecture that SConES will detect biomarker with increased sensibility respect to non-network frameworks. In other words, it should be able to detect causal SNPs for less heritable phenotypes. In order to test this hypothesis, *martini* facilitates the simulation of phenotypes and interconnected causal networks on real GWAS datasets. This simulation tool is broken down into two functions.
+We conjecture that SConES will detect biomarker with increased sensibility with respect to non-network frameworks. In other words, it should be able to detect causal SNPs for less heritable phenotypes. In order to test this hypothesis, *martini* facilitates the simulation of phenotypes and interconnected causal networks on real GWAS datasets. This simulation tool is broken down into two functions.
 
 The first of them is `simulate_causal_snps()`, which takes a SNP network in which each SNP is annotated with the genes it maps to (as can be obtained by `get_GI_network()`, see Section \@ref(martini-ui)). It takes two additional parameters: the number of genes involved in the disease (`n`), and the proportion of the SNPs mapped to a causal gene that are causal themselves (`p`). Then, it randomly scans the network until it finds a maximum of two connected SNP subnetworks that are mapped to `n` different genes. A fraction `p` of such subnetwork are selected as causal.
 

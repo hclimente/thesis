@@ -109,7 +109,7 @@ structure.
 (ref:fig-pcs-caption) GENESIS shows no differential population structure between cases and controls. **(A,B,C,D)** Eight main principal components computed on the genotypes of GENESIS. Cases are colored in green, controls in orange.
 
 ```{r pcs, echo=FALSE, fig.cap='(ref:fig-pcs-caption)'}
-knitr::include_graphics('fig/sfigure_1', dpi = NA)
+knitr::include_graphics('fig/sfigure_1.pdf', dpi = NA)
 ```
 
 ### High-score subnetwork search algorithms {#sec:org6ced6c9}
@@ -130,7 +130,7 @@ exclusively on the 32\,767 that could be mapped to an HGNC symbol. Out of
 the SNPs 197\,083 remaining after quality control, 164\,037 mapped to at
 least one of these genes.
 
-We use such mapping to compare the outputs of methods who produce SNP-
+We use such mapping to compare the outputs of methods that produce SNP-
 to those that produce gene-lists, and vice versa. In the former case, we
 consider any gene that can be mapped to any of the selected SNPs as
 selected as well. In the latter, we consider all the SNPs that can be
@@ -491,7 +491,7 @@ that, that overlap should become larger when the results are aggregated
 at the gene level. For that purpose, we computed the gene association as
 in Section \@ref(methods:node-score). The iCOGS array was used for genotyping in
 BCAC [@sakoda_turning_2013], the same array as for GENESIS
-[@sinilnikova_genesis:_2016]. Although imputed data is available, we
+[@sinilnikova_genesis:_2016]. Although imputed data are available, we
 used exclusively the SNPs available on GENESIS after quality control to
 make the results comparable.
 
@@ -612,7 +612,7 @@ for each of the five gene-based methods (Section
 \@ref(methods:snp-network)). The solutions are very heterogeneous
 (Table \@ref(tab:gene-solutions) and Table
 \@ref(tab:snp-solutions)): none of the subnetworks examined by
-LEAN is significant (adjusted P-value \< 0.05), while HotNet2 produced
+LEAN are significant (adjusted P-value \< 0.05), while HotNet2 produced
 the largest solution subnetwork with 440 genes. SConES GI failed to
 recover genes in the PPIN, but it recovered one genomic region mapped to
 RNA gene *RNU6-420P*. All solution subnetworks except LEAN's are, on
@@ -629,7 +629,7 @@ associated genes.
 (ref:fig-overview-solutions-caption) Overview of the subnetworks produced by the different network methods. **(dmGWAS, heinz, HotNet2, LEAN, and SigMod)** contain gene subnetworks; **(SConES GI)**, SNP subnetworks.
 
 ```{r overview-solutions, echo=FALSE, fig.cap='(ref:fig-overview-solutions-caption)'}
-knitr::include_graphics('fig/sfigure_2', dpi = NA)
+knitr::include_graphics('fig/sfigure_2.png', dpi = NA)
 ```
 
 (ref:fig-manhattan-solutions-caption) Manhattan plots showing the biomolecules selected by each method. In **(Consensus, dmGWAS, heinz, HotNet2, and SigMod)** datapoints are genes; in **(SConES GS, GM, and GI)**, SNPs. LEAN was excluded, as it did not select any gene.
@@ -669,19 +669,19 @@ needed draw conclusions.
 (ref:fig-disgenet-comparison-caption) Proportion of the selected genes by each of the methods on the GENESIS data that is a known breast cancer susceptibility gene (Section \@ref(methods:bcac)). Only genes present in the protein-protein interaction network were considered. LEAN is not displayed as it did not select any gene. The presented network methods recover a higher proportion of breast cancer susceptibility genes than of other genes, despite their lack of significance in GENESIS.
 
 ```{r disgenet-comparison, echo=FALSE, fig.cap='(ref:fig-disgenet-comparison-caption)', out.height='80%', fig.align='center'}
-knitr::include_graphics('fig/sfigure_5', dpi = NA)
+knitr::include_graphics('fig/sfigure_5.pdf', dpi = NA)
 ```
 
 (ref:fig-bcac-comparison-caption) Proportion of the Bonferroni significant biomolecules (in either the GENESIS or the BCAC datasets) selected by each of the methods on the GENESIS data. **(Consensus, dmGWAS, heinz, HotNet2, and SigMod)** involve significant genes, only among those present in the protein-protein interaction network. **(SConES GS, GM and GI)** involve significant SNPs. LEAN is not displayed as it did not select any gene. The presented network methods recover a higher proportion of significant genes than of non-significant genes in both datasets, despite their lack of significance in GENESIS.
 
 ```{r bcac-comparison, echo=FALSE, fig.cap="(ref:fig-bcac-comparison-caption)", out.height='80%', fig.align='center'}
-knitr::include_graphics('fig/sfigure_4', dpi = NA)
+knitr::include_graphics('fig/sfigure_4.pdf', dpi = NA)
 ```
 
 (ref:fig-consensus-stats-caption) Genes on the consensus network. Breast cancer susceptibility genes are colored in pink; the rest are colored in grey. **(A)** Number of methods selecting every gene in the subnetwork. **(B)** VEGAS P-values of association of the genes, with regards to the number of methods that selected them. **(C)** Comparison of betweenness centrality of the genes in the consensus network and the other genes in the PPIN and not in the consensus network. To improve visualization, we removed outliers. **(D)** Relationship between the log~10~ of the betweenness centrality and the -log~10~ of the VEGAS P-value of the genes in the consensus network. The blue line represents a fitted generalized linear model.
 
 ```{r consensus-stats, echo=FALSE, fig.cap='(ref:fig-consensus-stats-caption)', out.height='75%', fig.align='center'}
-knitr::include_graphics('fig/sfigure_8', dpi = NA)
+knitr::include_graphics('fig/sfigure_8.pdf', dpi = NA)
 ```
 
 As the solutions were quite different from each other it is hard to draw
@@ -711,7 +711,7 @@ nodes), contains the two breast cancer susceptibility genes *CASP8* and
 (ref:fig-benchmark-caption) Comparison of network-based GWAS methods on GENESIS. Each method was run 5 times of a random subset of the samples, and tested on the remaining samples (Section \@ref(methods:comparison)). **(A)** Number of SNPs selected by each method and number of SNPs on the active set used by the Lasso classifier. Points are the average over the 5 runs; lines represent the standard error of the mean. A grey diagonal line with slope 1 is added for comparison. For reference, the active set of Lasso using all the SNPs included, on average, 154\,117.4 SNPs. **(B)** Sensitivity and specificity on test set of the L1-penalized logistic regression trained on the features selected by each of the methods. In addition, the performance of the classifier trained on all SNPs is displayed. Points are the average over the 5 runs; lines represent the standard error of the mean. **(C)** Pairwise Pearson\\'s correlations of the solutions used by different methods. A Pearson's correlation of 1 means the two solutions are the same. A Pearson's correlation of 0 means that there is no SNP in common between the two solutions. **(D)** Runtime of the evaluated methods, by type of network used (gene or SNP). For gene network-based methods, inverted triangles represent the runtime of the algorithm itself, and circles the total time, which includes the algorithm themselves and the additional 119\,980 seconds (1 day and 9.33 hours) which took VEGAS2v2 on average to compute the gene scores from SNP summary statistics.
 
 ```{r benchmark, echo=FALSE, fig.cap='(ref:fig-benchmark-caption)', out.width='80%', fig.align='center'}
-knitr::include_graphics('fig/figure_4', dpi = NA)
+knitr::include_graphics('fig/figure_4.pdf', dpi = NA)
 ```
 
 As the employed methods produced such different results, we compared
@@ -764,7 +764,7 @@ results.
 (ref:fig-issues-caption) Drawbacks confronted when using network guided methods. **(A)** dmGWAS solution subnetwork. Genes with a P-value \< 0.1 are highlighted in red. **(B)** Centrality degree and -log~10~ of the VEGAS P-value for the nodes in SigMod solution subnetwork. **(C)** Genomic regions where either SConES GS, GM or GI select SNPs.
 
 ```{r issues, echo=FALSE, fig.cap='(ref:fig-issues-caption)'}
-knitr::include_graphics('fig/figure_2', dpi = NA)
+knitr::include_graphics('fig/figure_2.png', dpi = NA)
 ```
 
 In practice, and despite their similarities and their involvement in
@@ -778,7 +778,7 @@ environment are on average strongly associated with the disease.
 (ref:fig-pearson-methods-caption) Pearson's correlation between the different solution subnetworks. **(A)** Correlation between selected SNPs. **(B)** Correlation between selected genes. In general, the solutions display a very low overlap.
 
 ```{r pearson-methods, echo=FALSE, fig.cap='(ref:fig-pearson-methods-caption)'}
-knitr::include_graphics('fig/sfigure_6', dpi = NA)
+knitr::include_graphics('fig/sfigure_6.pdf', dpi = NA)
 ```
 
 In this dataset, heinz's solution is very conservative, providing a
@@ -870,8 +870,10 @@ ribosomal protein (MRPS31 - VEGAS P-value = 7.67 10^-3^ - and MRPS18B -
 VEGAS P-value = 7.92 10^-3^), which suggests an involvement of
 mitochondrial ribosomes in carcinogenesis.
 
+(ref:fig-consensus-names-caption) Consensus subnetwork on GENESIS (Section \@ref(methods:consensus)). **(A)** Each node is represented by a pie chart, which shows the methods that selected it. The labeled genes have a VEGAS2v2 P-value \< 0.001 and/or are known breast cancer susceptibility genes (colored in pink). **(B)** The name of every gene is indicated.
+
 ```{r consensus-names, echo=FALSE, fig.cap='(ref:fig-consensus-names-caption)', out.height='80%', fig.align='center'}
-knitr::include_graphics('fig/sfigure_7', dpi = NA)
+knitr::include_graphics('fig/sfigure_7.pdf', dpi = NA)
 ```
 
 We also examined the topological properties of the nodes. The genes in
@@ -894,8 +896,6 @@ breast and ovarian cancer [@liu_jab1_cops5_2018]. Despite its lack of
 association in GENESIS (VEGAS P-value = 0.22), its neighbors in the
 consensus subnetwork have consistently low P-values (median VEGAS
 P-value = 0.006).
-
-(ref:fig-consensus-names-caption) Consensus subnetwork on GENESIS (Section \@ref(methods:consensus)). **(A)** Each node is represented by a pie chart, which shows the methods that selected it. The labeled genes have a VEGAS2v2 P-value \< 0.001 and/or are known breast cancer susceptibility genes (colored in pink). **(B)** The name of every gene is indicated.
 
 The consensus subnetwork is not completely connected: out of the 93
 genes, the largest connected subnetwork includes only 49. A GO
@@ -1007,7 +1007,7 @@ heavily on how SNPs are mapped to genes. In Section
 when genes overlap or are in linkage disequilibrium.
 
 ```{r biotypes-excluded, echo=FALSE, fig.cap='Biotypes of genes from the annotation that are not present in the HINT protein-protein interaction network.'}
-knitr::include_graphics('fig/sfigure_9', dpi = NA)
+knitr::include_graphics('fig/sfigure_9.pdf', dpi = NA)
 ```
 
 As not all databases compile the same interactions, the choice of the
@@ -1031,7 +1031,7 @@ runtime (Figure \@ref(fig:lc-ht-comparison)).
 (ref:fig-lc-ht-comparison-caption) Comparison of benchmark on high-throughput interactions to benchmark on both high-throughput and literature curated interactions. Grey lines represent no change between the benchmarks (1 for ratios, 0 for differences). **(A)** Ratios of the selected features between both benchmarks and of the active set. **(B)** Shifts in sensitivity and specificity. **(C)** Shift in Pearson's correlation between benchmarks. **(D)** Ratio between the runtimes of the benchmarks. For gene network-based methods, inverted triangles represent the ratio of runtimes of the algorithms themselves, and circles the total time, which includes the algorithm themselves and the additional 119\,980 seconds (1 day and 9.33 hours) which took VEGAS2v2 on average to compute the gene scores from SNP summary statistics. In general, adding additional interactions slightly improves the stability of the solution, but increases the solution size, has mixed effects on the sensitivity and specificity, and impacts negatively the required runtime of the algorithms.
 
 ```{r lc-ht-comparison, echo=FALSE, fig.cap='(ref:fig-lc-ht-comparison-caption)'}
-knitr::include_graphics('fig/sfigure_10', dpi = NA)
+knitr::include_graphics('fig/sfigure_10.pdf', dpi = NA)
 ```
 
 In order to produce the consensus network, we had to face the different
